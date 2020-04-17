@@ -1,2 +1,7 @@
-import LOG from "./log";
-export const reallog = LOG
+import { reallog } from "./log";
+
+
+reallog.info("this","blue")
+
+
+
