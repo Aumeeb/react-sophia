@@ -16,6 +16,7 @@ export const PresetColorTypes = tuple(
     'volcano',
     'gold',
     'lime',
+    'violet',
 );
 
 export type PresetColorType = ElementOf<typeof PresetColorTypes>;

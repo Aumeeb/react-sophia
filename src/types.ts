@@ -16,3 +16,5 @@ export type ElementOf<T> = T extends (infer E)[] ? E : T extends readonly (infer
 export type LiteralUnion<T extends U, U> = T | (U & {});
 
 
+export type MathOperator = "+" | "-" | "*" | "/" | "%"
+export type ExpectOperator = "==" | "===" | "!==" | "!="
