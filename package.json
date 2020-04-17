@@ -1,0 +1,14 @@
+{
+  "name": "reallog",
+  "version": "1.0.0",
+  "description": "To Enhance the log for dev",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -w "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^4.42.1"
+  }
+}
