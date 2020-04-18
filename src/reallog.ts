@@ -1,16 +1,45 @@
-import { PresetColorTypes, PresetColorType } from "./colorfulText"
-import { textStyle, textInfoStyle, textSuccessStyle, textFailureStyle } from "./template";
+
+import { textInfoStyle, textSuccessStyle, textFailureStyle } from "./template";
 import { ExpectOperator } from "./types";
 import { emoji } from "./emoji";
 import { expectText } from "./template/expectText";
+import { isString, isNumber } from "./utils/typeRecognize";
+
 
 
 class RealLog {
 
     private fontsize: number = 20
 
-    public info(text: string) {
-        console.log(`%c ${emoji.bulb} ${text}`, textInfoStyle());
+
+    public info<T extends string | string[] | number[] | (string | number)[]>(text: T) {
+        if (typeof text === "string" || typeof text === "number") {
+            console.log(`%c ${emoji.bulb} ${text}`, textInfoStyle());
+        }
+        if (Array.isArray(text)) {   //we expect here is a pure one demension array with [string or number] inside
+
+            let newText = text.map((t: any) => {
+                if (isString(t)) {
+
+                    return `'${t}'`
+                } else {
+                    return t
+                }
+            }
+            )
+            console.group(`%c ${emoji.bulb} [${newText.join(' ')}]`, textInfoStyle())
+            text.forEach(t => {
+                if (isString(t)) {
+                    console.log(`%c string: ${t}`, textSuccessStyle());
+                }
+                if (isNumber(t)) {
+                    console.log(`%c number: ${t}`, textSuccessStyle());
+                }
+            })
+            console.groupEnd()
+
+        }
+
     }
     public success(text: string) {
         console.log(`%c ${emoji.corrent} ${text}`, textSuccessStyle());
