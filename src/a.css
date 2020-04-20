@@ -5,3 +5,14 @@ a {
   padding: 0 4px;
   color: rgb(105, 183, 25);
 }
+
+b{
+  width: 16px;
+  height: 16px;
+  background:red;
+  background-image: url(./resource/images/goog.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-position: 0% 25%;
+}

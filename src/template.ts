@@ -1,27 +1,27 @@
 import { PresetColorType } from "./colorfulText";
-import { commonText } from "./template/singleText";
+import { commonTextStyle } from "./template/singleText";
+import { isNumber, isString } from "util";
+import { typedStyle } from "./template/typedText";
 
 export const textStyle = (color: PresetColorType) => `
     color: ${color};
-        ${commonText}
+        ${commonTextStyle}
     `
 export const textInfoStyle = () => `
 color: rgba(0,0,0,.6);
-${commonText}
+${commonTextStyle}
 `
 export const textSuccessStyle = () => `
 color: rgb(105, 183, 25);
-${commonText}
+${commonTextStyle}
 `
 export const textFailureStyle = () => `
 color:  #e84545de;
-${commonText}
+${commonTextStyle}
 `
 
-export const typedInfoStyle = (type: any) => {
+export const typedInfo = (value: any) => {
+    if (isNumber(value)) console.log(`%c %c${value}`, `${typedStyle}`, commonTextStyle);
+    if (isString(value)) console.log(`%c %c${value}`, `${typedStyle}`, commonTextStyle);
 
-    return `
-color: rgba(0,0,0,.6);
-${commonText}
-`
 }

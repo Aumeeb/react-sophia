@@ -1,9 +1,9 @@
 
-import { textSuccessStyle, textFailureStyle, textInfoStyle ,typedInfoStyle} from "./template";
+import { textSuccessStyle, textFailureStyle, textInfoStyle, typedInfo as printTypedInfo } from "./template";
 import { ExpectOperator } from "./types";
 import { emoji } from "./emoji";
 import { expectText } from "./template/expectText";
-import { isString, isNumber } from "./utils/typeRecognize";
+import { isString, isNumber } from "util"
 
 
 
@@ -20,7 +20,6 @@ class RealLog {
 
             let newText = text.map((t: any) => {
                 if (isString(t)) {
-
                     return `'${t}'`
                 } else {
                     return t
@@ -28,14 +27,7 @@ class RealLog {
             }
             )
             console.group(`%c ${emoji.bulb} [${newText.join(' ')}]`, textInfoStyle())
-            text.forEach(t => {
-                if (isString(t)) {
-                    console.log(`%c ${t}`, typedInfoStyle(t));
-                }
-                if (isNumber(t)) {
-                    console.log(`%c  ${t}`, typedInfoStyle(t));
-                }
-            })
+            text.forEach(t => printTypedInfo(t))
             console.groupEnd()
 
         }
