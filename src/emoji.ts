@@ -3,5 +3,8 @@ export const emoji = {
     corrent: '✔️',
     incorrent: '❌',
     thinking: '🤔',
-    crystal_ball: '🔮'
+    crystal_ball: '🔮',
+    type_number: '🔢',
+    type_string: '🔠',
+
 }

@@ -18,3 +18,10 @@ color:  #e84545de;
 ${commonText}
 `
 
+export const typedInfoStyle = (type: any) => {
+
+    return `
+color: rgba(0,0,0,.6);
+${commonText}
+`
+}

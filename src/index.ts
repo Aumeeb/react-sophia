@@ -22,5 +22,3 @@ reallog.expect("123", "===", 123)
 
 console.groupEnd()
 
-let input1 = document.getElementById("input1") as HTMLInputElement
-reallog.info(input1.value)

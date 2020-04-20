@@ -18,3 +18,16 @@ export type LiteralUnion<T extends U, U> = T | (U & {});
 
 export type MathOperator = "+" | "-" | "*" | "/" | "%"
 export type ExpectOperator = "==" | "===" | "!==" | "!="
+
+export enum SVGType {
+    Class,
+    CodeSegment,
+    Constant,
+    Enum,
+    Field,
+    Function,
+    Interface,
+    Keyword,
+    Namespace,
+    Event,
+}

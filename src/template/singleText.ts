@@ -5,4 +5,4 @@ font-style: normal;
 text-align: center;
 height: 20px;
 border-radius:.28571429rem;
-padding: .6em 1.0em .6em;`
+padding: .6em 0.6em .6em;`

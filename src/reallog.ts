@@ -1,5 +1,5 @@
 
-import { textInfoStyle, textSuccessStyle, textFailureStyle } from "./template";
+import { textSuccessStyle, textFailureStyle, textInfoStyle ,typedInfoStyle} from "./template";
 import { ExpectOperator } from "./types";
 import { emoji } from "./emoji";
 import { expectText } from "./template/expectText";
@@ -30,10 +30,10 @@ class RealLog {
             console.group(`%c ${emoji.bulb} [${newText.join(' ')}]`, textInfoStyle())
             text.forEach(t => {
                 if (isString(t)) {
-                    console.log(`%c string: ${t}`, textSuccessStyle());
+                    console.log(`%c ${t}`, typedInfoStyle(t));
                 }
                 if (isNumber(t)) {
-                    console.log(`%c number: ${t}`, textSuccessStyle());
+                    console.log(`%c  ${t}`, typedInfoStyle(t));
                 }
             })
             console.groupEnd()
