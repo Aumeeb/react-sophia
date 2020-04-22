@@ -6,7 +6,8 @@
   "main": "./out/reallog.js",
   "scripts": {
     "dev": "tsc -w ",
-    "build": "webpack --watch"
+    "build": "webpack --watch",
+    "installPackages": "npm install"
   },
   "author": "",
   "license": "ISC",
