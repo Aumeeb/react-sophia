@@ -1,9 +1,9 @@
 {
   "name": "reallog",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "To Enhance the log for dev",
   "private": true,
-  "main": "index.js",
+  "main": "./out/reallog.js",
   "scripts": {
     "dev": "tsc -w ",
     "build": "webpack --watch",

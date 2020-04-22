@@ -4,6 +4,7 @@ import { ExpectOperator } from "./types";
 import { emoji } from "./emoji";
 import { expectText } from "./template/expectText";
 import { isString, isNumber } from "util"
+import { italic } from "./template/font";
 
 
 
@@ -20,14 +21,14 @@ class RealLog {
 
             let newText = text.map((t: any) => {
                 if (isString(t)) {
-                    return `'${t}'`
+                    return `"${t}"`
                 } else {
                     return t
                 }
             }
             )
-            console.group(`%c ${emoji.bulb} [${newText.join(' ')}]`, textInfoStyle())
-            text.forEach(t => printTypedInfo(t))
+            console.group(`%c 💕 ${text.length} [${newText.join(', ')}]`, textInfoStyle() + italic)
+            text.forEach((t, index) => printTypedInfo(t, index))
             console.groupEnd()
 
         }

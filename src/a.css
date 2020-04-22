@@ -3,7 +3,7 @@ a {
   height: 20px;
   border-radius: 5px;
   padding: 0 4px;
-  color: rgb(105, 183, 25);
+  color: #db995c;
 }
 
 b{
@@ -15,4 +15,11 @@ b{
   background-repeat: no-repeat;
   display: inline-block;
   background-position: 0% 25%;
+}
+c{
+  font-style: italic;
+  color: rgb(206, 145, 120);
+}
+d{
+  color: #e6893e;
 }
