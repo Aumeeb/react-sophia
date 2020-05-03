@@ -6,12 +6,15 @@ import { getHeight, getWidth } from '../../util/browser'
 // import { throttle } from 'lodash'
 
 export interface DraggableProps {
+  position?: {
+    x: number
+    y: number
+  }
   width?: number
   height?: number
   offsetTop?: number
   offsetLeft?: number
-  x?: number
-  y?: number
+
   onMouseUp?: () => void
 }
 const STYLES: CSSProperties = {
@@ -64,10 +67,11 @@ const _Draggable: FC<DraggableProps> = props => {
     },
     { supervise: false, forceCleanUp: false }
   )
+  const { position = { x:800, y: 800 } } = props
   useEffect(() => {
     updateObject({
-      x: getWidth() - props.x!,
-      y: getHeight() - props.y!,
+      x: getWidth() - position.x,
+      y: getHeight() - position.y,
     })
   }, [])
 

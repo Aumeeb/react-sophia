@@ -12,7 +12,7 @@ export const MENU_ROUTER = [
 export const Sophia: FC = () => {
   return (
     <>
-      <Draggable x={500} y={700}>
+      <Draggable>
         <Menu minWidth={200} maxWidth={600} emojiIcon="📦" scale={3} throb menuName={MENU_ROUTER} />
       </Draggable>
     </>

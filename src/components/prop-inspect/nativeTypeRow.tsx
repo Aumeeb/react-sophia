@@ -6,7 +6,7 @@ import React from 'react'
 import { CSpan } from './colorful'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, isArrowFunction } from '../../type'
-import { italic } from '../../shared/styles'
+import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
 
 const TYPE_COLORS = {
@@ -60,27 +60,18 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
   }
   /** for array */
   getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
-    let [expend, setExpend] = useState(false)
+    let [expend, setExpend] = useState(true)
     let [level, setLevel] = useState(deepLevel)
     return (
-      <article>
-        <span
-          onClick={() => {
-            alert(1123123)
-
-            console.log(!expend)
-
-            setExpend(!expend)
-          }}
-        >
-          {/* {SYMBOLS.downPointingTriangle} */}
-        </span>
-        <span style={italic} color="gray">
-          ({arrValue.length})
-        </span>
-        <CSpan ml={10} color="gray">
-          [
-        </CSpan>
+      <article
+        style={{ ...INLINE_BLOCK }}
+        onClick={() => {
+          setExpend(!expend)
+        }}
+      >
+        <span>{SYMBOLS.downPointingTriangle}</span>
+        <span style={ITALIC}>({arrValue.length})</span>
+        <CSpan ml={10}>[</CSpan>
         {arrValue.map(val => {
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined') {
@@ -92,6 +83,10 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
               funcValue = 'arrow-function'
             }
             matchedBody = <CSpan color={TYPE_COLORS.function}>{funcValue}</CSpan>
+          }
+
+          if (getType(val) === 'obejct') {
+            matchedBody = <CSpan color={TYPE_COLORS.function}>{`{...}`}</CSpan>
           }
           return (
             <span key={getUid()}>

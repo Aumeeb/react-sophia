@@ -1,4 +1,4 @@
-import { isString, isNumber, isFunction, isBoolean, isUndefined, isNull, isArray } from 'util'
+import { isString, isNumber, isFunction, isBoolean, isUndefined, isNull, isArray, isObject } from 'util'
 import { isEvent } from './svgs/svgBadge';
 import { MENU_ROUTER } from "./sophia";
 export const tuple = <T extends string[]>(...args: T) => args;
@@ -48,6 +48,7 @@ export function getType(value: unknown): ExistNativeType {
     if (isUndefined(value)) return 'undefined'
     if (isArray(value)) return 'array'
     if (isNull(value)) return 'null'
+    if (isObject(value)) return 'obejct'
     return 'undefined'
 }
 
