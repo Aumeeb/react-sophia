@@ -6,41 +6,35 @@ import { useObject } from '../../hooks/useObject'
 import { ColorfulRows } from '../prop-inspect/colorful'
 import { AvailableNav } from '../../type'
 import { getUid } from '../../util/random'
+import { testdata } from '../draggable'
 
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
   let eachIconWidth = 50
-  let [, setSubItemVisible] = useState(true)
-  let [, setTouchedBox] = useState(false)
+
   let [curCallee, setCurCallee] = useState<string>('')
   let { object, updateObject } = useObject<{
     nav: AvailableNav
+    t: any
   }>({
     nav: 'Wastebasket',
     callee: 'menu',
+    t: testdata,
   })
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
 
-  useEffect(() => {}, [os.get(curCallee)])
+  // useEffect(() => {}, [os.get(curCallee)])
+  console.log(1)
 
   return (
     <div
-      onMouseOver={() => setSubItemVisible(true)}
-      onMouseOut={() => setSubItemVisible(false)}
       className={throb ? 'menu-icon-beat-up' : ''}
       style={{
         fontSize: scale * fontSize,
       }}
     >
-      <header
-        onMouseOver={() => {
-          setTouchedBox(true)
-        }}
-        onMouseOut={() => {
-          setTouchedBox(false)
-        }}
-      >
+      <header>
         <div className="menu-panel-wrapper" style={{ width: eachIconWidth }}>
           <span>{emojiIcon}</span>
           {props.menuName.map(item => (

@@ -18,7 +18,7 @@ const TYPE_COLORS = {
   null_undefined: '#569cca',
   object: '#000',
   array: '#b4c8a0',
-  symbol: 'pink',
+  symbol: '#ff7990',
 }
 
 export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
@@ -69,17 +69,18 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
   }
   /** for array */
   getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
-    const [expend, setExpend] = useState(true)
+    const [expend, setExpend] = useState(false)
 
     return (
-      <article
-        style={{ ...INLINE_BLOCK }}
-        onClick={e => {
-          e.stopPropagation()
-          setExpend(!expend)
-        }}
-      >
-        <span>{expend ? SYMBOLS.downPointingTriangle : SYMBOLS.rightPointingTriangle}</span>
+      <article style={{ ...INLINE_BLOCK }}>
+        <span
+          onClick={e => {
+            e.stopPropagation()
+            setExpend(!expend)
+          }}
+        >
+          {expend ? EMJS.expend : SYMBOLS.rightPointingTriangle}
+        </span>
         <span style={ITALIC}>({arrValue.length})</span>
         <CSpan ml={10}>[</CSpan>
         {arrValue.map((val, i) => {
@@ -295,7 +296,3 @@ export interface NativeTypeDescription {
   afterNode?: ReactNode
   self: NativeTypeRow
 }
-
-// function say<T extends 'hello' | 'world'>(word: T): T extends 'hello' ? 'mello' : 'wrod' {
-//   return 'mello'
-// }

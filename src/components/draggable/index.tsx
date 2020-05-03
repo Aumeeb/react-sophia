@@ -5,7 +5,33 @@ import { useObject } from '../../hooks/useObject'
 import { getHeight, getWidth } from '../../util/browser'
 // import { throttle } from 'lodash'
 // console.log([1,2,3,{name:5},{name:5,age:2,xsl:2421412412412412412142}]);
-
+export const testdata = [
+  1,
+  '2',
+  true,
+  undefined,
+  void 0,
+  null,
+  () => {},
+  function () {},
+  Symbol('1'),
+  [
+    1,
+    2,
+    3,
+    [
+      4,
+      5,
+      [
+        () => {
+          console.log(123)
+        },
+      ],
+    ],
+  ],
+  {},
+  { name: 2 },
+]
 export interface DraggableProps {
   position?: {
     x: number
@@ -26,33 +52,7 @@ const STYLES: CSSProperties = {
 const _Draggable: FC<DraggableProps> = props => {
   const { object, updateObject } = useObject(
     {
-      arr: [
-        1,
-        '2',
-        true,
-        undefined,
-        void 0,
-        null,
-        () => {},
-        function () {},
-        Symbol('1'),
-        [
-          1,
-          2,
-          3,
-          [
-            4,
-            5,
-            [
-              () => {
-                console.log(123)
-              },
-            ],
-          ],
-        ],
-        {},
-        { name: 2 },
-      ],
+      arr: testdata,
       pressed: false,
       pressedX: 0,
       pressedY: 0,
@@ -121,8 +121,8 @@ const _Draggable: FC<DraggableProps> = props => {
 
 export const Draggable: FC<DraggableProps> = props => {
   return (
-    <BrowserPropsProvider>
-      <_Draggable {...props} />
-    </BrowserPropsProvider>
+    // <BrowserPropsProvider>
+    <_Draggable {...props} />
+    // </BrowserPropsProvider>
   )
 }
