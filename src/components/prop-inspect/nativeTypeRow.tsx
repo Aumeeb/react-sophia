@@ -23,8 +23,8 @@ const TYPE_COLORS = {
 
 export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
   private size: SVGBlockSize = {
-    width: 20,
-    height: 20,
+    width: 16,
+    height: 16,
   }
   constructor(protected value: any) {}
   textTextColor = ''
@@ -89,13 +89,13 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
       <article
         style={{ ...INLINE_BLOCK }}
         onClick={() => {
-          setExpend(!expend)
+          // setExpend(!expend)
         }}
       >
         <span>{SYMBOLS.downPointingTriangle}</span>
         <span style={ITALIC}>({arrValue.length})</span>
         <CSpan ml={10}>[</CSpan>
-        {arrValue.map(val => {
+        {arrValue.map((val, i) => {
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
             matchedBody = new NativeTypeRow(val).getNativeTypeDescription()?.mainBody
@@ -117,7 +117,7 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
           return (
             <span key={getUid()}>
               {matchedBody}
-              {this.getSeparatorNode(', ')}
+              {i < arrValue.length - 1 ? this.getSeparatorNode(', ') : ''}
             </span>
           )
         })}

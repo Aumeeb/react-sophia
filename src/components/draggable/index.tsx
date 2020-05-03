@@ -4,6 +4,7 @@ import { BrowserPropsProvider } from '../../shared/window-context'
 import { useObject } from '../../hooks/useObject'
 import { getHeight, getWidth } from '../../util/browser'
 // import { throttle } from 'lodash'
+// console.log([1,2,3,{name:5},{name:5,age:2,xsl:2421412412412412412142}]);
 
 export interface DraggableProps {
   position?: {
@@ -21,48 +22,21 @@ const STYLES: CSSProperties = {
   position: 'absolute',
   zIndex: 100,
 }
-const SIZE = {
-  width: 20,
-  height: 20,
-}
 
 const _Draggable: FC<DraggableProps> = props => {
   const { object, updateObject } = useObject(
     {
+      arr: [1, '2', true, undefined, void 0, null, () => {}, function () {}, Symbol('1'), [1, [2, [3, [4]]]], {}, { name: 2 }],
       pressed: false,
       pressedX: 0,
       pressedY: 0,
       x: 0,
       y: 0,
       callee: 'draggable',
-      onMouseUp: () => {
-        console.log([
-          1,
-          2,
-          3,
-          {},
-          { name: 2 },
-          [[]],
-          undefined,
-          null,
-          '1',
-          'f',
-          _Draggable,
-          function () {
-            console.log(1)
-          },
-          () => {
-            console.log(2)
-          },
-        ])
-      },
+      onMouseUp: () => {},
       alert() {
         alert(2)
       },
-      getObjects: () => {
-        console.log({ name: 5, age: 2, sex: true })
-      },
-      arr: [1, '2', true, undefined, void 0, null, () => {}, function () {}, Symbol('1'), [], [1], [1, []], _Draggable, {}, { name: 2 }],
       obj: { name: 5, age: 6 },
     },
     { supervise: false, forceCleanUp: false }

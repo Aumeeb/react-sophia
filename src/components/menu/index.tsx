@@ -10,7 +10,7 @@ import { getUid } from '../../util/random'
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
   let eachIconWidth = 50
-  let badgeWidth = 20
+  let badgeWidth = 16
   let [, setSubItemVisible] = useState(true)
   let [, setTouchedBox] = useState(false)
   let [curCallee, setCurCallee] = useState<string>('')

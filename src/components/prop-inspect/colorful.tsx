@@ -4,10 +4,13 @@ import { getSVG, isEvent } from '../../svgs/svgBadge'
 import { EMJS } from '../../shared/emojis'
 import { NativeTypeRow, NativeTypeDescription } from './nativeTypeRow'
 import { type } from 'os'
+import { INLINE_FLEX, FLEX } from '../../shared/styles'
 
 const KEY_STYLE: CSSProperties = {
   marginLeft: 2,
   marginRight: 2,
+  position: 'relative',
+  top: -5,
 }
 const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: -4 }
 
@@ -24,11 +27,13 @@ export function renderPropertyOfObjectOrArray(objectKey: string, value: any): JS
   const typeDesc = new NativeTypeRow(value).getNativeTypeDescription()
 
   return (
-    <div style={{ marginTop: 10 }}>
-      {typeDesc?.self.getDefualtTypeSVG()}
-      <span style={DATA_TYPE_WRAPPER_STYLE}>
-        <span style={KEY_STYLE}> {objectKey}</span> : {typeDesc?.beforeNode} {typeDesc?.mainBody} {typeDesc?.afterNode}
-      </span>
+    <div style={{ marginTop: 10, ...FLEX }}>
+      <aside>
+        {typeDesc?.self.getDefualtTypeSVG()} <span style={KEY_STYLE}>{objectKey} :</span>
+      </aside>
+      <article style={DATA_TYPE_WRAPPER_STYLE}>
+        {typeDesc?.beforeNode} {typeDesc?.mainBody} {typeDesc?.afterNode}
+      </article>
     </div>
   )
 }
