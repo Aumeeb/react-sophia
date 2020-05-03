@@ -1,4 +1,4 @@
-import { isString, isNumber, isFunction, isBoolean, isUndefined, isNull, isArray, isObject } from 'util'
+import { isString, isNumber, isFunction, isBoolean, isUndefined, isNull, isArray, isObject, isSymbol } from 'util'
 import { isEvent } from './svgs/svgBadge';
 import { MENU_ROUTER } from "./sophia";
 export const tuple = <T extends string[]>(...args: T) => args;
@@ -38,7 +38,7 @@ export enum SVGType {
     Namespace,
     Event,
 }
-export type ExistNativeType = 'event' | 'function' | 'string' | 'number' | 'boolean' | 'obejct' | 'undefined' | 'null' | 'array'
+export type ExistNativeType = 'symbol' | 'event' | 'function' | 'string' | 'number' | 'boolean' | 'obejct' | 'undefined' | 'null' | 'array' | 'object'
 export function getType(value: unknown): ExistNativeType {
     if (isBoolean(value)) return 'boolean'
     if (isString(value)) return 'string'
@@ -49,6 +49,7 @@ export function getType(value: unknown): ExistNativeType {
     if (isArray(value)) return 'array'
     if (isNull(value)) return 'null'
     if (isObject(value)) return 'obejct'
+    if (isSymbol(value)) return "symbol"
     return 'undefined'
 }
 

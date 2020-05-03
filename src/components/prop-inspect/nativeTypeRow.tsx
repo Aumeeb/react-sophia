@@ -1,16 +1,23 @@
 import { ReactNode, useState } from 'react'
-
 import { getSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
 import { CSpan } from './colorful'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
-import { getType, isArrowFunction } from '../../type'
+import { getType, isArrowFunction, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
+  string: '#dd7324',
+  number: '#b4c8a0',
+  event: 'rgb(235,184,109)',
+  boolean: '#569cca',
+  null_undefined: '#569cca',
+  object: '#000',
+  array: '#b4c8a0',
+  symbol: 'pink',
 }
 
 export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
@@ -28,9 +35,11 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
     if (getType(this.value) === 'event') return new EventType(this.value).getNativeTypeDescription()
     if (getType(this.value) === 'undefined') return new UndefinedType(this.value).getNativeTypeDescription()
     if (getType(this.value) === 'null') return new NullType(this.value).getNativeTypeDescription()
+    if (getType(this.value) === 'object') return new ObjectType(this.value).getNativeTypeDescription()
+    if (getType(this.value) === 'symbol') return new SymbolType(this.value).getNativeTypeDescription()
     if (getType(this.value) === 'array')
       return new (class extends NativeTypeRow implements getNativeTypeDescription {
-        textTextColor = '#b4c8a0'
+        textTextColor = TYPE_COLORS.array
         getNativeTypeDescription(): NativeTypeDescription {
           return {
             typeRange: ['number'],
@@ -50,6 +59,9 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
     return getSVG(this.value)(this.size)
   }
   getRegularBody(prefix: ReactNode = <></>, affix: ReactNode = <></>) {
+    if (getType(this.value) === 'symbol') {   
+      this.value = this.value.toString()  //symbol has method toString intrinsically but 'undefined & null' doesn't
+    }
     return (
       <CSpan color={this.textTextColor}>
         {prefix}
@@ -57,6 +69,12 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
         {affix}
       </CSpan>
     )
+  }
+  getShrunkenObjectBody() {
+    return <CSpan color={TYPE_COLORS.object}>{`{...}`}</CSpan>
+  }
+  getShrunkenArrayBody(arr: any[]) {
+    return <CSpan color={TYPE_COLORS.array}>{`Array (${arr.length})`}</CSpan>
   }
   /** for array */
   getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
@@ -74,19 +92,22 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
         <CSpan ml={10}>[</CSpan>
         {arrValue.map(val => {
           let matchedBody: ReactNode
-          if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined') {
+          if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
             matchedBody = new NativeTypeRow(val).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {
-            let funcValue = 'function'
+            let funcValue = 'func'
             if (isArrowFunction(val)) {
-              funcValue = 'arrow-function'
+              funcValue = 'λ-func'
             }
             matchedBody = <CSpan color={TYPE_COLORS.function}>{funcValue}</CSpan>
           }
 
           if (getType(val) === 'obejct') {
-            matchedBody = <CSpan color={TYPE_COLORS.function}>{`{...}`}</CSpan>
+            matchedBody = this.getShrunkenObjectBody()
+          }
+          if (getType(val) === 'array') {
+            matchedBody = this.getShrunkenArrayBody(val)
           }
           return (
             <span key={getUid()}>
@@ -118,7 +139,7 @@ interface getNativeTypeDescription {
 }
 
 const StringType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = '#dd7324'
+  textTextColor = TYPE_COLORS.string
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['string'],
@@ -132,7 +153,7 @@ const StringType = class extends NativeTypeRow implements getNativeTypeDescripti
   }
 }
 const NumberType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = '#b4c8a0'
+  textTextColor = TYPE_COLORS.number
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['number'],
@@ -146,7 +167,7 @@ const NumberType = class extends NativeTypeRow implements getNativeTypeDescripti
   }
 }
 const EventType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = 'rgb(235,184,109)'
+  textTextColor = TYPE_COLORS.event
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['event'],
@@ -174,7 +195,7 @@ const FunctionType = class extends NativeTypeRow implements getNativeTypeDescrip
   }
 }
 const BooleanType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = '#569cca'
+  textTextColor = TYPE_COLORS.boolean
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['boolean'],
@@ -188,7 +209,7 @@ const BooleanType = class extends NativeTypeRow implements getNativeTypeDescript
   }
 }
 const UndefinedType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = '#808080'
+  textTextColor = TYPE_COLORS.null_undefined
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['undefined'],
@@ -202,7 +223,7 @@ const UndefinedType = class extends NativeTypeRow implements getNativeTypeDescri
   }
 }
 const NullType = class extends NativeTypeRow implements getNativeTypeDescription {
-  textTextColor = '#808080'
+  textTextColor = TYPE_COLORS.null_undefined
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['null'],
@@ -215,7 +236,35 @@ const NullType = class extends NativeTypeRow implements getNativeTypeDescription
     }
   }
 }
-type ExistNativeType = 'event' | 'function' | 'string' | 'number' | 'boolean' | 'obejct' | 'undefined' | 'null' | 'array'
+const ObjectType = class extends NativeTypeRow implements getNativeTypeDescription {
+  textTextColor = TYPE_COLORS.object
+  getNativeTypeDescription(): NativeTypeDescription {
+    return {
+      typeRange: ['object'],
+      typeTextColor: this.textTextColor,
+      badges: [],
+      mainBody: this.getRegularBody(),
+      self: this,
+      beforeNode: <></>,
+      afterNode: <></>,
+    }
+  }
+}
+const SymbolType = class extends NativeTypeRow implements getNativeTypeDescription {
+  textTextColor = TYPE_COLORS.symbol
+  getNativeTypeDescription(): NativeTypeDescription {
+    return {
+      typeRange: ['object'],
+      typeTextColor: this.textTextColor,
+      badges: [],
+      mainBody: this.getRegularBody(),
+      self: this,
+      beforeNode: <></>,
+      afterNode: <></>,
+    }
+  }
+}
+
 export interface NativeTypeDescription {
   typeRange: Array<ExistNativeType>
   typeTextColor: string

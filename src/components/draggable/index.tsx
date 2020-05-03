@@ -62,12 +62,12 @@ const _Draggable: FC<DraggableProps> = props => {
       getObjects: () => {
         console.log({ name: 5, age: 2, sex: true })
       },
-      arr: [1, '2', true, undefined, void 0, null, () => {}, function () {}, _Draggable, {}, { name: 2 }],
-      ojb: { name: 5, age: 6 },
+      arr: [1, '2', true, undefined, void 0, null, () => {}, function () {}, Symbol('1'), [], [1], [1, []], _Draggable, {}, { name: 2 }],
+      obj: { name: 5, age: 6 },
     },
     { supervise: false, forceCleanUp: false }
   )
-  const { position = { x:800, y: 800 } } = props
+  const { position = { x: 800, y: 1200 } } = props
   useEffect(() => {
     updateObject({
       x: getWidth() - position.x,
