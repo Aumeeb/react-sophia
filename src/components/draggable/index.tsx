@@ -26,7 +26,33 @@ const STYLES: CSSProperties = {
 const _Draggable: FC<DraggableProps> = props => {
   const { object, updateObject } = useObject(
     {
-      arr: [1, '2', true, undefined, void 0, null, () => {}, function () {}, Symbol('1'), [1, [2, [3, [4]]]], {}, { name: 2 }],
+      arr: [
+        1,
+        '2',
+        true,
+        undefined,
+        void 0,
+        null,
+        () => {},
+        function () {},
+        Symbol('1'),
+        [
+          1,
+          2,
+          3,
+          [
+            4,
+            5,
+            [
+              () => {
+                console.log(123)
+              },
+            ],
+          ],
+        ],
+        {},
+        { name: 2 },
+      ],
       pressed: false,
       pressedX: 0,
       pressedY: 0,
@@ -57,17 +83,16 @@ const _Draggable: FC<DraggableProps> = props => {
     })
   }
   function mouseMove(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (object.pressed) {
-      let changeX = ev.clientX - object.pressedX
-      let changeY = ev.clientY - object.pressedY
-
-      updateObject({
-        x: object.x + changeX,
-        y: object.y + changeY,
-        pressedX: ev.clientX,
-        pressedY: ev.clientY,
-      })
-    }
+    // if (object.pressed) {
+    //   let changeX = ev.clientX - object.pressedX
+    //   let changeY = ev.clientY - object.pressedY
+    //   updateObject({
+    //     x: object.x + changeX,
+    //     y: object.y + changeY,
+    //     pressedX: ev.clientX,
+    //     pressedY: ev.clientY,
+    //   })
+    // }
   }
   function mouseUp() {
     updateObject('pressed', false)
@@ -77,7 +102,6 @@ const _Draggable: FC<DraggableProps> = props => {
     <div
       onMouseDown={mouseDown}
       onMouseUp={mouseUp}
-      // onMouseMove={throttle(mouseMove, 50)}
       onMouseMove={mouseMove}
       onMouseOut={mouseUp}
       onDoubleClick={e => void e.preventDefault()}

@@ -10,7 +10,8 @@ const KEY_STYLE: CSSProperties = {
 }
 const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: -4 }
 
-export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => renderPropertyOfObjectOrArray(props.objectKey, props.value)
+// export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => RenderPropertyOfObjectOrArray(props.objectKey, props.value)
+export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} />
 
 export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
   let { ml = 6 } = props
@@ -19,13 +20,13 @@ export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
 }
 
 /** this function will be rendered the each property of an object or an item of an Array */
-export function renderPropertyOfObjectOrArray(objectKey: string, value: any): JSX.Element {
-  const typeDesc = new NativeTypeRow(value).getNativeTypeDescription()
+export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any }): JSX.Element => {
+  const typeDesc = new NativeTypeRow(props.value).getNativeTypeDescription()
 
   return (
     <div style={{ marginTop: 10, ...FLEX }}>
       <aside>
-        {typeDesc?.self.getDefualtTypeSVG()} <span style={KEY_STYLE}>{objectKey} :</span>
+        {typeDesc?.self.getDefualtTypeSVG()} <span style={KEY_STYLE}>{props.objectKey} :</span>
       </aside>
       <article style={DATA_TYPE_WRAPPER_STYLE}>
         {typeDesc?.beforeNode} {typeDesc?.mainBody} {typeDesc?.afterNode}

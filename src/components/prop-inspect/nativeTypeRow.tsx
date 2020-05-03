@@ -1,8 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 import { getSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
-import { CSpan, renderPropertyOfObjectOrArray } from './colorful'
+import { CSpan, RenderPropertyOfObjectOrArray } from './colorful'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, isArrowFunction, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
@@ -69,19 +69,17 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
   }
   /** for array */
   getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
-    let [expend, setExpend] = useState(true)
+    const [expend, setExpend] = useState(true)
 
     return (
-      <article style={{ ...INLINE_BLOCK }}>
-        <span
-          onClick={e => {
-            e.stopPropagation()
-            console.log(arrValue)
-            setExpend(false)
-          }}
-        >
-          {SYMBOLS.downPointingTriangle}
-        </span>
+      <article
+        style={{ ...INLINE_BLOCK }}
+        onClick={e => {
+          e.stopPropagation()
+          setExpend(!expend)
+        }}
+      >
+        <span>{expend ? SYMBOLS.downPointingTriangle : SYMBOLS.rightPointingTriangle}</span>
         <span style={ITALIC}>({arrValue.length})</span>
         <CSpan ml={10}>[</CSpan>
         {arrValue.map((val, i) => {
@@ -115,7 +113,11 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
         {expend && (
           <div>
             {arrValue.map((p, index) => {
-              return <div key={getUid()}>{renderPropertyOfObjectOrArray(index.toString(), p)}</div>
+              return (
+                <div key={getUid()}>
+                  <RenderPropertyOfObjectOrArray objectKey={index.toString()} value={p} />
+                </div>
+              )
             })}
           </div>
         )}
