@@ -28,3 +28,14 @@ export const getUid = (length: number = 10): string => {
 
     return uid;
 };
+
+export const randomColor = (transparent: boolean = false) => {
+    const range = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+    let color = `#`
+    let len = 6
+    if (transparent) len = 8
+    for (let i = 0; i < len; i++) {
+        color += range[getRandomInt(0, 15)]
+    }
+    return color
+}

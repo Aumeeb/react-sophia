@@ -10,7 +10,6 @@ import { getUid } from '../../util/random'
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
   let eachIconWidth = 50
-  let badgeWidth = 16
   let [, setSubItemVisible] = useState(true)
   let [, setTouchedBox] = useState(false)
   let [curCallee, setCurCallee] = useState<string>('')
@@ -61,7 +60,7 @@ const _Menu: FC<MenuProps> = props => {
       <div style={{ marginTop: 16 }}>
         {Object.keys(curStateObject).map(key => {
           const value = curStateObject[key]
-          return <ColorfulRows objectKey={key} key={getUid()} value={value} badgeWidth={badgeWidth} />
+          return <ColorfulRows objectKey={key} key={getUid()} value={value} />
         })}
       </div>
     )

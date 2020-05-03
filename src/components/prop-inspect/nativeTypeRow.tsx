@@ -38,21 +38,7 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
     if (getType(this.value) === 'null') return new NullType(this.value).getNativeTypeDescription()
     if (getType(this.value) === 'object') return new ObjectType(this.value).getNativeTypeDescription()
     if (getType(this.value) === 'symbol') return new SymbolType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'array')
-      return new (class extends NativeTypeRow implements getNativeTypeDescription {
-        textTextColor = TYPE_COLORS.array
-        getNativeTypeDescription(): NativeTypeDescription {
-          return {
-            typeRange: ['number'],
-            typeTextColor: this.textTextColor,
-            badges: [],
-            mainBody: this.getArrayBody(this.value),
-            self: this,
-            beforeNode: <></>,
-            afterNode: <></>,
-          }
-        }
-      })(this.value).getNativeTypeDescription()
+    if (getType(this.value) === 'array') return new ArrayType(this.value).getNativeTypeDescription()
 
     return undefined
   }
@@ -84,13 +70,14 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
   /** for array */
   getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
     let [expend, setExpend] = useState(true)
-    let [level, setLevel] = useState(deepLevel)
+
     return (
       <article style={{ ...INLINE_BLOCK }}>
         <span
           onClick={e => {
+            e.stopPropagation()
             console.log(arrValue)
-            setExpend(!expend)
+            setExpend(false)
           }}
         >
           {SYMBOLS.downPointingTriangle}
@@ -277,7 +264,20 @@ const SymbolType = class extends NativeTypeRow implements getNativeTypeDescripti
     }
   }
 }
-
+const ArrayType = class extends NativeTypeRow implements getNativeTypeDescription {
+  textTextColor = TYPE_COLORS.array
+  getNativeTypeDescription(): NativeTypeDescription {
+    return {
+      typeRange: ['number'],
+      typeTextColor: this.textTextColor,
+      badges: [],
+      mainBody: this.getArrayBody(this.value),
+      self: this,
+      beforeNode: <></>,
+      afterNode: <></>,
+    }
+  }
+}
 export interface NativeTypeDescription {
   typeRange: Array<ExistNativeType>
   typeTextColor: string

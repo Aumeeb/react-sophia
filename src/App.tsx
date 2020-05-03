@@ -1,7 +1,46 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 import logo from './logo.svg'
 import { Sophia } from './sophia'
 import './App.css'
+import { randomColor } from './util/random'
+
+function Recurisve(props: { deep: number; left: number; children?: any }) {
+  let [s, ss] = useState(true)
+  let deep = props.deep - 1
+  if (deep > 0) {
+    return (
+      <div
+        onClick={e => {
+          e.stopPropagation()
+          console.log(deep)
+
+          ss(!s)
+        }}
+        style={{ display: s ? 'block' : 'none', background: randomColor(), paddingLeft: props.left * deep }}
+      >
+        {deep}
+        <Recurisve deep={deep} left={props.left}>
+          {props.children}
+        </Recurisve>
+      </div>
+    )
+  }
+  return <div> </div>
+}
+function Recurisve2(deep: number, left: number) {
+  deep -= 1
+  if (deep > 0) {
+    console.log(deep)
+
+    return (
+      <div style={{ background: 'auto', paddingLeft: left * deep }}>
+        {deep}
+        {Recurisve2(deep, left)}
+      </div>
+    )
+  }
+  return <div> </div>
+}
 
 function App() {
   return (
@@ -16,6 +55,25 @@ function App() {
         </a>
       </header> */}
       <Sophia />
+      {/* {Recurisve2(10, 10)} */}
+      {/* <Recurisve deep={10} left={10} /> */}
+
+      {/* <div
+        onClick={() => {
+          console.log(11111)
+        }}
+      >
+        11111
+        <div
+          onClick={e => {
+             e.stopPropagation()
+            console.log(22222)
+          }}
+        >
+          22222
+          <div onClick={handleClick}>33333</div>
+        </div>
+      </div> */}
     </div>
   )
 }

@@ -10,7 +10,7 @@ const KEY_STYLE: CSSProperties = {
 }
 const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: -4 }
 
-export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth: number }) => renderPropertyOfObjectOrArray(props.objectKey, props.value)
+export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => renderPropertyOfObjectOrArray(props.objectKey, props.value)
 
 export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
   let { ml = 6 } = props
