@@ -1,10 +1,6 @@
-import React, { FC, CSSProperties, ReactNode } from 'react'
-import { isString, isNumber, isFunction, isBoolean } from 'util'
-import { getSVG, isEvent } from '../../svgs/svgBadge'
-import { EMJS } from '../../shared/emojis'
-import { NativeTypeRow, NativeTypeDescription } from './nativeTypeRow'
-import { type } from 'os'
-import { INLINE_FLEX, FLEX } from '../../shared/styles'
+import React, { FC, CSSProperties } from 'react'
+import { NativeTypeRow } from './nativeTypeRow'
+import { FLEX } from '../../shared/styles'
 
 const KEY_STYLE: CSSProperties = {
   marginLeft: 2,
@@ -17,7 +13,7 @@ const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: -4 }
 export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth: number }) => renderPropertyOfObjectOrArray(props.objectKey, props.value)
 
 export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
-  let { ml = 6, color = '#000' } = props
+  let { ml = 6 } = props
 
   return <span style={{ marginLeft: ml, color: props.color }}>{props.children}</span>
 }

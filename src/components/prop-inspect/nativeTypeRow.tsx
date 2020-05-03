@@ -86,13 +86,15 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
     let [expend, setExpend] = useState(true)
     let [level, setLevel] = useState(deepLevel)
     return (
-      <article
-        style={{ ...INLINE_BLOCK }}
-        onClick={() => {
-          // setExpend(!expend)
-        }}
-      >
-        <span>{SYMBOLS.downPointingTriangle}</span>
+      <article style={{ ...INLINE_BLOCK }}>
+        <span
+          onClick={e => {
+            console.log(arrValue)
+            setExpend(!expend)
+          }}
+        >
+          {SYMBOLS.downPointingTriangle}
+        </span>
         <span style={ITALIC}>({arrValue.length})</span>
         <CSpan ml={10}>[</CSpan>
         {arrValue.map((val, i) => {
