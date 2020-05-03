@@ -2,11 +2,12 @@ import { ReactNode, useState } from 'react'
 import { getSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
-import { CSpan } from './colorful'
+import { CSpan, renderPropertyOfObjectOrArray } from './colorful'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, isArrowFunction, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
+import { shorten } from '../../util/stringformat'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
@@ -59,13 +60,17 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
     return getSVG(this.value)(this.size)
   }
   getRegularBody(prefix: ReactNode = <></>, affix: ReactNode = <></>) {
-    if (getType(this.value) === 'symbol') {   
-      this.value = this.value.toString()  //symbol has method toString intrinsically but 'undefined & null' doesn't
+    let displayValue: string = this.value
+    if (getType(this.value) === 'symbol') {
+      displayValue = this.value.toString() //symbol has method toString intrinsically but 'undefined & null' doesn't
+    }
+    if (getType(this.value) === 'function' || getType(this.value) === 'event') {
+      displayValue = shorten(this.value + '', 100)
     }
     return (
       <CSpan color={this.textTextColor}>
         {prefix}
-        {this.value + ''}
+        {displayValue + ''}
         {affix}
       </CSpan>
     )
@@ -116,9 +121,15 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
             </span>
           )
         })}
+        <CSpan>]</CSpan>
 
-        <CSpan color="gray">]</CSpan>
-        {expend && <article>12312312312</article>}
+        {expend && (
+          <div>
+            {arrValue.map((p, index) => {
+              return <div key={getUid()}>{renderPropertyOfObjectOrArray(index.toString(), p)}</div>
+            })}
+          </div>
+        )}
       </article>
     )
   }

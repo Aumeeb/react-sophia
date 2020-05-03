@@ -11,7 +11,7 @@ const KEY_STYLE: CSSProperties = {
 }
 const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: -4 }
 
-export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth: number }) => renderValueOfState2(props.objectKey, props.value)
+export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth: number }) => renderPropertyOfObjectOrArray(props.objectKey, props.value)
 
 export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
   let { ml = 6, color = '#000' } = props
@@ -19,7 +19,8 @@ export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
   return <span style={{ marginLeft: ml, color: props.color }}>{props.children}</span>
 }
 
-function renderValueOfState2(objectKey: string, value: any): JSX.Element {
+/** this function will be rendered the each property of an object or an item of an Array */
+export function renderPropertyOfObjectOrArray(objectKey: string, value: any): JSX.Element {
   const typeDesc = new NativeTypeRow(value).getNativeTypeDescription()
 
   return (
