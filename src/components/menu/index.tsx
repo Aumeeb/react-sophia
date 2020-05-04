@@ -23,10 +23,6 @@ const _Menu: FC<MenuProps> = props => {
   })
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
-
-  // useEffect(() => {}, [os.get(curCallee)])
-  
-
   return (
     <div
       className={throb ? 'menu-icon-beat-up' : ''}

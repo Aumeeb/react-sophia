@@ -1,6 +1,6 @@
 import React, { FC, CSSProperties, useEffect } from 'react'
 import { useObject } from '../../hooks/useObject'
-import { getHeight, getWidth } from '../../util/browser'
+import { getWidth } from '../../util/browser'
 
 export const testdata = [
   1,
@@ -10,22 +10,10 @@ export const testdata = [
   void 0,
   null,
   () => {},
-  function () {},
+  function (a: any, b: any) {
+    console.log(a + b)
+  },
   Symbol('1'),
-  [
-    1,
-    2,
-    3,
-    [
-      4,
-      5,
-      [
-        () => {
-          console.log(123)
-        },
-      ],
-    ],
-  ],
   {},
   { name: 2 },
 ]
@@ -49,7 +37,6 @@ const STYLES: CSSProperties = {
 const _Draggable: FC<DraggableProps> = props => {
   const { object, updateObject } = useObject(
     {
-      React,
       arr: testdata,
       pressed: false,
       pressedX: 0,
@@ -65,7 +52,7 @@ const _Draggable: FC<DraggableProps> = props => {
     },
     { supervise: false, forceCleanUp: false }
   )
-  const { position = { x: 0, y: 20 } } = props
+  const { position = { x: 500, y: 20 } } = props //set hatch place
   useEffect(() => {
     // updateObject({
     //   x: getWidth() - position.x,
