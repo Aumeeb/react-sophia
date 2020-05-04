@@ -1,10 +1,7 @@
 import React, { FC, CSSProperties, useEffect } from 'react'
-
-import { BrowserPropsProvider } from '../../shared/window-context'
 import { useObject } from '../../hooks/useObject'
 import { getHeight, getWidth } from '../../util/browser'
-// import { throttle } from 'lodash'
-// console.log([1,2,3,{name:5},{name:5,age:2,xsl:2421412412412412412142}]);
+
 export const testdata = [
   1,
   '2',
@@ -45,13 +42,14 @@ export interface DraggableProps {
   onMouseUp?: () => void
 }
 const STYLES: CSSProperties = {
-  position: 'absolute',
+  position: 'fixed',
   zIndex: 100,
 }
 
 const _Draggable: FC<DraggableProps> = props => {
   const { object, updateObject } = useObject(
     {
+      React,
       arr: testdata,
       pressed: false,
       pressedX: 0,
@@ -63,15 +61,19 @@ const _Draggable: FC<DraggableProps> = props => {
       alert() {
         alert(2)
       },
-      obj: { name: 5, age: 6 },
+      obj: { name: 5, age: 6, typescript: testdata },
     },
     { supervise: false, forceCleanUp: false }
   )
-  const { position = { x: 800, y: 1200 } } = props
+  const { position = { x: 0, y: 20 } } = props
   useEffect(() => {
+    // updateObject({
+    //   x: getWidth() - position.x,
+    //   y: getHeight() - position.y,
+    // })
     updateObject({
-      x: getWidth() - position.x,
-      y: getHeight() - position.y,
+      x: position.x,
+      y: position.y,
     })
   }, [])
 
@@ -106,6 +108,7 @@ const _Draggable: FC<DraggableProps> = props => {
       onMouseOut={mouseUp}
       onDoubleClick={e => void e.preventDefault()}
       style={{
+        maxWidth: getWidth() / 2 + 'px',
         ...STYLES,
         width: props.width,
         height: props.height,
@@ -120,9 +123,5 @@ const _Draggable: FC<DraggableProps> = props => {
 }
 
 export const Draggable: FC<DraggableProps> = props => {
-  return (
-    // <BrowserPropsProvider>
-    <_Draggable {...props} />
-    // </BrowserPropsProvider>
-  )
+  return <_Draggable {...props} />
 }

@@ -25,7 +25,7 @@ const _Menu: FC<MenuProps> = props => {
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
 
   // useEffect(() => {}, [os.get(curCallee)])
-  console.log(1)
+  
 
   return (
     <div

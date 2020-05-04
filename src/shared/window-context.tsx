@@ -25,8 +25,6 @@ export const BrowserPropsProvider: FC<WindowProps> = props => {
 
   useEffect(() => {
     window.addEventListener('resize', e => {
-      console.log(1)
-
       syncBrwoserWindowInfo({})
     })
     window.addEventListener('load', () => {

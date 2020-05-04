@@ -1,4 +1,4 @@
-import { isString, isNumber, isFunction } from 'util'
+import { isString, isNumber, isFunction, isObject, isArray } from 'util'
 import * as SVG from '.'
 export const path: string = '../assets/'
 export enum SVGType {
@@ -42,6 +42,10 @@ export function getSVG(value: any) {
   }
   if (isFunction(value)) {
     return SVG.Function
+  }
+  if (isObject(value)) {
+    if (isArray(value)) return SVG.Array
+    return SVG.Object
   }
   return SVG.Field
 }

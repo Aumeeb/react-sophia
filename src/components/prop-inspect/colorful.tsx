@@ -1,5 +1,5 @@
 import React, { FC, CSSProperties } from 'react'
-import { NativeTypeRow } from './nativeTypeRow'
+import { DrawNativeTypeRow } from './nativeTypeRow'
 import { FLEX } from '../../shared/styles'
 
 const KEY_STYLE: CSSProperties = {
@@ -20,7 +20,7 @@ export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
 
 /** this function will be rendered the each property of an object or an item of an Array */
 export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any }): JSX.Element => {
-  const typeDesc = new NativeTypeRow(props.value).getNativeTypeDescription()
+  const typeDesc = new DrawNativeTypeRow(props.value).getNativeTypeDescription()
 
   return (
     <div style={{ marginTop: 10, ...FLEX }}>
@@ -33,3 +33,4 @@ export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value:
     </div>
   )
 }
+ 

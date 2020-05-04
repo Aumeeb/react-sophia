@@ -33,3 +33,13 @@
     transform: rotate(360deg);
   }
 }
+.cc {
+  width: 20px;
+  height: 60px;
+  background: red;
+  position: fixed;
+  left: 0;
+  top: 20px;
+  display: inline-block;
+  border-radius: 0px 10px 10px 0px;
+}

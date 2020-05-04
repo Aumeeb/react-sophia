@@ -21,7 +21,7 @@ const TYPE_COLORS = {
   symbol: '#ff7990',
 }
 
-export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
+export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
   private size: SVGBlockSize = {
     width: 16,
     height: 16,
@@ -81,12 +81,12 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
         >
           {expend ? EMJS.expend : SYMBOLS.rightPointingTriangle}
         </span>
-        <span style={ITALIC}>({arrValue.length})</span>
+        <span style={ITALIC}> ({arrValue.length})</span>
         <CSpan ml={10}>[</CSpan>
         {arrValue.map((val, i) => {
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
-            matchedBody = new NativeTypeRow(val).getNativeTypeDescription()?.mainBody
+            matchedBody = new DrawNativeTypeRow(val).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {
             let funcValue = 'func'
@@ -96,7 +96,7 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
             matchedBody = <CSpan color={TYPE_COLORS.function}>{funcValue}</CSpan>
           }
 
-          if (getType(val) === 'obejct') {
+          if (getType(val) === 'object') {
             matchedBody = this.getShrunkenObjectBody()
           }
           if (getType(val) === 'array') {
@@ -125,8 +125,66 @@ export class NativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeT
       </article>
     )
   }
-  getArrayVertiaclBody(): ReactNode {
-    return <CSpan color={this.textTextColor}>{this.value + ''}</CSpan>
+
+  getObjectBody(obj: { [key: string]: any }): ReactNode {
+    const [expend, setExpend] = useState(false)
+    const objKeys: string[] = Object.keys(obj)
+    console.log(obj)
+
+    return (
+      <article style={{ ...INLINE_BLOCK }}>
+        <span
+          onClick={e => {
+            e.stopPropagation()
+            setExpend(!expend)
+          }}
+        >
+          {expend ? EMJS.expend : SYMBOLS.rightPointingTriangle}
+        </span>
+        <span style={ITALIC}> ({objKeys.length})</span>
+        <CSpan ml={10}>{'{ '}</CSpan>
+        {objKeys.map((fieldName, i) => {
+          let val: any = obj[fieldName]
+          let matchedBody: ReactNode
+          if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
+            matchedBody = new DrawNativeTypeRow(val).getNativeTypeDescription()?.mainBody
+          }
+          if (getType(val) === 'function') {
+            let funcValue = 'func'
+            if (isArrowFunction(val)) {
+              funcValue = 'λ-func'
+            }
+            matchedBody = <CSpan color={TYPE_COLORS.function}>{funcValue}</CSpan>
+          }
+
+          if (getType(val) === 'object') {
+            matchedBody = this.getShrunkenObjectBody()
+          }
+          if (getType(val) === 'array') {
+            matchedBody = this.getShrunkenArrayBody(val)
+          }
+          return (
+            <span key={getUid()}>
+              {`${fieldName} :`} {matchedBody}
+              {i < objKeys.length - 1 ? this.getSeparatorNode(', ') : ''}
+            </span>
+          )
+        })}
+        <CSpan>{'}'}</CSpan>
+
+        {expend && (
+          <div>
+            {objKeys.map((k, i) => {
+              return (
+                <div key={getUid()}>
+                  <RenderPropertyOfObjectOrArray objectKey={k} value={obj[k]} />
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </article>
+    )
   }
   getSeparatorNode(separator: ReactNode = <></>): ReactNode {
     return (
@@ -141,7 +199,7 @@ interface getNativeTypeDescription {
   textTextColor: string
 }
 
-const StringType = class extends NativeTypeRow implements getNativeTypeDescription {
+const StringType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.string
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -155,7 +213,7 @@ const StringType = class extends NativeTypeRow implements getNativeTypeDescripti
     }
   }
 }
-const NumberType = class extends NativeTypeRow implements getNativeTypeDescription {
+const NumberType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.number
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -169,7 +227,7 @@ const NumberType = class extends NativeTypeRow implements getNativeTypeDescripti
     }
   }
 }
-const EventType = class extends NativeTypeRow implements getNativeTypeDescription {
+const EventType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.event
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -183,7 +241,7 @@ const EventType = class extends NativeTypeRow implements getNativeTypeDescriptio
     }
   }
 }
-const FunctionType = class extends NativeTypeRow implements getNativeTypeDescription {
+const FunctionType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.function
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -197,7 +255,7 @@ const FunctionType = class extends NativeTypeRow implements getNativeTypeDescrip
     }
   }
 }
-const BooleanType = class extends NativeTypeRow implements getNativeTypeDescription {
+const BooleanType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.boolean
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -211,7 +269,7 @@ const BooleanType = class extends NativeTypeRow implements getNativeTypeDescript
     }
   }
 }
-const UndefinedType = class extends NativeTypeRow implements getNativeTypeDescription {
+const UndefinedType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.null_undefined
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -225,7 +283,7 @@ const UndefinedType = class extends NativeTypeRow implements getNativeTypeDescri
     }
   }
 }
-const NullType = class extends NativeTypeRow implements getNativeTypeDescription {
+const NullType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.null_undefined
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -239,21 +297,21 @@ const NullType = class extends NativeTypeRow implements getNativeTypeDescription
     }
   }
 }
-const ObjectType = class extends NativeTypeRow implements getNativeTypeDescription {
+const ObjectType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.object
   getNativeTypeDescription(): NativeTypeDescription {
     return {
       typeRange: ['object'],
       typeTextColor: this.textTextColor,
       badges: [],
-      mainBody: this.getRegularBody(),
+      mainBody: this.getObjectBody(this.value),
       self: this,
       beforeNode: <></>,
       afterNode: <></>,
     }
   }
 }
-const SymbolType = class extends NativeTypeRow implements getNativeTypeDescription {
+const SymbolType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.symbol
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -267,7 +325,7 @@ const SymbolType = class extends NativeTypeRow implements getNativeTypeDescripti
     }
   }
 }
-const ArrayType = class extends NativeTypeRow implements getNativeTypeDescription {
+const ArrayType = class extends DrawNativeTypeRow implements getNativeTypeDescription {
   textTextColor = TYPE_COLORS.array
   getNativeTypeDescription(): NativeTypeDescription {
     return {
@@ -294,5 +352,5 @@ export interface NativeTypeDescription {
   mainBody?: ReactNode
   beforeNode?: ReactNode
   afterNode?: ReactNode
-  self: NativeTypeRow
+  self: DrawNativeTypeRow
 }

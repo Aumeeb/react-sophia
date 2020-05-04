@@ -31,6 +31,8 @@
 }
 
 .menu-panel-info {
+  overflow: scroll;
+  height: 100%;
   padding: 16px !important;
   margin-top: 6px;
   background-color: #f2f2f2;

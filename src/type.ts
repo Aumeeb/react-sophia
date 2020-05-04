@@ -38,7 +38,7 @@ export enum SVGType {
     Namespace,
     Event,
 }
-export type ExistNativeType = 'symbol' | 'event' | 'function' | 'string' | 'number' | 'boolean' | 'obejct' | 'undefined' | 'null' | 'array' | 'object'
+export type ExistNativeType = 'symbol' | 'event' | 'function' | 'string' | 'number' | 'boolean' | 'object' | 'undefined' | 'null' | 'array' | 'object'
 export function getType(value: unknown): ExistNativeType {
     if (isBoolean(value)) return 'boolean'
     if (isString(value)) return 'string'
@@ -48,7 +48,7 @@ export function getType(value: unknown): ExistNativeType {
     if (isUndefined(value)) return 'undefined'
     if (isArray(value)) return 'array'
     if (isNull(value)) return 'null'
-    if (isObject(value)) return 'obejct'
+    if (isObject(value)) return 'object'
     if (isSymbol(value)) return "symbol"
     return 'undefined'
 }
