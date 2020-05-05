@@ -4,8 +4,8 @@ import { useObject } from '../hooks/useObject'
 
 const _: FC = () => {
   // const { getBooks, getTable, searchBook, name } = useContext(BookContext)
-  const { object } = useObject(
-    { ...useContext(BookContext), callee: 'testBookPage' },
+  const { object, updateObject } = useObject(
+    { ...useContext(BookContext), callee: 'testBookPage', firstName: '', lastName: '', age: '' },
     {
       supervise: true,
     }
@@ -13,6 +13,17 @@ const _: FC = () => {
   return (
     <>
       <button>{object.name}</button>
+      <div>
+        <div>
+          Your first name : <input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
+        </div>
+        <div>
+          Your last name : <input type="text" value={object.lastName} onChange={e => updateObject('lastName', e.target.value)} />
+        </div>
+        <div>
+          Your age is : <input type="text" value={object.age} onChange={e => updateObject('age', e.target.value)} />
+        </div>
+      </div>
     </>
   )
 }

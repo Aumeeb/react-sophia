@@ -1,4 +1,4 @@
-import React, { FC, CSSProperties, useEffect } from 'react'
+import React, { FC, CSSProperties, useEffect, DOMAttributes } from 'react'
 import { DrawNativeTypeRow } from './native-type-factory'
 import { FLEX } from '../../shared/styles'
 import { analyzeFuncParams } from '../../util/func-analysis'
@@ -16,10 +16,14 @@ const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, l
 
 export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} />
 
-export const CSpan: FC<{ color?: string; ml?: string | number }> = props => {
+export const CSpan: FC<{  color?: string; ml?: string | number; className?: string; style?: React.CSSProperties } & DOMAttributes<HTMLSpanElement>> = props => {
   let { ml = 6 } = props
 
-  return <span style={{ marginLeft: ml, color: props.color }}>{props.children}</span>
+  return (
+    <span {...props} style={{ marginLeft: ml, color: props.color, ...props.style }}>
+      {props.children}
+    </span>
+  )
 }
 
 /** this function will be rendered the each property of an object or an item of an Array */

@@ -5,7 +5,7 @@ import React from 'react'
 import { CSpan, RenderPropertyOfObjectOrArray, RenderFuncInParameters } from './type-decorator'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, ExistNativeType } from '../../type'
-import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
+import { ITALIC, INLINE_BLOCK, StringTypeStyle } from '../../shared/styles'
 import { getUid } from '../../util/random'
 import { shorten } from '../../util/string-format'
 import { isArrowFunction } from '../../util/func-analysis'
@@ -63,6 +63,22 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
         {affix}
       </CSpan>
     )
+  }
+  getStringBody(prefix: ReactNode = <></>, affix: ReactNode = <></>) {
+    const [hovered, setHovered] = useState(false)
+    let displayValue: string = this.value
+
+    return (
+      <CSpan onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)} color={this.textTextColor} style={hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}>
+        {prefix}
+        {displayValue + ''}
+        {affix}
+      </CSpan>
+    )
+    // border: 1px solid #5f5f5f;
+    // border-radius: 2px;
+    // border-style: dashed;
+    // padding: 2px;
   }
   getShrunkenObjectBody() {
     return <CSpan color={TYPE_COLORS.object}>{`{...}`}</CSpan>
@@ -226,7 +242,7 @@ const StringType = class extends DrawNativeTypeRow implements getNativeTypeDescr
       typeRange: ['string'],
       typeTextColor: this.textTextColor,
       badges: [],
-      mainBody: this.getRegularBody(`"`, `"`),
+      mainBody: this.getStringBody(`"`, `"`),
       self: this,
       beforeNode: <></>,
       afterNode: <></>,
