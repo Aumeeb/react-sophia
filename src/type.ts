@@ -56,12 +56,3 @@ export function getType(value: unknown): ExistNativeType {
     return 'undefined'
 }
 
-export function isArrowFunction(fn: Function) {
-    let isNonArrowFnRegex = /^\s*function/;
-    var isArrowFnWithParensRegex = /^\([^)]*\) *=>/;
-    var isArrowFnWithoutParensRegex = /^[^=]*=>/;
-    var fnStr = Function.prototype.toString.call(fn);
-    return fnStr.length > 0 &&
-        !isNonArrowFnRegex.test(fnStr) &&
-        (isArrowFnWithParensRegex.test(fnStr) || isArrowFnWithoutParensRegex.test(fnStr));
-};

@@ -4,11 +4,11 @@ import { SVGBlockSize } from '../../svgs'
 import React from 'react'
 import { CSpan, RenderPropertyOfObjectOrArray } from './colorful'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
-import { getType, isArrowFunction, ExistNativeType } from '../../type'
+import { getType, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
 import { shorten } from '../../util/string-format'
-import { analyzeFuncParams } from '../../util/func-analysis'
+import { analyzeFuncParams, isArrowFunction } from '../../util/func-analysis'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
@@ -85,7 +85,7 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
           arugmentList.map(arg => {
             return (
               <div key={getUid()} style={{ marginTop: 10 }}>
-                {getExtraSVG('wrench')({ width: 16 })} {arg} :
+                {getExtraSVG('wrench')({ width: 16 })} {arg} : <input type="text" />
               </div>
             )
           })}

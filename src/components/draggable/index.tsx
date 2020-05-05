@@ -14,6 +14,22 @@ export const testdata = [
   function (a: any, b: any) {
     console.log(a + b)
   },
+  function (c: any, e: any, f: any) {
+    console.log(c + e + f)
+  },
+  (name: any, c: any) => {
+    return name
+  },
+  (cb: any) => {
+    return cb
+  },
+
+  function (z: any) {},
+  {
+    c: (name: any) => {
+      return name
+    },
+  },
   Symbol('1'),
   {},
   { name: 2 },
