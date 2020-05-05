@@ -3,6 +3,7 @@ import logo from './logo.svg'
 import { Sophia } from './sophia'
 import './App.css'
 import { randomColor } from './util/random'
+import { Book } from './test/bookList'
 
 function Recurisve(props: { deep: number; left: number; children?: any }) {
   let [s, ss] = useState(true)
@@ -74,6 +75,7 @@ function App() {
           <div onClick={handleClick}>33333</div>
         </div>
       </div> */}
+      <Book/>
     </div>
   )
 }
