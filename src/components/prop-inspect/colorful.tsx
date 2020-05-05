@@ -8,7 +8,7 @@ const KEY_STYLE: CSSProperties = {
   position: 'relative',
   top: -5,
 }
-const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, height: 20, lineHeight: '20px' }
+const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, lineHeight: '20px' }
 
 export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} />
 
@@ -32,4 +32,9 @@ export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value:
       </article>
     </div>
   )
+}
+export const RenderInParameters = (props: { argName: string }): JSX.Element => {
+  return <div>
+    
+  </div>
 }

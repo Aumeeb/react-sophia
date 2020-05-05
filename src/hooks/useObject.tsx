@@ -15,7 +15,6 @@ export function useObject<T extends { [key: string]: any }>(
 ) {
   const [object, setO] = useState<T>(initO)
   if (option.supervise) {
-    console.log(option)
     os.collectObject(object.callee, object)
   }
   /**

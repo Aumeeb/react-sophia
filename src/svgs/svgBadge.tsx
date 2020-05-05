@@ -13,6 +13,7 @@ export enum SVGType {
   Namespace = 'namespace.svg',
   Event = 'event.svg',
 }
+type SVGIconName = 'wrench'
 /** SVG  width&height px*/
 const side = '32'
 export function isConst(str: string) {
@@ -48,4 +49,9 @@ export function getSVG(value: any) {
     return SVG.Object
   }
   return SVG.Field
+}
+
+export function getExtraSVG(value: SVGIconName) {
+  if ((value as SVGIconName) === 'wrench') return SVG.Wrench
+  return SVG.Default
 }

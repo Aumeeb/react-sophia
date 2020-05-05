@@ -9,6 +9,7 @@ export const testdata = [
   undefined,
   void 0,
   null,
+  [1, 2, 3, [4]],
   () => {},
   function (a: any, b: any) {
     console.log(a + b)
@@ -51,7 +52,7 @@ const _Draggable: FC<DraggableProps> = props => {
       },
       obj: { name: 5, age: 6, typescript: testdata },
     },
-    { supervise: false, forceCleanUp: false }
+    { supervise: true, forceCleanUp: false }
   )
   const { position = { x: 500, y: 20 } } = props //set hatch place
   useEffect(() => {

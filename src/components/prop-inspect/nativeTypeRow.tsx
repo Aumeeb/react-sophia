@@ -1,5 +1,5 @@
 import { ReactNode, useState, useEffect } from 'react'
-import { getSVG } from '../../svgs/svgBadge'
+import { getSVG, getExtraSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
 import { CSpan, RenderPropertyOfObjectOrArray } from './colorful'
@@ -8,6 +8,7 @@ import { getType, isArrowFunction, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
 import { shorten } from '../../util/string-format'
+import { analyzeFuncParams } from '../../util/func-analysis'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
@@ -23,6 +24,7 @@ const TYPE_COLORS = {
 
 export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
   private size: SVGBlockSize = {
+    //set svg icon size
     width: 20,
     height: 20,
   }
@@ -51,7 +53,7 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
       displayValue = this.value.toString() //symbol has method toString intrinsically but 'undefined & null' doesn't
     }
     if (getType(this.value) === 'function' || getType(this.value) === 'event') {
-      displayValue = shorten(this.value + '', 100)
+      displayValue = shorten(this.value + '', 66)
     }
     return (
       <CSpan color={this.textTextColor}>
@@ -67,8 +69,33 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
   getShrunkenArrayBody(arr: any[]) {
     return <CSpan color={TYPE_COLORS.array}>{`Array (${arr.length})`}</CSpan>
   }
+  getFunctionBody() {
+    const func: Function = this.value
+    const arugmentList = analyzeFuncParams(func)
+    return (
+      <article style={{ ...INLINE_BLOCK }}>
+        <div>
+          <span onClick={this.value}>{EMJS.run}</span>{' '}
+          <CSpan ml={0} color={'gray'}>
+            {shorten(this.value + '', 66)}
+          </CSpan>
+        </div>
+
+        {arugmentList.length > 0 &&
+          arugmentList.map(arg => {
+            return (
+              <div key={getUid()} style={{ marginTop: 10 }}>
+                {getExtraSVG('wrench')({ width: 16 })} {arg} :
+              </div>
+            )
+          })}
+      </article>
+    )
+  }
+
   /** for array */
-  getArrayBody(arrValue: any[], deepLevel: number = 0): ReactNode {
+  getArrayBody(deepLevel: number = 0): ReactNode {
+    const arrValue: any[] = this.value
     const [expend, setExpend] = useState(false)
 
     return (
@@ -248,9 +275,9 @@ const FunctionType = class extends DrawNativeTypeRow implements getNativeTypeDes
       typeRange: ['function'],
       typeTextColor: this.textTextColor,
       badges: [],
-      mainBody: this.getRegularBody(),
+      mainBody: this.getFunctionBody(),
       self: this,
-      beforeNode: <span onClick={this.value}>{EMJS.run}</span>,
+      beforeNode: <></>,
       afterNode: <></>,
     }
   }
@@ -332,7 +359,7 @@ const ArrayType = class extends DrawNativeTypeRow implements getNativeTypeDescri
       typeRange: ['number'],
       typeTextColor: this.textTextColor,
       badges: [],
-      mainBody: this.getArrayBody(this.value),
+      mainBody: this.getArrayBody(),
       self: this,
       beforeNode: <></>,
       afterNode: <></>,
