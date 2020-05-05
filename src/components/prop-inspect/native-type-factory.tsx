@@ -2,13 +2,14 @@ import { ReactNode, useState, useEffect } from 'react'
 import { getSVG, getExtraSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
-import { CSpan, RenderPropertyOfObjectOrArray } from './colorful'
+import { CSpan, RenderPropertyOfObjectOrArray, RenderFuncInParameters } from './type-decorator'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
 import { shorten } from '../../util/string-format'
-import { analyzeFuncParams, isArrowFunction } from '../../util/func-analysis'
+import { isArrowFunction } from '../../util/func-analysis'
+import { useUpdate } from '../../hooks/useUpdate'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
@@ -71,24 +72,17 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
   }
   getFunctionBody() {
     const func: Function = this.value
-    const arugmentList = analyzeFuncParams(func)
+    const { update, setUpdate } = useUpdate()
     return (
       <article style={{ ...INLINE_BLOCK }}>
         <div>
-          <span onClick={this.value}>{EMJS.run}</span>{' '}
+          <span onClick={setUpdate}>{EMJS.run}</span>{' '}
           <CSpan ml={0} color={'gray'}>
             {shorten(this.value + '', 66)}
           </CSpan>
         </div>
 
-        {arugmentList.length > 0 &&
-          arugmentList.map(arg => {
-            return (
-              <div key={getUid()} style={{ marginTop: 10 }}>
-                {getExtraSVG('wrench')({ width: 16 })} {arg} : <input type="text" />
-              </div>
-            )
-          })}
+        <RenderFuncInParameters value={func} shouldExecute={update} />
       </article>
     )
   }
@@ -156,7 +150,6 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
   getObjectBody(obj: { [key: string]: any }): ReactNode {
     const [expend, setExpend] = useState(false)
     const objKeys: string[] = Object.keys(obj)
-    console.log(obj)
 
     return (
       <article style={{ ...INLINE_BLOCK }}>
