@@ -23,8 +23,8 @@ const TYPE_COLORS = {
 
 export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNativeTypeDescription'> {
   private size: SVGBlockSize = {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
   }
   constructor(protected value: any) {}
   textTextColor = ''

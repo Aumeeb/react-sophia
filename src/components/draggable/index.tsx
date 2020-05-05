@@ -18,6 +18,7 @@ export const testdata = [
   { name: 2 },
 ]
 export interface DraggableProps {
+  className?: string
   position?: {
     x: number
     y: number
@@ -89,6 +90,7 @@ const _Draggable: FC<DraggableProps> = props => {
 
   return (
     <div
+      className={props.className}
       onMouseDown={mouseDown}
       onMouseUp={mouseUp}
       onMouseMove={mouseMove}

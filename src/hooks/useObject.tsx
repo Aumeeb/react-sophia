@@ -14,6 +14,10 @@ export function useObject<T extends { [key: string]: any }>(
   }
 ) {
   const [object, setO] = useState<T>(initO)
+  if (option.supervise) {
+    console.log(option)
+    os.collectObject(object.callee, object)
+  }
   /**
    *
    * @param obj 举个🌰  {name:"lee",age:10,gender:true}
@@ -34,9 +38,6 @@ export function useObject<T extends { [key: string]: any }>(
 
       if (option.forceCleanUp) console.clear()
 
-      if (option.supervise) console.log(shallowObject, option.forceCleanUp)
-
-      os.collectObject(object.callee, object)
       setO({ ...shallowObject })
     } catch (error) {}
   }
