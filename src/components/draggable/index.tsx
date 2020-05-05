@@ -3,6 +3,7 @@ import { useObject } from '../../hooks/useObject'
 import { getWidth } from '../../util/browser'
 
 export const testdata = [
+  React,
   1,
   '2',
   true,
@@ -14,16 +15,10 @@ export const testdata = [
   function (a: any, b: any) {
     console.log(a + b)
   },
-  function (c: any, e: any, f: any) {
-    console.log(c + e + f)
+  (firstName: any, lastName: any) => {
+    let fullName = firstName + lastName
+    console.log(fullName)
   },
-  (name: any, c: any) => {
-    return name
-  },
-  (cb: any) => {
-    return cb
-  },
-
   function (z: any) {},
   {
     c: (name: any) => {
