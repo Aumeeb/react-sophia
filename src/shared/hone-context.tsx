@@ -7,11 +7,31 @@ interface FCC {
 type HomeContextType = {
   name: string
 } & typeof api
-
+const Books = [
+  {
+    name: '直呼',
+    id: 1,
+  },
+  {
+    name: '是的',
+    id: 2,
+  },
+  {
+    name: '个是',
+    id: 3,
+  },
+]
 const api = {
-  getTable() {},
-  getBooks() {},
-  searchBook() {},
+  getTable() {
+    return Promise.resolve<{ name: string; age: number }[]>([{ name: 'lee', age: 5 }])
+  },
+  getBooks() {
+    return Promise.resolve(Books)
+  },
+  searchBook(id: number) {
+    let found = Books.filter(p => (p.id = id))
+    return Promise.resolve(found)
+  },
 }
 
 const HomeContext = React.createContext<Partial<HomeContextType>>({})

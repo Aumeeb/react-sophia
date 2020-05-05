@@ -19,6 +19,7 @@ export type CompositionOfAPIFunction<O>= {
     [k in keyof O]?: <T>(data?: T) => Promise<T>;
 }
 export type PickValuesOfObjectArray<T extends [], K extends string> = T[number][K]
+type ExtractObjectType<T> ={[k in keyof T]:  T[k]}
 type PromiseType<T> = T extends Promise<infer U> ? U : never
 type GetTruthyKeys<T extends {}> = {
     [key in keyof T]: T[key] extends false ? never : key
