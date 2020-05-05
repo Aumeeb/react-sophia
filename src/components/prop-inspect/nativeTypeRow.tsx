@@ -7,7 +7,7 @@ import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, isArrowFunction, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK } from '../../shared/styles'
 import { getUid } from '../../util/random'
-import { shorten } from '../../util/stringformat'
+import { shorten } from '../../util/string-format'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
