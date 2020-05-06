@@ -9,9 +9,8 @@ export const SYMBOLS = {
     downPointingTriangle: '▼',
 }
 export const MENU_ROUTER = [
-    { name: '📜', nav: 'stateReview' },
-    { name: '⚙️', nav: 'settings' },
-    { name: '🗑️', nav: 'Wastebasket' },
-    { name: '🌌', nav: 'TimeMachine' },
-  ] as const
-  
+    { nav: '📜', name: 'stateReview' },
+    { nav: '⚙️', name: 'settings' },
+    { nav: '🗑️', name: 'Wastebasket' },
+    { nav: '🌌', name: 'TimeMachine' },
+] as const

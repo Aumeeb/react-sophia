@@ -13,3 +13,4 @@ export const Sophia: FC = () => {
     </>
   )
 }
+ 

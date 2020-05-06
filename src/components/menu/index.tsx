@@ -19,11 +19,12 @@ const _Menu: FC<MenuProps> = props => {
     t: any
     source: any
   }>({
-    nav: 'Wastebasket',
+    nav: '📜',
     callee: 'menu',
     t: testdata,
     source: os.currentScene.object ?? {},
   })
+  const [currentDataSourceName, setcurrentDataSourceName] = useState<string | null>(null)
   useEffect(() => {
     os.addUseStateReturnValues({ act: { o: object, setObj: updateObject }, tag: '__menu__' })
   }, [])
@@ -42,9 +43,10 @@ const _Menu: FC<MenuProps> = props => {
       <header>
         <div className="menu-panel-wrapper" style={{ width: eachIconWidth }}>
           <span>{emojiIcon}</span>
+          {/* render menus icon emoji */}
           {props.menuName.map((item, index) => (
             <span key={getUid()} className="menu-panel-item-span " onClick={() => updateObject('nav', item.nav)}>
-              {item.name}
+              {item.nav.toString()}
             </span>
           ))}
         </div>
@@ -64,9 +66,9 @@ const _Menu: FC<MenuProps> = props => {
   }
 
   function renderContentByClickedMenu() {
-    if (object.nav === 'Wastebasket') return
+    if (object.nav === '🗑️') return
 
-    if (object.nav === 'stateReview') {
+    if (object.nav === '📜') {
       return (
         <>
           <div className="menu-panel-info">
