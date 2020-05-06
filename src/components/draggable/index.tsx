@@ -63,7 +63,7 @@ const _Draggable: FC<DraggableProps> = props => {
       },
       obj: { name: 5, age: 6, typescript: testdata },
     },
-    { supervise: true, forceCleanUp: false }
+    { supervise: true }
   )
   const { position = { x: 500, y: 20 } } = props //set hatch place
   useEffect(() => {

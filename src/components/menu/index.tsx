@@ -44,7 +44,7 @@ const _Menu: FC<MenuProps> = props => {
     </div>
   )
   function renderState() {
-    const curStateObject: any = os.get(curCallee) ?? {}
+    const curStateObject: any = os.get(curCallee)?.objectPool ?? {}
 
     return (
       <div style={{ marginTop: 16 }}>

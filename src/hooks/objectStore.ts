@@ -1,5 +1,13 @@
+import { Dispatch, SetStateAction } from "react"
+
+type StatePool<S> = {
+    objectPool: S,
+    setObjectPool: Dispatch<SetStateAction<S>>
+}
+
 class ObjectStore {
-    private pool: Map<string, {}> = new Map()
+    private readonly pool: Map<string, StatePool<any>> = new Map()
+
     /**To get count of the state objects. */
     get count() {
         return this.pool.size
@@ -13,16 +21,17 @@ class ObjectStore {
         return callees
     }
     /** automatically store the state object to this storage */
-    collectObject<T extends { [key: string]: any }>(key: string, value: T) {
+    collectObject<S>(key: string, value: StatePool<S>) {
         this.pool.set(key, value)
     }
     /** To getStateObject  */
     get(key: string) {
         return this.pool.get(key)
     }
-    syncUpdate<T>(setPropFunc: (o: T) => void) {
-        // setPropFunc(o)
-    }
+
+    // syncUpdate<T>(setPropFunc: (o: T) => void) {
+    //     // setPropFunc(o)
+    // }
 }
 export const os = new ObjectStore()
 

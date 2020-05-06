@@ -5,17 +5,13 @@ export function useObject<T extends { [key: string]: any }>(
   initO: T & { callee?: string },
   option: Partial<{
     supervise: boolean
-    readonly maxRecord: number
-    forceCleanUp: boolean
   }> = {
     supervise: false,
-    maxRecord: 3,
-    forceCleanUp: false,
   }
 ) {
   const [object, setO] = useState<T>(initO)
   if (option.supervise) {
-    os.collectObject(object.callee, object)
+    os.collectObject(object.callee, { objectPool: object, setObjectPool: setO })
   }
   /**
    *
@@ -34,8 +30,6 @@ export function useObject<T extends { [key: string]: any }>(
           shallowObject[prop] = key[prop]
         })
       } else shallowObject[key] = value
-
-      if (option.forceCleanUp) console.clear()
 
       setO({ ...shallowObject })
     } catch (error) {}

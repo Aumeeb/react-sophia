@@ -10,7 +10,7 @@ interface WindowProps {
 }
 export const browserWindowContext = React.createContext<WindowProps>({})
 export const BrowserPropsProvider: FC<WindowProps> = props => {
-  const { object, updateObject } = useObject<WindowProps>({ browserHeight: 0, browserWidth: 0, windowEv: null, callee: 'BrowserPropsProvider' }, { supervise: false, forceCleanUp: false })
+  const { object, updateObject } = useObject<WindowProps>({ browserHeight: 0, browserWidth: 0, windowEv: null, callee: 'BrowserPropsProvider' }, { supervise: false })
 
   function syncBrwoserWindowInfo({ me }: { me?: MouseEvent }) {
     let empty = object

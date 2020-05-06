@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from 'react'
+import { ReactNode, useState, useEffect, useRef } from 'react'
 import { getSVG, getExtraSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
@@ -10,6 +10,8 @@ import { getUid } from '../../util/random'
 import { shorten } from '../../util/string-format'
 import { isArrowFunction } from '../../util/func-analysis'
 import { useUpdate } from '../../hooks/useUpdate'
+import { useObject } from '../../hooks/useObject'
+import { KeyBoard } from '../../shared/keyboard'
 
 const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
@@ -65,15 +67,40 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
     )
   }
   getStringBody(prefix: ReactNode = <></>, affix: ReactNode = <></>) {
-    const [hovered, setHovered] = useState(false)
-    let displayValue: string = this.value
+    const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: this.value })
 
+    const _input = useRef<HTMLInputElement>(null)
+    let displayValue: string = this.value
+    useEffect(() => {
+      if (object.clicked) {
+        _input.current?.focus()
+      }
+    }, [object.clicked])
+    function modifyText(e: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement, MouseEvent>) {
+      recover()
+    }
     return (
-      <CSpan onMouseOver={() => setHovered(true)} onMouseOut={() => setHovered(false)} color={this.textTextColor} style={hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}>
-        {prefix}
-        {displayValue + ''}
-        {affix}
-      </CSpan>
+      <>
+        {!object.clicked && (
+          <CSpan onClick={() => updateObject('clicked', true)} onMouseOver={() => updateObject('hovered', true)} onMouseOut={() => updateObject('hovered', false)} color={this.textTextColor} style={object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}>
+            {prefix}
+            {displayValue + ''}
+            {affix}
+          </CSpan>
+        )}
+
+        {object.clicked && (
+          <input
+            ref={_input}
+            value={object.__sv__}
+            onBlur={modifyText}
+            onChange={e => updateObject('__sv__', e.target.value)}
+            onKeyDown={e => {
+              if (e.keyCode === KeyBoard.Enter) recover()
+            }}
+          />
+        )}
+      </>
     )
     // border: 1px solid #5f5f5f;
     // border-radius: 2px;

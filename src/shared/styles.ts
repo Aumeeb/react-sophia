@@ -25,6 +25,7 @@ export const StringTypeStyle = {
         borderStyle: 'dashed',
         borderColor: '#5f5f5f',
         borderRadius: 2,
+        cursor: "pointer",
         // transition: 'all .3s cubic-bezier(.78,.14,.15,.86)',
     },
     normal: {
