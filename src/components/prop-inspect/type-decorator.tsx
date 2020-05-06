@@ -69,6 +69,7 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
     </div>
   )
 }
+/** This function give you a ablitiy to edit string value which came from the  `datasource` perhaps it took much time to calculation */
 export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string }> = props => {
   const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
 
@@ -111,8 +112,4 @@ export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; val
       )}
     </>
   )
-  // border: 1px solid #5f5f5f;
-  // border-radius: 2px;
-  // border-style: dashed;
-  // padding: 2px;
 }

@@ -41,6 +41,7 @@ export function useObject<T extends { [key: string]: any }>(
    * Recover all the values of each property which you passed in at the `useObject` at the beginning.
    * @param omit Omit some of properties of those you wouldn't want to recover.
    */
+  function recover(): void
   function recover(omit?: (keyof T)[]): void
   function recover(omit?: (keyof T)[]): void {
     if (omit === undefined) {
