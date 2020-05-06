@@ -22,16 +22,16 @@ const Books = [
   },
 ]
 const api = {
-  getTable() {
-    return Promise.resolve<{ name: string; age: number }[]>([{ name: 'lee', age: 5 }])
-  },
-  getBooks() {
-    return Promise.resolve(Books)
-  },
-  searchBook(id: number) {
-    let found = Books.filter(p => (p.id = id))
-    return Promise.resolve(found)
-  },
+  // getTable() {
+  //   return Promise.resolve<{ name: string; age: number }[]>([{ name: 'lee', age: 5 }])
+  // },
+  // getBooks() {
+  //   return Promise.resolve(Books)
+  // },
+  // searchBook(id: number) {
+  //   let found = Books.filter(p => (p.id = id))
+  //   return Promise.resolve(found)
+  // },
 }
 
 export const BookContext = React.createContext<Partial<BookContextType>>({})

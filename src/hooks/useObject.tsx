@@ -4,7 +4,7 @@ import { os } from '../archive/objectStore'
 export function useObject<T extends { [key: string]: any }>(
   initO: T & { callee?: string },
   option: Partial<{
-    supervise: boolean
+    supervise?: boolean
     twoWay?: boolean
   }> = {
     supervise: false,
@@ -12,11 +12,11 @@ export function useObject<T extends { [key: string]: any }>(
   }
 ) {
   const [object, setO] = useState<T>(initO)
-  if (option.supervise ?? false) {
+  if (option?.supervise) {
     os.collectObject(object.callee, { treasure: object, setTreasure: setO, twoWay: option.twoWay ?? false })
   }
   /**
-   * @param obj 举个🌰  {name:"lee",age:10,gender:true}
+   * @param obj 🌰eg.. {name:"lee",age:10,gender:true}
    */
   function updateObject(obj: Partial<T>): void
   function updateObject<P extends keyof T>(key: P, value: T[P]): void
@@ -31,7 +31,9 @@ export function useObject<T extends { [key: string]: any }>(
         })
       } else shallowObject[key] = value
       if (os.twoWaysbindsCheck(setO)) {
+        const action = os.useStateReturnAction.find(p => p.tag === '__menu__')
         console.log(`is two ways`)
+        action?.act.os({ source: os.currentScene.object })
       }
       setO({ ...shallowObject })
     } catch (error) {}

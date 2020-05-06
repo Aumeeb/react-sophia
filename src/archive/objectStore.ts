@@ -1,3 +1,4 @@
+import { UpdatableComponentRange } from "../components/menu"
 
 
 type StatePool<S> = {
@@ -5,8 +6,9 @@ type StatePool<S> = {
     setTreasure: (value: any) => void
     twoWay: boolean
 }
-
+type UseStateReturnInfo = { tag: UpdatableComponentRange, act: { o: {}, os: any } } // ((value: any) => void | (key: any, val: any) => void)
 class ObjectStore {
+    private _usr: UseStateReturnInfo[] = []
     private _callee: string = ''
     get currentScene() {
         return {
@@ -18,6 +20,12 @@ class ObjectStore {
             },
             twoWay: this.get(this._callee)?.twoWay
         }
+    }
+    get useStateReturnAction() {
+        return this._usr
+    }
+    addUseStateReturnValues(act: UseStateReturnInfo) {
+        this._usr.push(act)
     }
     private readonly treasures: Map<string, StatePool<any>> = new Map()
 
