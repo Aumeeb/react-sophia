@@ -110,7 +110,7 @@ const _Draggable: FC<DraggableProps> = props => {
       onMouseOut={mouseUp}
       onDoubleClick={e => void e.preventDefault()}
       style={{
-        maxWidth: getWidth() / 2 + 'px',
+        // maxWidth: getWidth() / 2 + 'px',
         ...STYLES,
         width: props.width,
         height: props.height,

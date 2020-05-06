@@ -67,3 +67,12 @@
 .menu-panel-item-span:hover {
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.61);
 }
+
+.anim-ease-width-height {
+  transition: all 0.08s linear;
+  height: 400px;
+}
+.anim-ease-width-height:hover {
+  width: 600px !important;
+  height: 600px !important;
+}
