@@ -6,11 +6,12 @@ type StatePool<S> = {
 }
 
 class ObjectStore {
-    get current() {
+    private _callee: string = ''
+    get currentScene() {
         return {
-            callee: '',
-            currentObject: null,
-            currentSetObect: null
+            callee: this._callee,
+            currentObject: this.get(this._callee)?.objectPool,
+            currentSetObect: this.get(this._callee)?.setObjectPool
         }
     }
     private readonly pool: Map<string, StatePool<any>> = new Map()
@@ -36,9 +37,9 @@ class ObjectStore {
         return this.pool.get(key)
     }
 
-    // syncUpdate<T>(setPropFunc: (o: T) => void) {
-    //     // setPropFunc(o)
-    // }
+    syncScene(name: string): void {
+        this._callee = name
+    }
 }
 export const os = new ObjectStore()
 

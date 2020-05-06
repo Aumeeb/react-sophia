@@ -65,7 +65,14 @@ const _Menu: FC<MenuProps> = props => {
         <div className="menu-panel-info">
           <nav style={{ minWidth, maxWidth }}>
             {os.callees.map(callee => (
-              <span key={getUid()} className="nav-span" onClick={() => setCurCallee(callee)}>
+              <span
+                key={getUid()}
+                className="nav-span"
+                onClick={() => {
+                  setCurCallee(callee)
+                  os.syncScene(callee)
+                }}
+              >
                 {callee}
                 <br />
               </span>
@@ -87,7 +94,7 @@ export const Menu: FC<MenuProps> = props => {
   )
 }
 
-interface MenuProps {
+export interface MenuProps {
   minWidth: number
   maxWidth: number
   emojiIcon?: string
