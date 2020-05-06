@@ -16,11 +16,23 @@ const _Menu: FC<MenuProps> = props => {
   let { object, updateObject } = useObject<{
     nav: AvailableNav
     t: any
+    source: any
   }>({
     nav: 'Wastebasket',
     callee: 'menu',
     t: testdata,
+    source: os.currentScene.object ?? {},
   })
+
+  useEffect(() => {
+    console.log(os.currentScene.object)
+    if (os.currentScene.twoWay) {
+      // here determine if oneway or twoway databind
+      updateObject({ source: object.source })
+    }
+  }, [object.source])
+  console.log('z', object)
+
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
 
@@ -45,12 +57,10 @@ const _Menu: FC<MenuProps> = props => {
     </div>
   )
   function renderState() {
-    const curStateObject: any = os.get(curCallee)?.objectPool ?? {}
-
     return (
       <div style={{ marginTop: 16 }}>
-        {Object.keys(curStateObject).map(key => {
-          const value = curStateObject[key]
+        {Object.keys(object.source).map(key => {
+          const value = object.source[key]
           return <ColorfulRows objectKey={key} key={getUid()} value={value} />
         })}
       </div>
@@ -71,6 +81,7 @@ const _Menu: FC<MenuProps> = props => {
                 onClick={() => {
                   setCurCallee(callee)
                   os.syncScene(callee)
+                  updateObject({ source: os.currentScene.object })
                 }}
               >
                 {callee}

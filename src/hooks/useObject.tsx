@@ -5,16 +5,17 @@ export function useObject<T extends { [key: string]: any }>(
   initO: T & { callee?: string },
   option: Partial<{
     supervise: boolean
+    twoWay?: boolean
   }> = {
     supervise: false,
+    twoWay: false,
   }
 ) {
   const [object, setO] = useState<T>(initO)
-  if (option.supervise) {
-    os.collectObject(object.callee, { objectPool: object, setObjectPool: setO })
+  if (option.supervise ?? false) {
+    os.collectObject(object.callee, { treasure: object, setTreasure: setO, twoWay: option.twoWay ?? false })
   }
   /**
-   *
    * @param obj 举个🌰  {name:"lee",age:10,gender:true}
    */
   function updateObject(obj: Partial<T>): void
@@ -22,15 +23,16 @@ export function useObject<T extends { [key: string]: any }>(
   function updateObject<P extends keyof T>(key?: P, value?: T[P]) {
     try {
       let shallowObject: any = { ...object } //here is a bug may be updates typescript will be solved this problem
-      if (!shallowObject.callee) {
-        shallowObject.callee = 'untitled'
-      }
+      if (!shallowObject.callee) shallowObject.callee = 'untitled'
+
       if (typeof key === 'object') {
         Object.keys(key).forEach((prop: keyof T) => {
           shallowObject[prop] = key[prop]
         })
       } else shallowObject[key] = value
-
+      if (os.twoWaysbindsCheck(setO)) {
+        console.log(`is two ways`)
+      }
       setO({ ...shallowObject })
     } catch (error) {}
   }
@@ -41,7 +43,6 @@ export function useObject<T extends { [key: string]: any }>(
    * Recover all the values of each property which you passed in at the `useObject` at the beginning.
    * @param omit Omit some of properties of those you wouldn't want to recover.
    */
-  function recover(): void
   function recover(omit?: (keyof T)[]): void
   function recover(omit?: (keyof T)[]): void {
     if (omit === undefined) {

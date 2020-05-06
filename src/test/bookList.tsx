@@ -5,9 +5,10 @@ import { useObject } from '../hooks/useObject'
 const _: FC = props => {
   // const { getBooks, getTable, searchBook, name } = useContext(BookContext)
   const { object, updateObject } = useObject(
-    { ...useContext(BookContext), callee: 'testBookPage', firstName: '', lastName: '', age: '', grandson: { name: 'minay' } },
+    { ...useContext(BookContext), callee: 'testBookPage', firstName: 'linda', lastName: '', age: '', grandson: { name: 'minay' } },
     {
       supervise: true,
+      twoWay: true,
     }
   )
   console.log(object)
