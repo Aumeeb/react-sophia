@@ -11,7 +11,7 @@ export const INLINE_FLEX: CSSProperties = {
 }
 export const FLEX: CSSProperties = {
     display: 'flex',
-
+    // transition : 'all .3s cubic-bezier(.78,.14,.15,.86)'
 
 }
 
@@ -23,7 +23,9 @@ export const StringTypeStyle = {
     hovered: {
         border: 1,
         borderStyle: 'dashed',
-        borderColor: '#5f5f5f'
+        borderColor: '#5f5f5f',
+        borderRadius: 2,
+        // transition: 'all .3s cubic-bezier(.78,.14,.15,.86)',
     },
     normal: {
 

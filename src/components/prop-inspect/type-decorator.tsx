@@ -16,7 +16,7 @@ const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, l
 
 export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} />
 
-export const CSpan: FC<{  color?: string; ml?: string | number; className?: string; style?: React.CSSProperties } & DOMAttributes<HTMLSpanElement>> = props => {
+export const CSpan: FC<{ color?: string; ml?: string | number; className?: string; style?: React.CSSProperties } & DOMAttributes<HTMLSpanElement>> = props => {
   let { ml = 6 } = props
 
   return (
@@ -45,11 +45,8 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
   const funcArguments = analyzeFuncParams(props.value)
   const { object, updateObject } = useObject({ isFirst: true, argument: getEmptyArray(funcArguments.length) })
   useEffect(() => {
-    if (object.isFirst) {
-      updateObject('isFirst', false)
-    } else {
-      props.value.apply(null, object.argument)
-    }
+    if (object.isFirst) updateObject('isFirst', false)
+    else Reflect.apply(props.value, undefined, object.argument)
   }, [props.shouldExecute])
   return (
     <div>
