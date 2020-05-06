@@ -5,7 +5,8 @@ import { getWidth } from '../../util/browser'
 export const testdata = [
   React,
   1,
-  '2',
+  '2321312312',
+  '23213123123232132',
   true,
   undefined,
   void 0,

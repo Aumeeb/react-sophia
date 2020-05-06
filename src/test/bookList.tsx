@@ -5,7 +5,7 @@ import { useObject } from '../hooks/useObject'
 const _: FC = () => {
   // const { getBooks, getTable, searchBook, name } = useContext(BookContext)
   const { object, updateObject } = useObject(
-    { ...useContext(BookContext), callee: 'testBookPage', firstName: '', lastName: '', age: '' },
+    { ...useContext(BookContext), callee: 'testBookPage', firstName: '', lastName: '', age: '', grandson: { name: 'minay' } },
     {
       supervise: true,
     }

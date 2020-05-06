@@ -6,6 +6,13 @@ type StatePool<S> = {
 }
 
 class ObjectStore {
+    get current() {
+        return {
+            callee: '',
+            currentObject: null,
+            currentSetObect: null
+        }
+    }
     private readonly pool: Map<string, StatePool<any>> = new Map()
 
     /**To get count of the state objects. */

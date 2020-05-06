@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect, useRef } from 'react'
 import { getSVG, getExtraSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
-import { CSpan, RenderPropertyOfObjectOrArray, RenderFuncInParameters } from './type-decorator'
+import { CSpan, RenderPropertyOfObjectOrArray, RenderFuncInParameters, RenderEditableString } from './type-decorator'
 import { EMJS, SYMBOLS } from '../../shared/emojis'
 import { getType, ExistNativeType } from '../../type'
 import { ITALIC, INLINE_BLOCK, StringTypeStyle } from '../../shared/styles'
@@ -13,7 +13,7 @@ import { useUpdate } from '../../hooks/useUpdate'
 import { useObject } from '../../hooks/useObject'
 import { KeyBoard } from '../../shared/keyboard'
 
-const TYPE_COLORS = {
+export const TYPE_COLORS = {
   function: 'rgb(220,220,170)',
   string: '#dd7324',
   number: '#b4c8a0',
@@ -82,7 +82,13 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
     return (
       <>
         {!object.clicked && (
-          <CSpan onClick={() => updateObject('clicked', true)} onMouseOver={() => updateObject('hovered', true)} onMouseOut={() => updateObject('hovered', false)} color={this.textTextColor} style={object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}>
+          <CSpan
+            onClick={() => updateObject('clicked', true)}
+            onMouseOver={() => updateObject('hovered', true)}
+            onMouseOut={() => updateObject('hovered', false)}
+            color={this.textTextColor}
+            style={object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}
+          >
             {prefix}
             {displayValue + ''}
             {affix}
@@ -269,7 +275,8 @@ const StringType = class extends DrawNativeTypeRow implements getNativeTypeDescr
       typeRange: ['string'],
       typeTextColor: this.textTextColor,
       badges: [],
-      mainBody: this.getStringBody(`"`, `"`),
+      // mainBody: this.getStringBody(`"`, `"`),
+      mainBody: <RenderEditableString prefix="" affix="" value={this.value} />,
       self: this,
       beforeNode: <></>,
       afterNode: <></>,
