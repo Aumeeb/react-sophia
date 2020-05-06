@@ -58,9 +58,10 @@
   border-radius: 5px;
 }
 .menu-panel-wrapper:hover {
-  width: 200px !important;
+  width: 250px !important;
   transition: 0.3s width ease, 0.5s transform ease;
 }
+
 .menu-panel-item-span {
 }
 .menu-panel-item-span:hover {

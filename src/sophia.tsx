@@ -2,12 +2,7 @@ import React, { FC } from 'react'
 import { Draggable } from './components/draggable'
 import { Menu } from './components/menu'
 import './sophia.css'
-export const MENU_ROUTER = [
-  { name: '📜', nav: 'stateReview' },
-  { name: '⚙️', nav: 'settings' },
-  { name: '🗑️', nav: 'Wastebasket' },
-  // { name: '🐷', nav: 'unblock' },
-] as const
+import { MENU_ROUTER } from './shared/emojis'
 
 export const Sophia: FC = () => {
   return (

@@ -1,6 +1,7 @@
 import { isString, isNumber, isFunction, isBoolean, isUndefined, isNull, isArray, isObject, isSymbol } from 'util'
 import { isEvent } from './svgs/svgBadge';
-import { MENU_ROUTER } from "./sophia";
+import { MENU_ROUTER } from './shared/emojis';
+ 
 export const tuple = <T extends string[]>(...args: T) => args;
 
 export const tupleNum = <T extends number[]>(...args: T) => args;

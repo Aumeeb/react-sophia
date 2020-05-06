@@ -11,7 +11,10 @@ class ObjectStore {
         return {
             callee: this._callee,
             object: this.get(this._callee)?.objectPool,
-            set: this.get(this._callee)?.setObjectPool ?? (() => Promise.resolve(void 0))
+            set: (value: any) => {
+                let setValue = this.get(this._callee)?.setObjectPool ?? (() => Promise.resolve(void 0))
+                setValue({ ...value })
+            }
         }
     }
     private readonly pool: Map<string, StatePool<any>> = new Map()

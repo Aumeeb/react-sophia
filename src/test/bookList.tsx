@@ -2,7 +2,7 @@ import React, { useEffect, useState, FC, ReactElement, ReactNode, useContext } f
 import { BookContextProvider, BookContext } from '../shared/book-context'
 import { useObject } from '../hooks/useObject'
 
-const _: FC = () => {
+const _: FC = props => {
   // const { getBooks, getTable, searchBook, name } = useContext(BookContext)
   const { object, updateObject } = useObject(
     { ...useContext(BookContext), callee: 'testBookPage', firstName: '', lastName: '', age: '', grandson: { name: 'minay' } },
@@ -10,6 +10,8 @@ const _: FC = () => {
       supervise: true,
     }
   )
+  console.log(object)
+
   return (
     <>
       <button>{object.name}</button>
