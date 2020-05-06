@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import './index.css'
 import { BrowserPropsProvider } from '../../shared/window-context'
-import { os } from '../../hooks/objectStore'
+import { os } from '../../archive/objectStore'
 import { useObject } from '../../hooks/useObject'
 import { ColorfulRows } from '../prop-inspect/type-decorator'
 import { AvailableNav } from '../../type'

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { os } from './objectStore'
+import { os } from '../archive/objectStore'
 
 export function useObject<T extends { [key: string]: any }>(
   initO: T & { callee?: string },

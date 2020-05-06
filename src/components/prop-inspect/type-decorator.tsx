@@ -6,7 +6,7 @@ import { getExtraSVG } from '../../svgs/svgBadge'
 import { useObject } from '../../hooks/useObject'
 import { getEmptyArray } from '../../util/array-ex'
 import { KeyBoard } from '../../shared/keyboard'
-import { os } from '../../hooks/objectStore'
+import { os } from '../../archive/objectStore'
 
 const KEY_STYLE: CSSProperties = {
   marginLeft: 2,
