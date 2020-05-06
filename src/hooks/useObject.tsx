@@ -32,8 +32,8 @@ export function useObject<T extends { [key: string]: any }>(
       } else shallowObject[key] = value
       if (os.twoWaysbindsCheck(setO)) {
         const action = os.useStateReturnAction.find(p => p.tag === '__menu__')
-        console.log(`is two ways`)
-        action?.act.os({ source: os.currentScene.object })
+        // console.log(`is two ways`, os.currentScene.object)
+        action?.act.setObj({ source: { ...shallowObject } })
       }
       setO({ ...shallowObject })
     } catch (error) {}

@@ -25,11 +25,12 @@ const _Menu: FC<MenuProps> = props => {
     source: os.currentScene.object ?? {},
   })
   useEffect(() => {
-    os.addUseStateReturnValues({ act: { o: object, os: updateObject }, tag: '__menu__' })
+    os.addUseStateReturnValues({ act: { o: object, setObj: updateObject }, tag: '__menu__' })
   }, [])
 
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
+  console.log('menu', object)
 
   return (
     <div

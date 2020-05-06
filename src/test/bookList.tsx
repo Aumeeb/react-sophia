@@ -11,8 +11,6 @@ const _: FC = props => {
       twoWay: true,
     }
   )
-  console.log(object)
-
   return (
     <>
       <button>{object.name}</button>

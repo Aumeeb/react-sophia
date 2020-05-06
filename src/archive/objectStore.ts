@@ -6,7 +6,7 @@ type StatePool<S> = {
     setTreasure: (value: any) => void
     twoWay: boolean
 }
-type UseStateReturnInfo = { tag: UpdatableComponentRange, act: { o: {}, os: any } } // ((value: any) => void | (key: any, val: any) => void)
+type UseStateReturnInfo = { tag: UpdatableComponentRange, act: { o: {}, setObj: any } } // ((value: any) => void | (key: any, val: any) => void)
 class ObjectStore {
     private _usr: UseStateReturnInfo[] = []
     private _callee: string = ''
