@@ -31,19 +31,19 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
     width: 20,
     height: 20,
   }
-  constructor(protected value: any) {}
+  constructor(protected value: any, protected fieldName: string) {}
   textTextColor = ''
   getNativeTypeDescription(): NativeTypeDescription | undefined {
-    if (getType(this.value) === 'string') return new StringType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'number') return new NumberType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'boolean') return new BooleanType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'function') return new FunctionType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'event') return new EventType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'undefined') return new UndefinedType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'null') return new NullType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'object') return new ObjectType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'symbol') return new SymbolType(this.value).getNativeTypeDescription()
-    if (getType(this.value) === 'array') return new ArrayType(this.value).getNativeTypeDescription()
+    if (getType(this.value) === 'string') return new StringType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'number') return new NumberType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'boolean') return new BooleanType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'function') return new FunctionType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'event') return new EventType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'undefined') return new UndefinedType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'null') return new NullType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'object') return new ObjectType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'symbol') return new SymbolType(this.value, this.fieldName).getNativeTypeDescription()
+    if (getType(this.value) === 'array') return new ArrayType(this.value, this.fieldName).getNativeTypeDescription()
 
     return undefined
   }
@@ -156,7 +156,7 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
         {arrValue.map((val, i) => {
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
-            matchedBody = new DrawNativeTypeRow(val).getNativeTypeDescription()?.mainBody
+            matchedBody = new DrawNativeTypeRow(val,this.fieldName).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {
             let funcValue = 'func'
@@ -216,7 +216,7 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
           let val: any = obj[fieldName]
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
-            matchedBody = new DrawNativeTypeRow(val).getNativeTypeDescription()?.mainBody
+            matchedBody = new DrawNativeTypeRow(val,this.fieldName).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {
             let funcValue = 'func'
@@ -276,7 +276,7 @@ const StringType = class extends DrawNativeTypeRow implements getNativeTypeDescr
       typeTextColor: this.textTextColor,
       badges: [],
       // mainBody: this.getStringBody(`"`, `"`),
-      mainBody: <RenderEditableString prefix="" affix="" value={this.value} />,
+      mainBody: <RenderEditableString prefix="" affix="" value={this.value}  fieldName={this.fieldName} />,
       self: this,
       beforeNode: <></>,
       afterNode: <></>,

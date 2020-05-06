@@ -6,6 +6,7 @@ import { getExtraSVG } from '../../svgs/svgBadge'
 import { useObject } from '../../hooks/useObject'
 import { getEmptyArray } from '../../util/array-ex'
 import { KeyBoard } from '../../shared/keyboard'
+import { os } from '../../hooks/objectStore'
 
 const KEY_STYLE: CSSProperties = {
   marginLeft: 2,
@@ -29,7 +30,7 @@ export const CSpan: FC<{ color?: string; ml?: string | number; className?: strin
 
 /** this function will be rendered the each property of an object or an item of an Array */
 export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any }): JSX.Element => {
-  const typeDesc = new DrawNativeTypeRow(props.value).getNativeTypeDescription()
+  const typeDesc = new DrawNativeTypeRow(props.value, props.objectKey).getNativeTypeDescription()
 
   return (
     <div style={{ marginTop: 10, ...FLEX }}>
@@ -70,18 +71,23 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
   )
 }
 /** This function give you a ablitiy to edit string value which came from the  `datasource` perhaps it took much time to calculation */
-export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string }> = props => {
+export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string }> = props => {
   const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
-
   const _input = useRef<HTMLInputElement>(null)
-  let displayValue: string = props.value
+
   useEffect(() => {
     if (object.clicked) {
       _input.current?.focus()
     }
   }, [object.clicked])
   function modifyText(e: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement, MouseEvent>) {
-    recover()
+    recover(['__sv__'])
+    update()
+  }
+  function update() {
+    const copiedO = os.currentScene.object
+    copiedO[props.fieldName] = object.__sv__
+    os.currentScene.set(copiedO)
   }
   return (
     <>
@@ -94,7 +100,7 @@ export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; val
           style={object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}
         >
           {props.prefix}
-          {displayValue + ''}
+          {object.__sv__ + ''}
           {props.affix}
         </CSpan>
       )}
@@ -106,7 +112,10 @@ export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; val
           onBlur={modifyText}
           onChange={e => updateObject('__sv__', e.target.value)}
           onKeyDown={e => {
-            if (e.keyCode === KeyBoard.Enter) recover()
+            if (e.keyCode === KeyBoard.Enter) {
+              recover(['__sv__'])
+              update()
+            }
           }}
         />
       )}

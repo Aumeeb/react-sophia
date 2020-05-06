@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 
 type StatePool<S> = {
     objectPool: S,
-    setObjectPool: Dispatch<SetStateAction<S>>
+    setObjectPool: (value: any) => void
 }
 
 class ObjectStore {
@@ -10,8 +10,8 @@ class ObjectStore {
     get currentScene() {
         return {
             callee: this._callee,
-            currentObject: this.get(this._callee)?.objectPool,
-            currentSetObect: this.get(this._callee)?.setObjectPool
+            object: this.get(this._callee)?.objectPool,
+            set: this.get(this._callee)?.setObjectPool ?? (() => Promise.resolve(void 0))
         }
     }
     private readonly pool: Map<string, StatePool<any>> = new Map()
