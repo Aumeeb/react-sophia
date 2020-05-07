@@ -55,7 +55,7 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <Sophia />
+
       {/* {Recurisve2(10, 10)} */}
       {/* <Recurisve deep={10} left={10} /> */}
 
@@ -75,7 +75,8 @@ function App() {
           <div onClick={handleClick}>33333</div>
         </div>
       </div> */}
-      <Book/>
+      <Book />
+      <Sophia />
     </div>
   )
 }

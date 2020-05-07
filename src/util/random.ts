@@ -1,3 +1,4 @@
+
 /**
  * Return a random int, used by `random.getUid()`.
  *
@@ -38,4 +39,27 @@ export const randomColor = (transparent: boolean = false) => {
         color += range[getRandomInt(0, 15)]
     }
     return color
+}
+
+export type SceneRegion = "animal" | "tree" | "flora"
+
+export function sceneNameGenerator(type: SceneRegion) {
+    let uncertainCollection: string[] = []
+    const trees = ['🎄', '🎋', '🎍', '🌵', '🌴', '🌳', '🌲']
+    const animals = ['🦄', '🐷', '🐏', '🦒', '🐭', '🐇', '🐼', '🐒', '🦍']
+    const flora = ['💐', '🌸', '💮', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷']
+    switch (type) {
+        case 'animal': uncertainCollection = animals
+            break
+        case 'tree': uncertainCollection = trees
+            break
+        case 'flora': uncertainCollection = flora
+    }
+
+
+    const emoji = uncertainCollection[getRandomInt(0, uncertainCollection.length - 1)]
+    const fullName = `${emoji}${getUid(8)}${emoji}`
+    // console.log(fullName);
+
+    return fullName
 }
