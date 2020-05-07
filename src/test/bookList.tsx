@@ -3,7 +3,34 @@ import { BookContextProvider, BookContext } from '../shared/book-context'
 import { useObject } from '../hooks/useObject'
 
 const _: FC = () => {
-  const { object, updateObject } = useObject({ ...useContext(BookContext), callee: 'testBookPage', firstName: 'linda', lastName: '', age: '', grandson: { name: 'minay' } }, { sceneName: 'booklist' })
+  const { object, updateObject } = useObject(
+    {
+      ...useContext(BookContext),
+      d: {
+        name: 5,
+        sex: true,
+        level1: {
+          nname: 512,
+          age: 6,
+          level2: {
+            arr: {
+              data: [
+                {
+                  booss: 'adalaer',
+                },
+              ],
+            },
+          },
+        },
+      },
+      callee: 'testBookPage',
+      firstName: 'linda',
+      lastName: '',
+      age: '',
+      grandson: { name: 'minay' },
+    },
+    { sceneName: 'booklist' }
+  )
   return (
     <>
       <button>{object.name}</button>
@@ -17,6 +44,8 @@ const _: FC = () => {
         <div>
           Your age is : <input type="text" value={object.age} onChange={e => updateObject('age', e.target.value)} />
         </div>
+
+        <button>{object.grandson.name}</button>
       </div>
     </>
   )

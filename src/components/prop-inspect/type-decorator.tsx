@@ -71,7 +71,7 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
   )
 }
 /** This function give you a ablitiy to edit string value which came from the  `datasource` perhaps it took much time to calculation */
-export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string }> = props => {
+export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string; hierarchy?: string[] }> = props => {
   const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
   const _input = useRef<HTMLInputElement>(null)
 
