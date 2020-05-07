@@ -117,6 +117,7 @@ const _Draggable: FC<DraggableProps> = props => {
     //   x: position.x,
     //   y: position.y,
     // })
+    console.log(CapturedUserMouse)
 
     CapturedUserMouse.x = position.x
     CapturedUserMouse.y = position.y
@@ -157,7 +158,7 @@ const _Draggable: FC<DraggableProps> = props => {
       syncDragPosition(draggablArea.current, CapturedUserMouse)
     }
   }
-  function mouseUp() {
+  function considerMouseDidNotPress() {
     // updateObject('pressed', false)
 
     CapturedUserMouse.pressed = false
@@ -168,12 +169,12 @@ const _Draggable: FC<DraggableProps> = props => {
       ref={draggablArea}
       className={props.className}
       onMouseDown={mouseDown}
-      onMouseUp={mouseUp}
       onMouseMove={mouseMove}
-      onMouseOut={mouseUp}
+      onMouseUp={considerMouseDidNotPress}
+      onMouseEnter={considerMouseDidNotPress}
       onDoubleClick={e => void e.preventDefault()}
       style={{
-        // maxWidth: getWidth() / 2 + 'px',
+        // maxWidth: getWidth() / 2 + 'px',              init width of content of total draggable component
         ...STYLES,
         width: props.width,
         height: props.height,
@@ -190,3 +191,5 @@ const _Draggable: FC<DraggableProps> = props => {
 export const Draggable: FC<DraggableProps> = props => {
   return <_Draggable {...props} />
 }
+
+// filter: drop-shadow(2px 9px 18px gray);
