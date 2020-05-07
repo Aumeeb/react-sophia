@@ -7,6 +7,7 @@ import { useObject } from '../../hooks/useObject'
 import { getEmptyArray } from '../../util/array-ex'
 import { KeyBoard } from '../../shared/keyboard'
 import { os } from '../../archive/objectStore'
+import nestedProperty from '../../util/nested-property'
 
 const KEY_STYLE: CSSProperties = {
   marginLeft: 2,
@@ -16,7 +17,7 @@ const KEY_STYLE: CSSProperties = {
 }
 const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, lineHeight: '20px' }
 
-export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} />
+export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} objHierarchy={''} />
 
 export const CSpan: FC<{ color?: string; ml?: string | number; className?: string; style?: React.CSSProperties } & DOMAttributes<HTMLSpanElement>> = props => {
   let { ml = 6 } = props
@@ -28,9 +29,11 @@ export const CSpan: FC<{ color?: string; ml?: string | number; className?: strin
   )
 }
 
-/** this function will be rendered the each property of an object or an item of an Array */
-export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any }): JSX.Element => {
-  const typeDesc = new DrawNativeTypeRow(props.value, props.objectKey).getNativeTypeDescription()
+/**This function will be rendered the each property of an object or an item of an Array */
+export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any; objHierarchy: string }): JSX.Element => {
+  let abyss = ',' + props.objectKey.toString() + props.objHierarchy.toString()
+
+  const typeDesc = new DrawNativeTypeRow(props.value, props.objectKey, abyss).getNativeTypeDescription()
 
   return (
     <div style={{ marginTop: 10, ...FLEX }}>
@@ -71,7 +74,7 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
   )
 }
 /** This function give you a ablitiy to edit string value which came from the  `datasource` perhaps it took much time to calculation */
-export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string; hierarchy?: string[] }> = props => {
+export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string; hierarchy: string }> = props => {
   const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
   const _input = useRef<HTMLInputElement>(null)
 
@@ -85,8 +88,9 @@ export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; val
     update()
   }
   function update() {
+    const objPath = props.hierarchy!.substring(1).split(',').reverse().join('.')
     const copiedO = os.currentScene.object
-    copiedO[props.fieldName] = object.__sv__
+    nestedProperty.set(copiedO, objPath, object.__sv__)
     os.currentScene.set(copiedO)
   }
   return (

@@ -4,3 +4,6 @@ export function shorten(s: string, len = 40, affix: string = "...") {
     else
         return s.substr(0, len) + affix
 }
+export function reverseString(str: string) {
+    return str.split("").reverse().join("");
+}

@@ -8,7 +8,9 @@ const _: FC = () => {
       ...useContext(BookContext),
       d: {
         name: 5,
+        love: 'loveyou',
         sex: true,
+        d: [2, { d: 5 }],
         level1: {
           nname: 512,
           age: 6,
@@ -23,18 +25,18 @@ const _: FC = () => {
           },
         },
       },
-      callee: 'testBookPage',
-      firstName: 'linda',
-      lastName: '',
-      age: '',
-      grandson: { name: 'minay' },
+      // callee: 'testBookPage',
+      // firstName: 'linda',
+      // lastName: '',
+      // age: '',
+      // grandson: { name: 'minay' },
     },
     { sceneName: 'booklist' }
   )
   return (
     <>
       <button>{object.name}</button>
-      <div>
+      {/* <div>
         <div>
           Your first name : <input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
         </div>
@@ -46,7 +48,7 @@ const _: FC = () => {
         </div>
 
         <button>{object.grandson.name}</button>
-      </div>
+      </div> */}
     </>
   )
 }
