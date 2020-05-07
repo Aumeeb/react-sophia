@@ -32,3 +32,7 @@ export const StringTypeStyle = {
 
     }
 }
+
+export function toPixel(val: number) {
+    return val + 'px'
+}
