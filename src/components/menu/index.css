@@ -79,15 +79,14 @@
 .menu-panel-item-span:hover {
   /* animation: spin 4s linear infinite; */
   transform: rotate(360deg);
-
-  background: red;
+  cursor: pointer !important;
 }
 
-.anim-ease-width-height {
+/* .anim-ease-width-height {     to control stateobject content width & height
   transition: all 0.08s linear;
   height: 400px;
 }
 .anim-ease-width-height:hover {
   width: 600px !important;
   height: 600px !important;
-}
+} */

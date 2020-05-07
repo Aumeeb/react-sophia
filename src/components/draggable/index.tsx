@@ -86,16 +86,16 @@ const _Draggable: FC<DraggableProps> = props => {
     })
   }
   function mouseMove(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    // if (object.pressed) {
-    //   let changeX = ev.clientX - object.pressedX
-    //   let changeY = ev.clientY - object.pressedY
-    //   updateObject({
-    //     x: object.x + changeX,
-    //     y: object.y + changeY,
-    //     pressedX: ev.clientX,
-    //     pressedY: ev.clientY,
-    //   })
-    // }
+    if (object.pressed) {
+      let changeX = ev.clientX - object.pressedX
+      let changeY = ev.clientY - object.pressedY
+      updateObject({
+        x: object.x + changeX,
+        y: object.y + changeY,
+        pressedX: ev.clientX,
+        pressedY: ev.clientY,
+      })
+    }
   }
   function mouseUp() {
     updateObject('pressed', false)
