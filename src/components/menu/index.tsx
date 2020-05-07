@@ -95,7 +95,7 @@ const _Menu: FC<MenuProps> = props => {
               ))}
             </nav>
           </div>
-          <div style={{ marginTop: -1, width: 300 }} className="menu-panel-info anim-ease-width-height">
+          <div style={{ marginTop: -1 }} className="menu-panel-info anim-ease-width-height">
             {renderState()}
           </div>
         </>

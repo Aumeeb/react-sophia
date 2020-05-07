@@ -38,8 +38,10 @@ export function useObject<T extends { [key: string]: any }>(
         })
       } else shallowObject[key] = value
 
-      console.log(sceneName, os.currentScene.sceneName)
-
+      /**
+       *  scenaName will be changed by current who called function `SetObject`
+       * 
+       */ 
       if (sceneName === os.currentScene.sceneName) {
         os.useStateReturnAction[0].act.setObj({ source: { ...shallowObject } })
       }
