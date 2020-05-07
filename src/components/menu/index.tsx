@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import './index.css'
-import { BrowserPropsProvider } from '../../shared/window-context'
+
 import { os } from '../../archive/objectStore'
 import { useObject } from '../../hooks/useObject'
 import { ColorfulRows } from '../prop-inspect/type-decorator'
@@ -106,9 +106,9 @@ const _Menu: FC<MenuProps> = props => {
 
 export const Menu: FC<MenuProps> = props => {
   return (
-    <BrowserPropsProvider>
+    <div>
       <_Menu {...props} />
-    </BrowserPropsProvider>
+    </div>
   )
 }
 

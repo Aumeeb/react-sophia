@@ -31,7 +31,7 @@ export const BrowserPropsProvider: FC<WindowProps> = props => {
       syncBrwoserWindowInfo({})
     })
     window.addEventListener('mousemove', e => {
-      syncBrwoserWindowInfo({ e})
+      syncBrwoserWindowInfo({ e })
     })
   }, [])
   return <browserWindowContext.Provider value={object}>{props.children}</browserWindowContext.Provider>

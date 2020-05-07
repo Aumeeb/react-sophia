@@ -1,5 +1,4 @@
 import React, { useEffect, useState, FC, ReactElement, ReactNode } from 'react'
-import { BrowserPropsProvider } from './window-context'
 
 interface FCC {
   children: ReactNode
