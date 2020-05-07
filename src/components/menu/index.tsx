@@ -8,7 +8,12 @@ import { AvailableNav } from '../../type'
 import { getUid } from '../../util/random'
 import { testdata } from '../draggable'
 
-export type UpdatableComponentRange = '__menu__'
+export type LimitedReversedActiveSceneName = '5a947008-9044-11ea-bb37-0242ac130002'
+export type LimitedReversedActive = { sceneName: string; tag: LimitedReversedActiveSceneName }
+const LIMITED_SCENES_TAG: LimitedReversedActive = {
+  sceneName: '⚙️menu⚙️',
+  tag: '5a947008-9044-11ea-bb37-0242ac130002',
+}
 
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
@@ -17,16 +22,18 @@ const _Menu: FC<MenuProps> = props => {
   let { object, updateObject } = useObject<{
     nav: AvailableNav
     t: any
-    source: any
-  }>({
-    nav: '📜',
-    callee: 'menu',
-    t: testdata,
-    source: os.currentScene.object ?? {},
-  })
+    source: { [key: string]: any }
+  }>(
+    {
+      nav: '📜',
+      t: testdata,
+      source: os.currentScene.object ?? {},
+    },
+    { sceneName: LIMITED_SCENES_TAG.sceneName }
+  )
   const [currentDataSourceName, setcurrentDataSourceName] = useState<string | null>(null)
   useEffect(() => {
-    os.addUseStateReturnValues({ act: { o: object, setObj: updateObject }, tag: '__menu__' })
+    os.addUseStateReturnValuesOfSystem({ act: { o: object, setObj: updateObject }, sence: LIMITED_SCENES_TAG })
   }, [])
 
   //default value assignment
@@ -73,7 +80,7 @@ const _Menu: FC<MenuProps> = props => {
         <>
           <div className="menu-panel-info">
             <nav style={{ minWidth, maxWidth }}>
-              {os.callees.map(callee => (
+              {os.scenes.map(callee => (
                 <span
                   key={getUid()}
                   className="nav-span"

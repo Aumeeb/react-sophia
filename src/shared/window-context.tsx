@@ -10,15 +10,15 @@ interface WindowProps {
 }
 export const browserWindowContext = React.createContext<WindowProps>({})
 export const BrowserPropsProvider: FC<WindowProps> = props => {
-  const { object, updateObject } = useObject<WindowProps>({ browserHeight: 0, browserWidth: 0, windowEv: null, callee: 'BrowserPropsProvider' }, { supervise: false })
+  const { object, updateObject } = useObject<WindowProps>({ browserHeight: 0, browserWidth: 0, windowEv: null }, { sceneName: '🦄d3AmwDw0🦄' })
 
-  function syncBrwoserWindowInfo({ me }: { me?: MouseEvent }) {
+  function syncBrwoserWindowInfo({ e }: { e?: MouseEvent }) {
     let empty = object
 
     empty.browserWidth = getWidth()
     empty.browserHeight = getHeight()
-    if (me) {
-      empty.windowEv = me
+    if (e) {
+      empty.windowEv = e
     }
     updateObject(empty)
   }
@@ -31,7 +31,7 @@ export const BrowserPropsProvider: FC<WindowProps> = props => {
       syncBrwoserWindowInfo({})
     })
     window.addEventListener('mousemove', e => {
-      syncBrwoserWindowInfo({ me: e })
+      syncBrwoserWindowInfo({ e})
     })
   }, [])
   return <browserWindowContext.Provider value={object}>{props.children}</browserWindowContext.Provider>

@@ -1,16 +1,9 @@
-import React, { useEffect, useState, FC, ReactElement, ReactNode, useContext } from 'react'
+import React, { FC, useContext } from 'react'
 import { BookContextProvider, BookContext } from '../shared/book-context'
 import { useObject } from '../hooks/useObject'
 
-const _: FC = props => {
-  // const { getBooks, getTable, searchBook, name } = useContext(BookContext)
-  const { object, updateObject } = useObject(
-    { ...useContext(BookContext), callee: 'testBookPage', firstName: 'linda', lastName: '', age: '', grandson: { name: 'minay' } },
-    {
-      supervise: true,
-      twoWay: true,
-    }
-  )
+const _: FC = () => {
+  const { object, updateObject } = useObject({ ...useContext(BookContext), callee: 'testBookPage', firstName: 'linda', lastName: '', age: '', grandson: { name: 'minay' } }, { sceneName: 'booklist' })
   return (
     <>
       <button>{object.name}</button>

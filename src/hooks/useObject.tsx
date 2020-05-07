@@ -1,20 +1,22 @@
 import { useState } from 'react'
 import { os } from '../archive/objectStore'
+import { sceneNameGenerator } from '../util/random'
 
 export function useObject<T extends { [key: string]: any }>(
-  initO: T & { callee?: string },
-  option: Partial<{
+  initO: T,
+  option: {
     supervise?: boolean
-    twoWay?: boolean
-  }> = {
-    supervise: false,
-    twoWay: false,
-  }
+
+    sceneName?: string
+  } = {}
 ) {
   const [object, setO] = useState<T>(initO)
-  if (option?.supervise) {
-    os.collectObject(object.callee, { treasure: object, setTreasure: setO, twoWay: option.twoWay ?? false })
+  const { supervise = true, sceneName = '' } = option
+
+  if (sceneName !== '') {
+    os.collectObject(option.sceneName!, { treasure: object, setTreasure: setO })
   }
+
   /**
    * @param obj 🌰eg.. {name:"lee",age:10,gender:true}
    */
@@ -23,18 +25,29 @@ export function useObject<T extends { [key: string]: any }>(
   function updateObject<P extends keyof T>(key?: P, value?: T[P]) {
     try {
       let shallowObject: any = { ...object } //here is a bug may be updates typescript will be solved this problem
-      if (!shallowObject.callee) shallowObject.callee = 'untitled'
+
+      /**
+       *  to implementation function overload here we have 2  scenarios
+       *   #1 passed in a {}
+       *   # 2 passed  key & value
+       */
 
       if (typeof key === 'object') {
         Object.keys(key).forEach((prop: keyof T) => {
           shallowObject[prop] = key[prop]
         })
       } else shallowObject[key] = value
-      if (os.twoWaysbindsCheck(setO)) {
-        const action = os.useStateReturnAction.find(p => p.tag === '__menu__')
-        // console.log(`is two ways`, os.currentScene.object)
-        action?.act.setObj({ source: { ...shallowObject } })
+
+      console.log(sceneName, os.currentScene.sceneName)
+
+      if (sceneName === os.currentScene.sceneName) {
+        os.useStateReturnAction[0].act.setObj({ source: { ...shallowObject } })
       }
+      // if (sceneName !== os.useStateReturnAction.find(p => p.sence.tag === '5a947008-9044-11ea-bb37-0242ac130002')?.sence.sceneName) {
+      // const action = os.useStateReturnAction.find(p => p.sence.tag === '5a947008-9044-11ea-bb37-0242ac130002')
+      // action?.act.setObj({ source: { ...shallowObject } })
+      // return
+      // }
       setO({ ...shallowObject })
     } catch (error) {}
   }
@@ -61,13 +74,8 @@ export function useObject<T extends { [key: string]: any }>(
     }
   }
   return {
-    /**创建返回的对象 */
     object,
-    /** 可更新单个属性
-     *  可更新一个 T 类型的对象
-     *    */
     updateObject,
-    /**直接还原到初始状态*/
     recover,
   }
 }

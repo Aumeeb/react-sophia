@@ -1,31 +1,29 @@
-import { UpdatableComponentRange } from "../components/menu"
-
+import { LimitedReversedActive } from "../components/menu"
 
 type StatePool<S> = {
     treasure: S,
     setTreasure: (value: any) => void
-    twoWay: boolean
 }
-type UseStateReturnInfo = { tag: UpdatableComponentRange, act: { o: {}, setObj: any } } // ((value: any) => void | (key: any, val: any) => void)
+type UseStateReturnInfo = { sence: LimitedReversedActive, act: { o: {}, setObj: any } } // ((value: any) => void | (key: any, val: any) => void)
 class ObjectStore {
-    private _usr: UseStateReturnInfo[] = []
-    private _callee: string = ''
+    private _system_useState: UseStateReturnInfo[] = []
+    private _sceneName: string = ''
     get currentScene() {
         return {
-            callee: this._callee,
-            object: this.get(this._callee)?.treasure ?? {},
+            sceneName: this._sceneName,
+            object: this.get(this._sceneName)?.treasure ?? {},
             set: (value: any) => {
-                let setValue = this.get(this._callee)?.setTreasure ?? (() => Promise.resolve(void 0))
+                let setValue = this.get(this._sceneName)?.setTreasure ?? (() => Promise.resolve(void 0))
                 setValue({ ...value })
             },
-            twoWay: this.get(this._callee)?.twoWay
+
         }
     }
     get useStateReturnAction() {
-        return this._usr
+        return this._system_useState
     }
-    addUseStateReturnValues(act: UseStateReturnInfo) {
-        this._usr.push(act)
+    addUseStateReturnValuesOfSystem(act: UseStateReturnInfo) {
+        this._system_useState.push(act)
     }
     private readonly treasures: Map<string, StatePool<any>> = new Map()
 
@@ -34,12 +32,12 @@ class ObjectStore {
         return this.treasures.size
     }
     /**Get the alias names of all state objects*/
-    get callees() {
-        let callees = []
+    get scenes() {
+        let sceneNameList = []
         for (var key of this.treasures.keys()) {
-            callees.push(key)
+            sceneNameList.push(key)
         }
-        return callees
+        return sceneNameList
     }
     /** automatically store the state object to this storage */
     collectObject<S>(key: string, value: StatePool<S>) {
@@ -49,19 +47,23 @@ class ObjectStore {
     get(key: string) {
         return this.treasures.get(key)
     }
-
+    /** which state should be displayed?  */
     syncScene(name: string): void {
-        this._callee = name
+        this._sceneName = name
     }
-    twoWaysbindsCheck(setO: Function): boolean {
-        let isTwoWays = false
-        this.treasures.forEach(p => {
-            if (p.setTreasure === setO && p.twoWay) {
-                isTwoWays = true
-            }
-        })
-        return isTwoWays
-    }
+    /** let user to select which  data bind mode is prefered 
+     *  1way 
+     * 2ways
+    */
+    // twoWaysbindsCheck(setO: Function): boolean {
+    //     let isTwoWays = false
+    //     this.treasures.forEach(p => {
+    //         if (p.setTreasure === setO && p.twoWay) {
+    //             isTwoWays = true
+    //         }
+    //     })
+    //     return isTwoWays
+    // }
 }
 export const os = new ObjectStore()
 

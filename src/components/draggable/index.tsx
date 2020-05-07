@@ -102,7 +102,7 @@ const _Draggable: FC<DraggableProps> = props => {
       },
       obj: { name: 5, age: 6, typescript: testdata },
     },
-    { supervise: true }
+    { sceneName: '😀_Draggable😀' }
   )
 
   const draggablArea = useRef<HTMLDivElement>(null)
