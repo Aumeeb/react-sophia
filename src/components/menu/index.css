@@ -89,3 +89,8 @@
   width: 600px !important;
   height: 600px !important;
 } */
+
+.selected-callee {
+  background: rgb(255, 161, 177);
+  color: #fff;
+}

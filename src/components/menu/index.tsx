@@ -23,15 +23,17 @@ const _Menu: FC<MenuProps> = props => {
     nav: AvailableNav
     t: any
     source: { [key: string]: any }
+    tabs: { tabName: string; select: boolean }[]
   }>(
     {
       nav: '📜',
       t: testdata,
       source: os.currentScene.object ?? {},
+      tabs: os.scenes.map(tabName => ({ tabName, select: false })),
     },
     { sceneName: LIMITED_SCENES_TAG.sceneName }
   )
-  const [currentDataSourceName, setcurrentDataSourceName] = useState<string | null>(null)
+  // const [currentStateList, setCurrentStateList] = useState(os.scenes.map(tabName => ({ tabName, select: false })))
   useEffect(() => {
     os.addUseStateReturnValuesOfSystem({ act: { o: object, setObj: updateObject }, sence: LIMITED_SCENES_TAG })
   }, [])
@@ -80,16 +82,19 @@ const _Menu: FC<MenuProps> = props => {
         <>
           <div className="menu-panel-info">
             <nav style={{ minWidth, maxWidth }}>
-              {os.scenes.map(callee => (
+              {object.tabs.map((curState, i) => (
                 <span
                   key={getUid()}
-                  className="nav-span"
+                  className={`nav-span ${curState.select ? 'selected-callee' : ''}`}
                   onClick={() => {
-                    os.syncScene(callee)
-                    updateObject({ source: os.currentScene.object })
+                    os.syncScene(curState.tabName)
+                    object.tabs.forEach(p => (p.select = false))
+                    object.tabs[i].select = true
+
+                    updateObject({ source: os.currentScene.object, tabs: object.tabs })
                   }}
                 >
-                  {callee}
+                  {curState.tabName}
                   <br />
                 </span>
               ))}
