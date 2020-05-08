@@ -32,10 +32,16 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
     height: 20,
   }
 
-  constructor(protected value: any, protected fieldName: string, public hierarchy: string) {}
+  constructor(protected value: any, protected fieldName: string, public hierarchy: string, public standby?: { nextHierarchyFieldName?: string; curHierarchyType?: 'object' | 'array' }) {}
   textTextColor = ''
   getNativeTypeDescription(): NativeTypeDescription | undefined {
-    if (getType(this.value) === 'string') return new StringType(this.value, this.fieldName, this.hierarchy).getNativeTypeDescription()
+    if (getType(this.value) === 'string')
+      return new StringType(
+        this.value,
+        this.fieldName,
+        this.hierarchy,
+        (this.standby = { nextHierarchyFieldName: this.standby?.nextHierarchyFieldName, curHierarchyType: this.standby?.curHierarchyType })
+      ).getNativeTypeDescription()
     if (getType(this.value) === 'number') return new NumberType(this.value, this.fieldName, this.hierarchy).getNativeTypeDescription()
     if (getType(this.value) === 'boolean') return new BooleanType(this.value, this.fieldName, this.hierarchy).getNativeTypeDescription()
     if (getType(this.value) === 'function') return new FunctionType(this.value, this.fieldName, this.hierarchy).getNativeTypeDescription()
@@ -109,10 +115,6 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
         )}
       </>
     )
-    // border: 1px solid #5f5f5f;
-    // border-radius: 2px;
-    // border-style: dashed;
-    // padding: 2px;
   }
   getShrunkenObjectBody() {
     return <CSpan color={TYPE_COLORS.object}>{`{...}`}</CSpan>
@@ -217,7 +219,9 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
           let val: any = obj[fieldName]
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
-            matchedBody = new DrawNativeTypeRow(val, this.fieldName, this.hierarchy).getNativeTypeDescription()?.mainBody
+            // console.log(`key is : ${fieldName}`, 'object')
+
+            matchedBody = new DrawNativeTypeRow(val, this.fieldName, this.hierarchy, { nextHierarchyFieldName: fieldName, curHierarchyType: 'object' }).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {
             let funcValue = 'func'
@@ -276,8 +280,17 @@ const StringType = class extends DrawNativeTypeRow implements getNativeTypeDescr
       typeRange: ['string'],
       typeTextColor: this.textTextColor,
       badges: [],
-      // mainBody: this.getStringBody(`"`, `"`),
-      mainBody: <RenderEditableString prefix="" affix="" value={this.value} fieldName={this.fieldName} hierarchy={this.hierarchy} />,
+      mainBody: (
+        <RenderEditableString
+          prefix=""
+          affix=""
+          value={this.value}
+          fieldName={this.fieldName}
+          hierarchy={this.hierarchy}
+          fromType={this.standby?.curHierarchyType ?? 'object'}
+          nextHierarchy={this.standby?.nextHierarchyFieldName ?? null}
+        />
+      ),
       self: this,
       beforeNode: <></>,
       afterNode: <></>,

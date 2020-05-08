@@ -75,6 +75,9 @@
 .menu-panel-item-span {
   /* . */
   transform: rotate(360deg);
+  width: 50px;
+  display: inline-block;
+  text-align: center;
 }
 .menu-panel-item-span:hover {
   /* animation: spin 4s linear infinite; */

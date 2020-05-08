@@ -74,7 +74,15 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
   )
 }
 /** This function give you a ablitiy to edit string value which came from the  `datasource` perhaps it took much time to calculation */
-export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; value: string; fieldName: string; hierarchy: string }> = props => {
+export const RenderEditableString: FC<{
+  prefix: ReactNode
+  affix: ReactNode
+  value: string
+  fieldName: string
+  hierarchy: string
+  nextHierarchy?: string | null
+  fromType?: 'object' | 'array'
+}> = props => {
   const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
   const _input = useRef<HTMLInputElement>(null)
 
@@ -88,7 +96,17 @@ export const RenderEditableString: FC<{ prefix: ReactNode; affix: ReactNode; val
     update()
   }
   function update() {
-    const objPath = props.hierarchy!.substring(1).split(',').reverse().join('.')
+    let objPath = props.hierarchy!.substring(1).split(',').reverse().join('.')
+    if (props.fromType === 'object') {
+      if (props.nextHierarchy !== null) {
+        objPath += `.${props.nextHierarchy}`
+      }
+
+      // console.log(props.hierarchy, 'current key is😀', props.nextHierarchy, props.fromType)
+      console.log(objPath, `nexthierarchy : ${props.nextHierarchy}`)
+    } else if (props.fromType === 'array') {
+    } else {
+    }
     const copiedO = os.currentScene.object
     nestedProperty.set(copiedO, objPath, object.__sv__)
     os.currentScene.set(copiedO)
