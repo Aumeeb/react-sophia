@@ -59,7 +59,6 @@ export function sceneNameGenerator(type: SceneRegion) {
 
     const emoji = uncertainCollection[getRandomInt(0, uncertainCollection.length - 1)]
     const fullName = `${emoji}${getUid(8)}${emoji}`
-    // console.log(fullName);
 
     return fullName
 }

@@ -219,8 +219,6 @@ export class DrawNativeTypeRow implements Omit<getNativeTypeDescription, 'getNat
           let val: any = obj[fieldName]
           let matchedBody: ReactNode
           if (getType(val) === 'number' || getType(val) === 'string' || getType(val) === 'null' || getType(val) === 'boolean' || getType(val) === 'undefined' || getType(val) === 'symbol') {
-            // console.log(`key is : ${fieldName}`, 'object')
-
             matchedBody = new DrawNativeTypeRow(val, this.fieldName, this.hierarchy, { nextHierarchyFieldName: fieldName, curHierarchyType: 'object' }).getNativeTypeDescription()?.mainBody
           }
           if (getType(val) === 'function') {

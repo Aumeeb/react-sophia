@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import { BookContextProvider, BookContext } from '../shared/book-context'
 import { useObject } from '../hooks/useObject'
 
@@ -7,24 +7,12 @@ const _: FC = () => {
     {
       ...useContext(BookContext),
       d: {
-        name: 5,
-        love: 'loveyou',
-        sex: true,
-        d: [2, { d: 5 }],
         level1: {
           nname: 512,
           age: 6,
-          level2: {
-            arr: {
-              data: [
-                {
-                  booss: 'adalaer',
-                },
-              ],
-            },
-          },
         },
       },
+      books: [],
       callee: 'testBookPage',
       firstName: 'linda',
       lastName: '',
@@ -33,6 +21,15 @@ const _: FC = () => {
     },
     { sceneName: 'booklist' }
   )
+  useEffect(() => {
+    fetchData()
+  }, [object.firstName])
+
+  function fetchData() {
+    object.getBooks!().then(d => {
+      updateObject('books', d as any)
+    })
+  }
   return (
     <>
       <button>{object.name}</button>
@@ -49,6 +46,17 @@ const _: FC = () => {
 
         <button>{object.grandson.name}</button>
       </div>
+
+      <table>
+        {object.books.map((book: { name: string; id: string }) => {
+          return (
+            <tr>
+              <td>{book.id}</td>
+              <td>{book.name}</td>
+            </tr>
+          )
+        })}
+      </table>
     </>
   )
 }

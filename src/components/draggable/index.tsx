@@ -117,7 +117,6 @@ const _Draggable: FC<DraggableProps> = props => {
     //   x: position.x,
     //   y: position.y,
     // })
-    console.log(CapturedUserMouse)
 
     CapturedUserMouse.x = position.x
     CapturedUserMouse.y = position.y

@@ -101,9 +101,7 @@ export const RenderEditableString: FC<{
       if (props.nextHierarchy !== null) {
         objPath += `.${props.nextHierarchy}`
       }
-
-      // console.log(props.hierarchy, 'current key is😀', props.nextHierarchy, props.fromType)
-      console.log(objPath, `nexthierarchy : ${props.nextHierarchy}`)
+ 
     } else if (props.fromType === 'array') {
     } else {
     }

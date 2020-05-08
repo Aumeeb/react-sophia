@@ -13,7 +13,6 @@ function Recurisve(props: { deep: number; left: number; children?: any }) {
       <div
         onClick={e => {
           e.stopPropagation()
-          console.log(deep)
 
           ss(!s)
         }}
@@ -31,8 +30,6 @@ function Recurisve(props: { deep: number; left: number; children?: any }) {
 function Recurisve2(deep: number, left: number) {
   deep -= 1
   if (deep > 0) {
-    console.log(deep)
-
     return (
       <div style={{ background: 'auto', paddingLeft: left * deep }}>
         {deep}
@@ -61,14 +58,14 @@ function App() {
 
       {/* <div
         onClick={() => {
-          console.log(11111)
+  
         }}
       >
         11111
         <div
           onClick={e => {
              e.stopPropagation()
-            console.log(22222)
+            
           }}
         >
           22222

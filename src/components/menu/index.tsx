@@ -40,7 +40,6 @@ const _Menu: FC<MenuProps> = props => {
 
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
-  console.log('menu', object)
 
   return (
     <div
