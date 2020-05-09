@@ -6,7 +6,6 @@ import { useObject } from '../../hooks/useObject'
 import { ColorfulRows } from '../prop-inspect/type-decorator'
 import { AvailableNav } from '../../type'
 import { getUid } from '../../util/random'
-import { testdata } from '../draggable'
 
 export type LimitedReversedActiveSceneName = '5a947008-9044-11ea-bb37-0242ac130002'
 export type LimitedReversedActive = { sceneName: string; tag: LimitedReversedActiveSceneName }
@@ -14,30 +13,33 @@ export const LIMITED_SCENES_TAG: LimitedReversedActive = {
   sceneName: '⚙️menu⚙️',
   tag: '5a947008-9044-11ea-bb37-0242ac130002',
 }
-
+let tabIndex: number = 0
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
   let eachIconWidth = 50
-
+  // let [tabIndex, setTabIndex] = useState<number>(0)
   let { object, updateObject } = useObject<{
     nav: AvailableNav
-    t: any
     source: { [key: string]: any }
     tabs: { tabName: string; select: boolean }[]
+    tabNames?: string[]
   }>(
     {
       nav: '📜',
-      t: testdata,
       source: os.currentScene.object ?? {},
       tabs: os.scenes.map(tabName => ({ tabName, select: false })),
-    },
-    { sceneName: LIMITED_SCENES_TAG.sceneName }
+    }
+    // { sceneName: LIMITED_SCENES_TAG.sceneName }
   )
 
   useEffect(() => {
     os.addUseStateReturnValuesOfSystem({ act: { o: object, setObj: updateObject }, sence: LIMITED_SCENES_TAG })
   }, [])
-
+  useEffect(() => {
+    const tabs = os.scenes.map(tabName => ({ tabName, select: false }))
+    tabs[tabIndex].select = false
+    updateObject({ tabs })
+  }, [object.tabs.length])
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
 
@@ -89,7 +91,8 @@ const _Menu: FC<MenuProps> = props => {
                     os.syncScene(curState.tabName)
                     object.tabs.forEach(p => (p.select = false))
                     object.tabs[i].select = true
-
+                    console.log('~~~', os.currentScene, object.tabs)
+                    tabIndex = i // which index of tab has been clicked
                     updateObject({ source: os.currentScene.object, tabs: object.tabs })
                   }}
                 >

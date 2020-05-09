@@ -14,12 +14,12 @@ const _: FC = () => {
         },
       },
       books: [],
-      firstName: 'linda',
-      lastName: '',
-      age: '',
+      firstName: 'lins',
+      lastName: '~',
+      age: 5,
       grandson: { name: 'minay' },
     },
-    { sceneName: '🦠booklist🦠' }
+    { sceneName: '🦠booklist2🦠' }
   )
   useEffect(() => {
     fetchData()
@@ -43,7 +43,7 @@ const _: FC = () => {
           Your last name : <Input type="text" value={object.lastName} onChange={e => updateObject('lastName', e.target.value)} />
         </div>
         <div>
-          Your age is : <Input type="text" value={object.age} onChange={e => updateObject('age', e.target.value)} />
+          Your age is : <Input type="text" value={object.age} onChange={e => updateObject('age', +e.target.value)} />
         </div>
 
         <Button type="ghost">{object.grandson.name}</Button>
@@ -72,7 +72,7 @@ const _: FC = () => {
     </div>
   )
 }
-export const Book: FC = props => {
+export const Book2: FC = props => {
   return (
     <BookContextProvider>
       <_ {...props}></_>

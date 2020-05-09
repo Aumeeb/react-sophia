@@ -20,7 +20,7 @@ export function useObject<T extends { [key: string]: any }>(
         if (os.registerState(sceneName)) {
           const synchronizdTabs = os.scenes.map(tabName => ({ tabName, select: false }))
           master.setTreasure({ tabs: synchronizdTabs })
-          console.log(synchronizdTabs)
+          console.log(sceneName, synchronizdTabs)
         }
       }
     }
@@ -55,11 +55,7 @@ export function useObject<T extends { [key: string]: any }>(
       if (sceneName === os.currentScene.sceneName) {
         os.useStateReturnAction[0].act.setObj({ source: { ...shallowObject } })
       }
-      // if (sceneName !== os.useStateReturnAction.find(p => p.sence.tag === '5a947008-9044-11ea-bb37-0242ac130002')?.sence.sceneName) {
-      // const action = os.useStateReturnAction.find(p => p.sence.tag === '5a947008-9044-11ea-bb37-0242ac130002')
-      // action?.act.setObj({ source: { ...shallowObject } })
-      // return
-      // }
+
       setO({ ...shallowObject })
     } catch (error) {}
   }

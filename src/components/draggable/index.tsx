@@ -3,34 +3,6 @@ import { useObject } from '../../hooks/useObject'
 import { getWidth, EvaluateElementArea, getHeight } from '../../util/browser'
 import { toPixel } from '../../shared/styles'
 
-export const testdata = [
-  React,
-  1,
-  '2321312312',
-  '23213123123232132',
-  true,
-  undefined,
-  void 0,
-  null,
-  [1, 2, 3, [4]],
-  () => {},
-  function (a: any, b: any) {
-    console.log(a + b)
-  },
-  (firstName: any, lastName: any) => {
-    let fullName = firstName + lastName
-    console.log(fullName)
-  },
-  function (z: any) {},
-  {
-    c: (name: any) => {
-      return name
-    },
-  },
-  Symbol('1'),
-  {},
-  { name: 2 },
-]
 export interface DraggableProps {
   className?: string
   position?: {
@@ -92,18 +64,14 @@ function syncDragPosition(target: HTMLDivElement | null, info: CapturedUserMouse
   }
 }
 const _Draggable: FC<DraggableProps> = props => {
-  const { object, updateObject } = useObject(
-    {
-      arr: testdata,
-      callee: 'draggable',
-      onMouseUp: () => {},
-      alert() {
-        alert(2)
-      },
-      obj: { name: 5, age: 6, typescript: testdata },
+  const { object, updateObject } = useObject({
+    callee: 'draggable',
+    onMouseUp: () => {},
+    alert() {
+      alert(2)
     },
-    { sceneName: '😀_Draggable😀' }
-  )
+    obj: { name: 5, age: 6 },
+  })
 
   const draggablArea = useRef<HTMLDivElement>(null)
   const { position = { x: 500, y: 20 } } = props //set hatch place
