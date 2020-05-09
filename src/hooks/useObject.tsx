@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { os } from '../archive/objectStore'
-import { sceneNameGenerator } from '../util/random'
+import { LIMITED_SCENES_TAG } from '../components/menu'
 
 export function useObject<T extends { [key: string]: any }>(
   initO: T,
   option: {
     supervise?: boolean
-
     sceneName?: string
   } = {}
 ) {
@@ -15,6 +14,16 @@ export function useObject<T extends { [key: string]: any }>(
 
   if (sceneName !== '') {
     os.collectObject(option.sceneName!, { treasure: object, setTreasure: setO })
+    if (sceneName !== LIMITED_SCENES_TAG.sceneName) {
+      const master = os.getMaster()
+      if (master) {
+        if (os.registerState(sceneName)) {
+          const synchronizdTabs = os.scenes.map(tabName => ({ tabName, select: false }))
+          master.setTreasure({ tabs: synchronizdTabs })
+          console.log(synchronizdTabs)
+        }
+      }
+    }
   }
 
   /**
@@ -40,8 +49,9 @@ export function useObject<T extends { [key: string]: any }>(
 
       /**
        *  scenaName will be changed by current who called function `SetObject`
-       * 
-       */ 
+       *
+       */
+
       if (sceneName === os.currentScene.sceneName) {
         os.useStateReturnAction[0].act.setObj({ source: { ...shallowObject } })
       }

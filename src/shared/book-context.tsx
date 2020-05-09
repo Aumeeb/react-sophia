@@ -8,16 +8,19 @@ type BookContextType = {
 } & typeof api
 const Books = [
   {
-    name: '直呼',
+    name: 'Tina',
     id: 1,
+    age: 16,
   },
   {
-    name: '是的',
+    name: 'Iera',
     id: 2,
+    age: 13,
   },
   {
-    name: '个是',
+    name: 'Linas',
     id: 3,
+    age: 15,
   },
 ]
 const api = {
@@ -28,7 +31,7 @@ const api = {
     return Promise.resolve(Books)
   },
   searchBook(id: number) {
-    let found = Books.filter(p => (p.id = id))
+    let found = Books.filter(p => +p.id === +id)
     return Promise.resolve(found)
   },
 }

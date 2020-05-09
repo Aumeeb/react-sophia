@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import './index.css'
 
 import { os } from '../../archive/objectStore'
@@ -10,7 +10,7 @@ import { testdata } from '../draggable'
 
 export type LimitedReversedActiveSceneName = '5a947008-9044-11ea-bb37-0242ac130002'
 export type LimitedReversedActive = { sceneName: string; tag: LimitedReversedActiveSceneName }
-const LIMITED_SCENES_TAG: LimitedReversedActive = {
+export const LIMITED_SCENES_TAG: LimitedReversedActive = {
   sceneName: '⚙️menu⚙️',
   tag: '5a947008-9044-11ea-bb37-0242ac130002',
 }
@@ -33,7 +33,7 @@ const _Menu: FC<MenuProps> = props => {
     },
     { sceneName: LIMITED_SCENES_TAG.sceneName }
   )
-  // const [currentStateList, setCurrentStateList] = useState(os.scenes.map(tabName => ({ tabName, select: false })))
+
   useEffect(() => {
     os.addUseStateReturnValuesOfSystem({ act: { o: object, setObj: updateObject }, sence: LIMITED_SCENES_TAG })
   }, [])
@@ -65,7 +65,7 @@ const _Menu: FC<MenuProps> = props => {
   function renderState() {
     return (
       <div>
-        {Object.keys(object.source).map(key => {
+        {Object.keys(object.source ?? {}).map(key => {
           const value = object.source[key]
           return <ColorfulRows objectKey={key} key={getUid()} value={value} />
         })}

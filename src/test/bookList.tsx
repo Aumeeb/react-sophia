@@ -1,5 +1,6 @@
 import React, { FC, useContext, useEffect } from 'react'
 import { BookContextProvider, BookContext } from '../shared/book-context'
+import { Button, Input, Table } from 'antd'
 import { useObject } from '../hooks/useObject'
 
 const _: FC = () => {
@@ -31,33 +32,43 @@ const _: FC = () => {
     })
   }
   return (
-    <>
-      <button>{object.name}</button>
+    <div style={{ padding: 20, width: '50%' }}>
+      <Button type="primary">{object.name}</Button>
       <div>
         <div>
-          Your first name : <input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
+          Your first name : <Input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
         </div>
         <div>
-          Your last name : <input type="text" value={object.lastName} onChange={e => updateObject('lastName', e.target.value)} />
+          Your last name : <Input type="text" value={object.lastName} onChange={e => updateObject('lastName', e.target.value)} />
         </div>
         <div>
-          Your age is : <input type="text" value={object.age} onChange={e => updateObject('age', e.target.value)} />
+          Your age is : <Input type="text" value={object.age} onChange={e => updateObject('age', e.target.value)} />
         </div>
 
-        <button>{object.grandson.name}</button>
+        <Button type="ghost">{object.grandson.name}</Button>
       </div>
 
-      <table>
-        {object.books.map((book: { name: string; id: string }) => {
-          return (
-            <tr>
-              <td>{book.id}</td>
-              <td>{book.name}</td>
-            </tr>
-          )
-        })}
-      </table>
-    </>
+      <Table
+        dataSource={object.books}
+        columns={[
+          {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+          },
+          {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+          },
+          {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+          },
+        ]}
+      />
+    </div>
   )
 }
 export const Book: FC = props => {

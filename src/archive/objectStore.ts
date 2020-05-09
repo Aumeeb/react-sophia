@@ -1,13 +1,14 @@
-import { LimitedReversedActive } from "../components/menu"
+import { LimitedReversedActive, LIMITED_SCENES_TAG } from "../components/menu"
 
 type StatePool<S> = {
     treasure: S,
-    setTreasure: (value: any) => void
+    setTreasure: React.Dispatch<React.SetStateAction<S>>
 }
 type UseStateReturnInfo = { sence: LimitedReversedActive, act: { o: {}, setObj: any } } // ((value: any) => void | (key: any, val: any) => void)
 class ObjectStore {
     private _system_useState: UseStateReturnInfo[] = []
     private _sceneName: string = ''
+    private _registeredStateName: string[] = []   //to record which stateObject has been register .. if registered it should not  be admit func `useObject` to update repeatedly!
     get currentScene() {
         return {
             sceneName: this._sceneName,
@@ -42,10 +43,21 @@ class ObjectStore {
     /** automatically store the state object to this storage */
     collectObject<S>(key: string, value: StatePool<S>) {
         this.treasures.set(key, value)
+
+    }
+    registerState(name: string) {
+        if (!this._registeredStateName.includes(name)) {
+            this._registeredStateName.push(name)
+            return true
+        }
+        return false
     }
     /** To getStateObject  */
     get(key: string) {
         return this.treasures.get(key)
+    }
+    getMaster() {
+        return this.get(LIMITED_SCENES_TAG.sceneName)
     }
     /** which state should be displayed?  */
     syncScene(name: string): void {
