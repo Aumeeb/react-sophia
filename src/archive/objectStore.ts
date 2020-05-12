@@ -2,10 +2,15 @@ import { LimitedReversedActive, LIMITED_SCENES_TAG } from "../components/menu"
 import { ObjectDataProcess } from "./object-data-process"
 
 class ObjectStore extends ObjectDataProcess {
+
     private _system_menu_useState: UseStateReturnInfo = null
     private _sceneName: string = ''
     private _registeredStateName: string[] = []   //to record which stateObject has been register .. if registered it should not  be admit func `useObject` to update repeatedly!
     private readonly treasures: Map<string, StatePool<any>> = new Map()
+
+    public config = {
+        isSupervise: true
+    }
     get currentScene() {
         return {
             sceneName: this._sceneName,

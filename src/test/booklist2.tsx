@@ -19,7 +19,7 @@ const _: FC = () => {
       age: 5,
       grandson: { name: 'minay' },
     },
-    { sceneName: '🦠booklist2🦠' }
+    { sceneName: '📜booklist2📜' }
   )
   useEffect(() => {
     fetchData()
@@ -34,7 +34,7 @@ const _: FC = () => {
 
   return (
     <div style={{ padding: 20, width: '50%' }}>
-      <Button type="primary">{object.name}</Button>   {/*  efe  */}
+      <Button type="primary">{object.name}</Button> {/*  efe  */}
       <div>
         <div>
           Your first name : <Input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
@@ -48,7 +48,6 @@ const _: FC = () => {
 
         <Button type="ghost">{object.grandson.name}</Button>
       </div>
-
       <Table
         dataSource={object.books}
         columns={[

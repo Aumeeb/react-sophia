@@ -8,7 +8,7 @@ export const Sophia: FC<ISophia> = props => {
   return (
     <>
       <Draggable className="grdq2a0x2p6xt">
-        <Menu minWidth={200} maxWidth={600} emojiIcon={props.emojiIcon ?? '🎊'} scale={3} throb menuName={MENU_ROUTER} />
+        <Menu minWidth={200} maxWidth={600} supervise={props.supervise} emojiIcon={props.emojiIcon ?? '🎊'} scale={3} throb menuName={MENU_ROUTER} />
       </Draggable>
     </>
   )
@@ -17,4 +17,5 @@ export const Sophia: FC<ISophia> = props => {
 export interface ISophia {
   /**It should be a single emoji String for best presentation, you can search emoji on google as you like 😀 */
   emojiIcon?: string
+  supervise?: boolean
 }

@@ -2,6 +2,14 @@ import { useState } from 'react'
 import { os } from '../archive/objectStore'
 import { LIMITED_SCENES_TAG } from '../components/menu'
 
+/**
+ * This function is a multifunction which take 2 arguments that used to reserve ObjectState for you in your page,
+ * you can call this function multi times in the same page or other pages.
+ * @template T is object type  like `{} , {age:5} , {age:5, cardNames:[100,200,300]}` all were valid.
+ * @param initO  The data object typeof `T` which want to reserve data for you
+ * @param [option]
+ * @returns  { object,updateObject,recover,}
+ */
 export function useObject<T extends { [key: string]: any }>(
   initO: T,
   option: {
@@ -17,7 +25,7 @@ export function useObject<T extends { [key: string]: any }>(
   const { sceneName = '' } = option
 
   // if current sceneName does not equal to ''  so it considered a superviser object.
-  if (sceneName !== '') {
+  if (sceneName !== '' && os.config.isSupervise) {
     const success = os.collectObject(option.sceneName!, { treasure: object, setTreasure: setO })
     if (success) {
       const menuAction = os.getMenuStateReturnAction()

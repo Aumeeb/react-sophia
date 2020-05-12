@@ -18,6 +18,7 @@ let tabIndex: number = 0
 const _Menu: FC<MenuProps> = props => {
   let fontSize: number = 12
   let eachIconWidth = 50
+  os.config.isSupervise = props.supervise ?? false
   let { update, setUpdate } = useUpdate()
   let { object, updateObject } = useObject<{
     nav: AvailableNav
@@ -52,7 +53,7 @@ const _Menu: FC<MenuProps> = props => {
   //default value assignment
   let { emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth } = props
 
-  return (
+  return props?.supervise === true ? (
     <div
       className={throb ? 'menu-icon-beat-up' : ''}
       style={{
@@ -72,7 +73,10 @@ const _Menu: FC<MenuProps> = props => {
       </header>
       {renderContentByClickedMenu()}
     </div>
+  ) : (
+    <></>
   )
+
   function renderState() {
     return (
       <div>
@@ -137,5 +141,6 @@ export interface MenuProps {
   offsetTop?: number
   offsetLeft?: number
   throb?: boolean
+  supervise?: boolean
   menuName: readonly { name: string; nav: AvailableNav }[]
 }
