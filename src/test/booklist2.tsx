@@ -34,7 +34,7 @@ const _: FC = () => {
 
   return (
     <div style={{ padding: 20, width: '50%' }}>
-      <Button type="primary">{object.name}</Button>
+      <Button type="primary">{object.name}</Button>   {/*  efe  */}
       <div>
         <div>
           Your first name : <Input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />

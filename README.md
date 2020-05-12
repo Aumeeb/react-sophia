@@ -24,14 +24,14 @@ React
 
 - 🏗️ Step 1 : Put react-sophia component inside your top level of Component, it should be installed only once in your entire project that is better.
 
-```javascript
+```jsx
 import React from 'react'
 import { Book } from './test/bookList' // page components
-import { Sophia } from 'react-sophia'  // import react-sophia in your top level of React components is recommended
+import { Sophia } from 'react-sophia'  
 function App() {
   return (
     <div>
-      <Sophia emojiIcon="💕" />
+      <Sophia emojiIcon="💕" />     {/*  💡   import react-sophia in your top level of React components is recommended  */} 
       <Book />
        <.../>
     </div>
@@ -43,7 +43,7 @@ export default App
 
 - 🏗️🏗️ step 2 : To provide Data to react-sophia for supervise. you should call **_useObject_** from react-sophia
 
-```typeScript
+```tsx
 import React from 'react'
 import { useObject } from 'react-sophia'
 
