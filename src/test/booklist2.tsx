@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect } from 'react'
 import { BookContextProvider, BookContext } from '../sophia/shared/book-context'
 import { Button, Input, Table } from 'antd'
-import { useObject } from '../sophia'
+import { useObject } from '../dist/index'
 
 const _: FC = () => {
   const { object, updateObject } = useObject(

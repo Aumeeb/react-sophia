@@ -1,16 +1,10 @@
 {
   "name": "react-sophia",
-  "version": "0.0.7",
+  "version": "0.1.1",
   "description": "react state trace...",
   "main": "index.js",
   "types": "index.d.ts",
   "private": false,
-  "dependencies": {
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
   "keywords": [
     "react",
     "state"
