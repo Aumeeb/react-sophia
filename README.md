@@ -15,6 +15,10 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 - 🔮 Reflect metaData what ever you want
 - 🖱️ Free drag to move by your 🐭.
 
+#Caution!!
+
+- Don't forget to provide the **_sceneName_** to when supervise mode
+
 # Installing
 
 ```bash
