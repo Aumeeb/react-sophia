@@ -1,6 +1,6 @@
 {
   "name": "react-sophia",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "react state trace...",
   "main": "index.js",
   "types": "index.d.ts",
@@ -16,5 +16,7 @@
     "state"
   ],
   "author": "noberk",
-  "license": "ISC"
+  "repository": "https://github.com/noberk/react-sophia",
+  "homepage": "https://github.com/noberk/react-sophia#readme",
+  "license": "MIT"
 }
