@@ -124,8 +124,9 @@ function updateObject<P extends keyof T>(key?: P, value?: T[P]) {.......}
 const { updateObject } = useObject({ name: 'lee', age: 5 })
 // usage 1  update a single property for object directly
 // 💡in TypeScript the first & second arguments keys value range were restricted and infered which can help you check data type is valid. but also in Javascript, unfortunately Javascript didn't throw a error when you are developing.
-updateObject('name', 'li')
+updateObject('name', 'li')   //syntax available ✅
 // usage2 update arbitrary properties for object directly
-// in TypeScript update object properties count should not be out of range of initO when you passed into useObject({...}) because here has a type checking
-updateObject({ name: 'li', age: 6 })
+// in TypeScript update object properties count should not be out of range of initO(previous parameter name) when you passed into useObject({...}) because here has a type checking
+updateObject({ name: 'li', age: 6 })  // syntax available ✅
+updateObject({ name: 'li'})  //syntax available ✅
 ```
