@@ -1,14 +1,11 @@
 import { LimitedReversedActive, LIMITED_SCENES_TAG } from "../components/menu"
+import { ObjectDataProcess } from "./object-data-process"
 
-type StatePool<S> = {
-    treasure: S,
-    setTreasure: React.Dispatch<React.SetStateAction<S>>
-}
-type UseStateReturnInfo = { sence: LimitedReversedActive, act: { o: {}, setObj: any } } // ((value: any) => void | (key: any, val: any) => void)
-class ObjectStore {
-    private _system_useState: UseStateReturnInfo[] = []
+class ObjectStore extends ObjectDataProcess {
+    private _system_menu_useState: UseStateReturnInfo = null
     private _sceneName: string = ''
     private _registeredStateName: string[] = []   //to record which stateObject has been register .. if registered it should not  be admit func `useObject` to update repeatedly!
+    private readonly treasures: Map<string, StatePool<any>> = new Map()
     get currentScene() {
         return {
             sceneName: this._sceneName,
@@ -20,13 +17,19 @@ class ObjectStore {
 
         }
     }
-    get useStateReturnAction() {
-        return this._system_useState
+    getMenuStateReturnAction() {
+        return this._system_menu_useState
     }
-    addUseStateReturnValuesOfSystem(act: UseStateReturnInfo) {
-        this._system_useState.push(act)
+    addMenuAction(act: UseStateReturnInfo) {
+        this._system_menu_useState = act
     }
-    private readonly treasures: Map<string, StatePool<any>> = new Map()
+
+    formatTabNames(): FormatedTabsNameData[] {
+        const names = this.scenes.map(tabName => ({ tabName, select: false }))
+        console.log("aa:", names);
+
+        return names
+    }
 
     /**To get count of the state objects. */
     get count() {
@@ -40,10 +43,25 @@ class ObjectStore {
         }
         return sceneNameList
     }
-    /** automatically store the state object to this storage */
+    /** Automatically store the state object to the storage */
     collectObject<S>(key: string, value: StatePool<S>) {
-        this.treasures.set(key, value)
+        try {
 
+            let preCount = this.treasures.size
+            this.treasures.set(key, value)
+            let nowCount = this.treasures.size
+
+            if (nowCount > preCount) {
+                console.log(key, " was collected by 👾");
+                super.onSave()
+                return true
+            }
+
+        } catch (error) {
+            super.onSaveFailure(error)
+            return false
+        }
+        return false
     }
     registerState(name: string) {
         if (!this._registeredStateName.includes(name)) {
@@ -77,5 +95,12 @@ class ObjectStore {
     //     return isTwoWays
     // }
 }
-export const os = new ObjectStore()
 
+export const os = new ObjectStore()
+console.log("哈哈", os);
+type FormatedTabsNameData = { tabName: string; select: boolean }
+type StatePool<S> = {
+    treasure: S,
+    setTreasure: React.Dispatch<React.SetStateAction<S>>
+}
+type UseStateReturnInfo = { sence: LimitedReversedActive, action: { o: {}, setO: any } } | null  // ((value: any) => void | (key: any, val: any) => void)

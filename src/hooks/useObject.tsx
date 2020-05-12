@@ -5,15 +5,28 @@ import { LIMITED_SCENES_TAG } from '../components/menu'
 export function useObject<T extends { [key: string]: any }>(
   initO: T,
   option: {
-    supervise?: boolean
+    /**
+     *In Testing mode only... remember that  `Do Not Use` the same `name` in the project otherwise stateName in the panel will be rendered only once...
+     * sceneName =   'name1' & 'name2'  were corrent.
+     * sceneName =  'abc' & 'abc' were incorrent.
+     */
     sceneName?: string
   } = {}
 ) {
   const [object, setO] = useState<T>(initO)
-  const { supervise = true, sceneName = '' } = option
+  const { sceneName = '' } = option
 
+  // if current sceneName does not equal to ''  so it considered a superviser object.
   if (sceneName !== '') {
-    os.collectObject(option.sceneName!, { treasure: object, setTreasure: setO })
+    const success = os.collectObject(option.sceneName!, { treasure: object, setTreasure: setO })
+    if (success) {
+      const menuAction = os.getMenuStateReturnAction()
+      console.log(os.count, menuAction)
+
+      if (menuAction) {
+        menuAction.action.setO({ tabs: os.formatTabNames() })
+      }
+    }
     if (sceneName !== LIMITED_SCENES_TAG.sceneName) {
       const master = os.getMaster()
       if (master) {
@@ -53,7 +66,7 @@ export function useObject<T extends { [key: string]: any }>(
        */
 
       if (sceneName === os.currentScene.sceneName) {
-        os.useStateReturnAction[0].act.setObj({ source: { ...shallowObject } })
+        os.getMenuStateReturnAction()?.action.setO({ source: { ...shallowObject } })
       }
 
       setO({ ...shallowObject })
