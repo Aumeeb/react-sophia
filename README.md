@@ -13,7 +13,7 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 - 🐛 Debug your Code dynamically
 - 🔌 Easy install & uninstall
 - 🔮 Reflect metaData what ever you want
-- 🖱️ Free drag to move by your 🐭
+- 🖱️ Free drag to move by your 🐭.
 
 # Installing
 
