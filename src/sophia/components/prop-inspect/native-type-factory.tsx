@@ -1,5 +1,5 @@
 import { ReactNode, useState, useEffect, useRef } from 'react'
-import { getSVG, getExtraSVG } from '../../svgs/svgBadge'
+import { getSVG } from '../../svgs/svgBadge'
 import { SVGBlockSize } from '../../svgs'
 import React from 'react'
 import { CSpan, RenderPropertyOfObjectOrArray, RenderFuncInParameters, RenderEditableString } from './type-decorator'

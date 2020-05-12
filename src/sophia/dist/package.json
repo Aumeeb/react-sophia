@@ -5,8 +5,11 @@
   "main": "index.js",
   "types": "index.d.ts",
   "private": false,
-  "scripts": {
-    "build":"tsc"
+  "dependencies": {
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "keywords": [
     "react",
