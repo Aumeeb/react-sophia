@@ -79,7 +79,7 @@ const Home = () => {
 
 # react-sophia API
 
-**_ import { useObject } from 'react-sophia' _**
+- import { useObject } from 'react-sophia'
 
 ```tsx
 /**
@@ -101,4 +101,8 @@ export function useObject<T extends { [key: string]: any }>(
     sceneName?: string
   } = {}
 )
+
+const { object, updateObject, recover } = useObject({name:'lee', age:5})
+
 ```
+
