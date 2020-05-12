@@ -20,9 +20,7 @@ React
 
 # Example
 
-- step 1
-
-* import react-sophia
+- 🏗️ Step 1 : Put react-sophia component inside your top level of Component
 
 ```javascript
 import React from 'react'
