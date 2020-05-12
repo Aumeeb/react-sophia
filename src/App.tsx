@@ -1,14 +1,12 @@
 import React from 'react'
-import { Sophia } from './sophia'
-import './App.css'
 import 'antd/dist/antd.css'
 import { Book } from './test/bookList'
 import { Book2 } from './test/booklist2'
-
+import { Sophia } from './sophia'
 function App() {
   return (
     <div className="App">
-      <Sophia />
+      <Sophia emojiIcon="💕" />
       <Book />
       <Book2 />
     </div>

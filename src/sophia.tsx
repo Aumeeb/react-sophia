@@ -15,6 +15,6 @@ export const Sophia: FC<ISophia> = props => {
 }
 
 export interface ISophia {
-  /**it should be a single emoji String for best presentation, you can search emoji on google as you like 😀 */
+  /**It should be a single emoji String for best presentation, you can search emoji on google as you like 😀 */
   emojiIcon?: string
 }
