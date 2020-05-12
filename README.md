@@ -20,7 +20,7 @@ React
 
 # Example
 
-- 🏗️ Step 1 : Put react-sophia component inside your top level of Component, it should be installed only once in your entire project that enough.
+- 🏗️ Step 1 : Put react-sophia component inside your top level of Component, it should be installed only once in your entire project that is better.
 
 ```javascript
 import React from 'react'
@@ -39,4 +39,7 @@ function App() {
 export default App
 ```
 
-- 🏗️🏗️ step 2
+- 🏗️🏗️ step 2 : Provide Data to react-sophia for supervise. you should call **_useObject_** from **_import { useObject } from 'react-sophia' _**
+
+```javascript
+```
