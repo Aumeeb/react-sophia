@@ -17,7 +17,7 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 
 #Caution!!
 
-- Don't forget to provide the **_sceneName_** to when supervise mode
+- ❓ Don't forget to provide the **_sceneName_** as second parameter to **_useObject_** to when supervise mode
 
 # Installing
 
