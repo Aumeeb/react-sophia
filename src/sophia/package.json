@@ -1,0 +1,14 @@
+{
+  "name": "react-sophia",
+  "version": "0.0.6",
+  "description": "react state trace...",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "private": false,
+  "keywords": [
+    "react",
+    "state"
+  ],
+  "author": "noberk",
+  "license": "ISC"
+}
