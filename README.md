@@ -131,7 +131,7 @@ updateObject({ name: 'li', age: 6 })  // syntax available ✅
 updateObject({ name: 'li'})  //syntax available ✅
 ```
 
-- **_recover _** to restore the initial object state
+- **_recover_** to restore the initial object state
 
 ```tsx
   /** Recover all the values of each property which you passed in at the `useObject` at the beginning.*/
