@@ -27,11 +27,11 @@ React
 ```jsx
 import React from 'react'
 import { Book } from './test/bookList' // page components
-import { Sophia } from 'react-sophia'  
+import { Sophia } from 'react-sophia'
 function App() {
   return (
     <div>
-      <Sophia emojiIcon="💕" />     {/*  💡   import react-sophia in your top level of React components is recommended  */} 
+      <Sophia emojiIcon="💕" />{/*🥦 import react-sophia in your top level of React components is recommended 🥦 */}
       <Book />
        <.../>
     </div>
