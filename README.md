@@ -4,7 +4,7 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 
 # Snapshot
 
-![Image text](https://raw.githubusercontent.com/noberk/react-sophia/master/src/sophia/assets/exhibition/a.png?token=AGIVD5UHJEPMQ33LTWT3RCC6XKQSG)
+![Image text](https://raw.githubusercontent.com/noberk/react-sophia/master/src/sophia/assets/exhibition/a.png)
 
 ## Features
 
