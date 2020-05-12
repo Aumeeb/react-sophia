@@ -21,6 +21,9 @@ const _: FC = () => {
     },
     { sceneName: '📜booklist2📜' }
   )
+  useObject({ pageName: 'tree' }, { sceneName: '🌲tree🌲' })
+  useObject({ name: '🦚Peacock🦚' }, { sceneName: '🦚Peacock🦚' })
+  useObject({ name: 'frog', height: 67 }, { sceneName: '🐸frog🐸' })
   useEffect(() => {
     fetchData()
   }, [])
