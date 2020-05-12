@@ -141,5 +141,15 @@ updateObject({ name: 'li'})  //syntax available ✅
    * @param omit Omit some of properties of those you wouldn't want to recover.
    */
   function recover(omit?: (keyof T)[]): void
-  function recover(omit?: (keyof T)[]): void {
+  function recover(omit?: (keyof T)[]): void {......}
+
+  //usage 1
+  const {object, updateObject,recover } = useObject({ name: 'lee', age: 5 ,male : true})
+  updateObject({ name: 'li', age: 6000 })  // =>   object  :  { name : "li", age : 6000, male : true }
+  recover()   // => object : { name: 'lee', age: 5 ,male : true}
+
+  //usage2
+  const {object, updateObject,recover } = useObject({ name: 'lee', age: 5 ,male : true})
+  updateObject({ name: 'lee222', age: 5555, male: false })  // =>   object  :  { name : "li", age : 6000, male : true }
+  recover(['male'])   // => object : { name: 'lee', age: 5 ,male : false}
 ```
