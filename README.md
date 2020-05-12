@@ -5,15 +5,15 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 # Features
 
 🧹 Easy to update & maintain & restore Your ReactHookState by TypeScript data type inference
-📺 Visualization 
+📺 Visualization
 🔌 Easy install & uninstall
 
 # Installing
 
 npm install react-sophia
 
-# Supported Framework : React
+# Supported Framework
 
-# Supported Languages : JavaScript, TypeScript
+React
 
 # Example
