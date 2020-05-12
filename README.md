@@ -107,3 +107,9 @@ const { object, updateObject, recover } = useObject({ name: 'lee', age: 5 })
 // usage 2 regular & supervise mode
 const { object, updateObject, recover } = useObject({ name: 'lee', age: 5 }, { sceneName: '🐷hello twins🐷' })
 ```
+
+- **_object_** is readonly which as same as UseState<T>() of hooks's return arguments of the index 0 at the Array,
+
+```tsx
+const { object } = useObject({ name: 'lee', age: 5 })
+```
