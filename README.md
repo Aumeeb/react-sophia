@@ -9,6 +9,7 @@ React-Sophia is a visualization plugin of javascript object trace which promotes
 - 🐛 Debug your Code dynamically
 - 🔌 Easy install & uninstall
 - 🔮 Reflect metaData what ever you want
+- 🖱️ Free drag to move by your 🐭
 
 # Installing
 
@@ -31,7 +32,8 @@ import { Sophia } from 'react-sophia'
 function App() {
   return (
     <div>
-      <Sophia emojiIcon="💕" />{/*🥦 import react-sophia in your top level of React components is recommended 🥦 */}
+       {/*🥦 import react-sophia in your top level of React components is recommended 🥦 */}
+       <Sophia emojiIcon="💕" supervise />
       <Book />
        <.../>
     </div>
@@ -74,3 +76,31 @@ const Home = () => {
 
 }
 ```
+
+# react-sophia API
+
+ useObject  
+
+```tsx
+/**
+ * This function is a multifunction which take 2 arguments that used to reserve ObjectState for you in your page,
+ * you can call this function multi times in the same page or other pages.
+ * @template T is object type  like `{} , {age:5} , {age:5, cardNames:[100,200,300]}` all were valid.
+ * @param initO  The data object typeof `T` which want to reserve data for you
+ * @param [option]
+ * @returns  { object,updateObject,recover,}
+ */
+export function useObject<T extends { [key: string]: any }>(
+  initO: T,
+  option: {
+    /**
+     *In Testing mode only... remember that  `Do Not Use` the same `name` in the project otherwise stateName in the panel will be rendered only once...
+     * sceneName =   'name1' & 'name2'  were corrent.
+     * sceneName =  'abc' & 'abc' were incorrent.
+     */
+    sceneName?: string
+  } = {}
+)
+```
+
+
