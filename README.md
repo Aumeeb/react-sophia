@@ -20,10 +20,14 @@ React
 
 # Example
 
+- step 1
+
+* import react-sophia
+
 ```javascript
 import React from 'react'
 import { Book } from './test/bookList' // page components
-import { Sophia } from './sophia'  // import react-sophia in your top level of React components is recommended
+import { Sophia } from 'react-sophia'  // import react-sophia in your top level of React components is recommended
 function App() {
   return (
     <div>
@@ -36,3 +40,5 @@ function App() {
 
 export default App
 ```
+
+- step 2
