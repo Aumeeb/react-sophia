@@ -102,7 +102,8 @@ export function useObject<T extends { [key: string]: any }>(
   } = {}
 )
 
-const { object, updateObject, recover } = useObject({name:'lee', age:5})
-
+// usage 1  regular mode
+const { object, updateObject, recover } = useObject({ name: 'lee', age: 5 })
+// usage 2 regular & supervise mode
+const { object, updateObject, recover } = useObject({ name: 'lee', age: 5 }, { sceneName: '🐷hello twins🐷' })
 ```
-
