@@ -113,3 +113,19 @@ const { object, updateObject, recover } = useObject({ name: 'lee', age: 5 }, { s
 ```tsx
 const { object } = useObject({ name: 'lee', age: 5 })
 ```
+
+- **_updateObject_** is overload and super function basically as same as UseState<T> of hooks's return arguments of the index 1 at the Array. but its other features
+
+```tsx
+function updateObject(obj: Partial<T>): void
+function updateObject<P extends keyof T>(key: P, value: T[P]): void
+function updateObject<P extends keyof T>(key?: P, value?: T[P]) {.......}
+
+const { updateObject } = useObject({ name: 'lee', age: 5 })
+// usage 1  update a single property for object directly
+// 💡in TypeScript the first & second arguments keys value range were restricted and infered which can help you check data type is valid. but also in Javascript, unfortunately Javascript didn't throw a error when you are developing.
+updateObject('name', 'li')
+// usage2 update arbitrary properties for object directly
+// in TypeScript update object properties count should not be out of range of initO when you passed into useObject({...}) because here has a type checking
+updateObject({ name: 'li', age: 6 })
+```
