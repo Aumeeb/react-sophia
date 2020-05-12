@@ -7,17 +7,17 @@ const _: FC = () => {
   const { object, updateObject } = useObject(
     {
       ...useContext(BookContext),
-      d: {
-        level1: {
-          nname: 512,
-          age: 6,
-        },
+      level1: {
+        nname: 512,
+        age: 6,
+        grandson: { name: 'minay' },
       },
+      pageName: '📜booklist2📜',
+      otherType: [Symbol('todo'), true, null],
       books: [],
       firstName: 'lins',
       lastName: '~',
       age: 5,
-      grandson: { name: 'minay' },
     },
     { sceneName: '📜booklist2📜' }
   )
@@ -34,7 +34,7 @@ const _: FC = () => {
 
   return (
     <div style={{ padding: 20, width: '50%' }}>
-      <Button type="primary">{object.name}</Button> {/*  efe  */}
+      <Button type="primary">{object.pageName}</Button> {/*  efe  */}
       <div>
         <div>
           Your first name : <Input type="text" value={object.firstName} onChange={e => updateObject('firstName', e.target.value)} />
@@ -46,7 +46,7 @@ const _: FC = () => {
           Your age is : <Input type="text" value={object.age} onChange={e => updateObject('age', +e.target.value)} />
         </div>
 
-        <Button type="ghost">{object.grandson.name}</Button>
+        <Button type="ghost">{object.level1.grandson.name}</Button>
       </div>
       <Table
         dataSource={object.books}
