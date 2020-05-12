@@ -33,7 +33,7 @@ function App() {
   return (
     <div>
        {/*🥦 import react-sophia in your top level of React components is recommended 🥦 */}
-       <Sophia emojiIcon="💕" supervise />
+       <Sophia emojiIcon="💕" supervise /> {/* you can enable supervise in development mode  or  remove supervise property in production mode */}
       <Book />
        <.../>
     </div>
