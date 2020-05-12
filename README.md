@@ -2,15 +2,17 @@
 
 React-Sophia is a visualization plugin of javascript object trace which promotes development speed when you are debugging & logging variables. and it will provide other amazing features that is on the way!
 
-# Features
+## Features
 
-🧹 Easy to update & maintain & restore Your ReactHookState by TypeScript data type inference
-📺 Visualization
-🔌 Easy install & uninstall
+- 🧹 Easy to update & maintain & restore Your ReactHookState by TypeScript data type inference
+- 📺 Visualization
+- 🔌 Easy install & uninstall
 
 # Installing
 
+```bash
 npm install react-sophia
+```
 
 # Supported Framework
 
