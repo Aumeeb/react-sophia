@@ -98,3 +98,13 @@
   background: rgb(255, 161, 177);
   color: #fff;
 }
+
+.github_Icon {
+  background-image: url(../../assets/exhibition/GitHub-Mark-64px.png);
+  background-size: cover;
+  display: inline-block;
+  width: 42px;
+  height: 40px;
+  position: relative;
+  top: 6px;
+}

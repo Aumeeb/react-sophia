@@ -7,6 +7,7 @@ import { ColorfulRows } from '../prop-inspect/type-decorator'
 import { AvailableNav } from '../../type'
 import { getUid } from '../../util/random'
 import { useUpdate } from '../../hooks/useUpdate'
+import { IconSourceType } from '../../shared/emojis'
 
 export type LimitedReversedActiveSceneName = '5a947008-9044-11ea-bb37-0242ac130002'
 export type LimitedReversedActive = { sceneName: string; tag: LimitedReversedActiveSceneName }
@@ -65,8 +66,8 @@ const _Menu: FC<MenuProps> = props => {
           <span>{emojiIcon}</span>
           {/* render menus icon emoji */}
           {props.menuName.map((item, index) => (
-            <span key={getUid()} className="menu-panel-item-span " onClick={() => updateObject('nav', item.nav)}>
-              {item.nav.toString()}
+            <span key={getUid()} className={`menu-panel-item-span ${item.type === 'png' ? 'github_Icon' : 0}`} onClick={() => updateObject('nav', item.nav)}>
+              {item.type === 'emoji' ? item.nav.toString() : ''}
             </span>
           ))}
         </div>
@@ -90,7 +91,9 @@ const _Menu: FC<MenuProps> = props => {
 
   function renderContentByClickedMenu() {
     if (object.nav === '🗑️') return
-
+    if (object.nav === 'github') {
+      window.open(atob('aHR0cHM6Ly9naXRodWIuY29tL25vYmVyay9yZWFjdC1zb3BoaWE='))
+    }
     if (object.nav === '📜') {
       return (
         <>
@@ -142,5 +145,5 @@ export interface MenuProps {
   offsetLeft?: number
   throb?: boolean
   supervise?: boolean
-  menuName: readonly { name: string; nav: AvailableNav }[]
+  menuName: readonly { name: string; nav: AvailableNav; type: IconSourceType }[]
 }
