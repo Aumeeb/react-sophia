@@ -1,16 +1,16 @@
-import React from 'react'
-import 'antd/dist/antd.css'
+import React from "react";
+import "antd/dist/antd.css";
 
-import { Book2 } from './test/books.test'
-import { Sophia } from '../src/sophia'
+import { Books } from "./test/books";
+import { Sophia } from "../src/sophia";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Sophia emojiIcon="💕" supervise />
-      <Book2 />
-    </div>
-  )
+      <Books />
+    </>
+  );
 }
 
-export default App
+export default App;

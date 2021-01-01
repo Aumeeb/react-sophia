@@ -92,7 +92,7 @@ const _: FC = () => {
     </div>
   );
 };
-export const Book2: FC = (props) => {
+export const Books: FC = (props) => {
   return (
     <BookContextProvider>
       <_ {...props}></_>
