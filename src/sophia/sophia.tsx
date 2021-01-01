@@ -1,26 +1,25 @@
-import React, { FC } from "react";
-import Draggable from "react-draggable";
-import { Menu } from "./components/menu";
-import "./sophia.css";
-import { MENU_ROUTER } from "./shared/emojis";
+import React, {FC} from 'react'
+import Draggable from 'react-draggable'
+import {Menu} from './components/menu'
+import './sophia.css'
+import {MENU_ROUTER} from './shared/emojis'
 
 export const Sophia: FC<ISophia> = (props) => {
   return (
     <>
-      <Draggable>
+      <Draggable defaultClassName="grdq2a0x2p6xt">
         <span
           style={{
             width: 600,
-            display: "inline-block",
+            display: 'inline-block',
             zIndex: 100,
-            position: "absolute",
-          }}
-        >
+            position: 'absolute',
+          }}>
           <Menu
             minWidth={200}
             maxWidth={600}
             supervise={props.supervise}
-            emojiIcon={props.emojiIcon ?? "🎊"}
+            emojiIcon={props.emojiIcon ?? '🎊'}
             scale={3}
             throb
             menuName={MENU_ROUTER}
@@ -28,11 +27,11 @@ export const Sophia: FC<ISophia> = (props) => {
         </span>
       </Draggable>
     </>
-  );
-};
+  )
+}
 
 export interface ISophia {
   /**It should be a single emoji String for best presentation, you can search emoji on google as you like 😀 */
-  emojiIcon?: string;
-  supervise?: boolean;
+  emojiIcon?: string
+  supervise?: boolean
 }

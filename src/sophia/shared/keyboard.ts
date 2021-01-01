@@ -1,3 +1,3 @@
 export enum KeyBoard {
-    Enter = 0x0D
+  Enter = 0x0d,
 }

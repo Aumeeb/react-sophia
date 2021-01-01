@@ -1,89 +1,81 @@
-import React, { FC, useEffect } from "react";
-import "./index.css";
+import React, {FC, useEffect} from 'react'
+import './index.css'
 
-import { os } from "../../archive/objectStore";
-import { useObject } from "../../hooks/useObject";
-import { ColorfulRows } from "../prop-inspect/type-decorator";
-import { AvailableNav } from "../../type";
-import { getUid } from "../../util/random";
-import { useUpdate } from "../../hooks/useUpdate";
-import { IconSourceType } from "../../shared/emojis";
+import {os} from '../../archive/objectStore'
+import {useObject} from '../../hooks/useObject'
+import {ColorfulRows} from '../prop-inspect/type-decorator'
+import {AvailableNav} from '../../type'
+import {getUid} from '../../util/random'
+import {useUpdate} from '../../hooks/useUpdate'
+import {IconSourceType} from '../../shared/emojis'
 
-export type LimitedReversedActiveSceneName = "5a947008-9044-11ea-bb37-0242ac130002";
+export type LimitedReversedActiveSceneName = '5a947008-9044-11ea-bb37-0242ac130002'
 export type LimitedReversedActive = {
-  sceneName: string;
-  tag: LimitedReversedActiveSceneName;
-};
+  sceneName: string
+  tag: LimitedReversedActiveSceneName
+}
 export const LIMITED_SCENES_TAG: LimitedReversedActive = {
-  sceneName: "⚙️menu⚙️",
-  tag: "5a947008-9044-11ea-bb37-0242ac130002",
-};
-let tabIndex: number = 0;
+  sceneName: '⚙️menu⚙️',
+  tag: '5a947008-9044-11ea-bb37-0242ac130002',
+}
+let tabIndex: number = 0
 const _Menu: FC<MenuProps> = (props) => {
-  let fontSize: number = 12;
-  let eachIconWidth = 50;
-  os.config.isSupervise = props.supervise ?? false;
-  let { update, setUpdate } = useUpdate();
-  let { object, updateObject } = useObject<{
-    nav: AvailableNav;
-    source: { [key: string]: any };
-    tabs: { tabName: string; select: boolean }[];
-    tabNames?: string[];
+  let fontSize: number = 12
+  let eachIconWidth = 50
+  os.config.isSupervise = props.supervise ?? false
+  let {update, setUpdate} = useUpdate()
+  let {object, updateObject} = useObject<{
+    nav: AvailableNav
+    source: {[key: string]: any}
+    tabs: {tabName: string; select: boolean}[]
+    tabNames?: string[]
   }>({
-    nav: "📜",
+    nav: '📜',
     source: os.currentScene.object ?? {},
-    tabs: os.scenes.map((tabName) => ({ tabName, select: false })),
-  });
+    tabs: os.scenes.map((tabName) => ({tabName, select: false})),
+  })
 
   useEffect(() => {
     //to save itself to database.
     os.addMenuAction({
-      action: { o: object, setO: updateObject },
+      action: {o: object, setO: updateObject},
       sence: LIMITED_SCENES_TAG,
-    });
-  }, []);
-  useEffect(() => {}, [update]);
+    })
+  }, [])
+  useEffect(() => {}, [update])
   useEffect(() => {
     try {
-      const tabs = os.scenes.map((tabName) => ({ tabName, select: false }));
+      const tabs = os.scenes.map((tabName) => ({tabName, select: false}))
       if (tabs.length === 0) {
       } else {
-        tabs[tabIndex].select = false;
-        updateObject({ tabs });
+        tabs[tabIndex].select = false
+        updateObject({tabs})
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  }, [object.tabs.length]);
+  }, [object.tabs.length])
   //default value assignment
-  let {
-    emojiIcon = "📓 ",
-    scale = 2,
-    throb = true,
-    minWidth,
-    maxWidth,
-  } = props;
+  let {emojiIcon = '📓 ', scale = 2, throb = true, minWidth, maxWidth} = props
 
   return props?.supervise === true ? (
     <div
-      className={throb ? "menu-icon-beat-up" : ""}
+      className={throb ? 'menu-icon-beat-up' : ''}
       style={{
         fontSize: scale * fontSize,
-      }}
-    >
+      }}>
       <header>
-        <div className="menu-panel-wrapper" style={{ width: eachIconWidth }}>
+        <div className="menu-panel-wrapper" style={{width: eachIconWidth}}>
           <span>{emojiIcon}</span>
           {/* render menus icon emoji */}
           {props.menuName.map((item, index) => (
             <span
               key={getUid()}
               className={`menu-panel-item-span ${
-                item.type === "png" ? "github_Icon" : 0
+                item.type === 'png' ? 'github_Icon' : 0
               }`}
-              onClick={() => updateObject("nav", item.nav)}
-            >
-              {item.type === "emoji" ? item.nav.toString() : ""}
+              onClick={() => updateObject('nav', item.nav)}>
+              {item.type === 'emoji' ? item.nav.toString() : ''}
             </span>
           ))}
         </div>
@@ -92,47 +84,46 @@ const _Menu: FC<MenuProps> = (props) => {
     </div>
   ) : (
     <></>
-  );
+  )
 
   function renderState() {
     return (
       <div>
         {Object.keys(object.source ?? {}).map((key) => {
-          const value = object.source[key];
-          return <ColorfulRows objectKey={key} key={getUid()} value={value} />;
+          const value = object.source[key]
+          return <ColorfulRows objectKey={key} key={getUid()} value={value} />
         })}
       </div>
-    );
+    )
   }
 
   function renderContentByClickedMenu() {
-    if (object.nav === "🗑️") return;
-    if (object.nav === "github") {
-      window.open(atob("aHR0cHM6Ly9naXRodWIuY29tL25vYmVyay9yZWFjdC1zb3BoaWE="));
+    if (object.nav === '🗑️') return
+    if (object.nav === 'github') {
+      window.open(atob('aHR0cHM6Ly9naXRodWIuY29tL25vYmVyay9yZWFjdC1zb3BoaWE='))
     }
-    if (object.nav === "📜") {
+    if (object.nav === '📜') {
       return (
         <>
           <div className="menu-panel-info">
-            <nav style={{ minWidth, maxWidth }}>
+            <nav style={{minWidth, maxWidth}}>
               {/* <span onClick={() => setUpdate()}>♻️</span> */}
               {object.tabs.map((curState, i) => (
                 <span
                   key={getUid()}
                   className={`nav-span ${
-                    curState.select ? "selected-callee" : ""
+                    curState.select ? 'selected-callee' : ''
                   }`}
                   onClick={() => {
-                    os.syncScene(curState.tabName);
-                    object.tabs.forEach((p) => (p.select = false));
-                    object.tabs[i].select = true;
-                    tabIndex = i; // which index of tab has been clicked
+                    os.syncScene(curState.tabName)
+                    object.tabs.forEach((p) => (p.select = false))
+                    object.tabs[i].select = true
+                    tabIndex = i // which index of tab has been clicked
                     updateObject({
                       source: os.currentScene.object,
                       tabs: object.tabs,
-                    });
-                  }}
-                >
+                    })
+                  }}>
                   {curState.tabName}
                   <br />
                 </span>
@@ -140,37 +131,36 @@ const _Menu: FC<MenuProps> = (props) => {
             </nav>
           </div>
           <div
-            style={{ marginTop: -1 }}
-            className="menu-panel-info anim-ease-width-height"
-          >
+            style={{marginTop: -1}}
+            className="menu-panel-info anim-ease-width-height">
             {renderState()}
           </div>
         </>
-      );
+      )
     }
   }
-};
+}
 
 export const Menu: FC<MenuProps> = (props) => {
   return (
     <div>
       <_Menu {...props} />
     </div>
-  );
-};
+  )
+}
 
 export interface MenuProps {
-  minWidth: number;
-  maxWidth: number;
-  emojiIcon?: string;
-  scale?: number;
-  offsetTop?: number;
-  offsetLeft?: number;
-  throb?: boolean;
-  supervise?: boolean;
+  minWidth: number
+  maxWidth: number
+  emojiIcon?: string
+  scale?: number
+  offsetTop?: number
+  offsetLeft?: number
+  throb?: boolean
+  supervise?: boolean
   menuName: readonly {
-    name: string;
-    nav: AvailableNav;
-    type: IconSourceType;
-  }[];
+    name: string
+    nav: AvailableNav
+    type: IconSourceType
+  }[]
 }

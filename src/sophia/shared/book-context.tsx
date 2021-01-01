@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC, ReactElement, ReactNode } from 'react'
+import React, {useEffect, useState, FC, ReactElement, ReactNode} from 'react'
 
 interface FCC {
   children: ReactNode
@@ -25,24 +25,34 @@ const Books = [
 ]
 const api = {
   getTable() {
-    return Promise.resolve<{ name: string; age: number }[]>([{ name: 'lee', age: 5 }])
+    return Promise.resolve<{name: string; age: number}[]>([
+      {name: 'lee', age: 5},
+    ])
   },
   getBooks() {
     return Promise.resolve(Books)
   },
   searchBook(id: number) {
-    let found = Books.filter(p => +p.id === +id)
+    let found = Books.filter((p) => +p.id === +id)
     return Promise.resolve(found)
+  },
+  sayHi: (mes: string) => {
+    alert(mes)
   },
 }
 
 export const BookContext = React.createContext<Partial<BookContextType>>({})
 
 function _(props: FCC) {
-  let [state, setState] = useState<Partial<BookContextType>>({ name: 'lee', ...api })
+  let [state, setState] = useState<Partial<BookContextType>>({
+    name: 'lee',
+    ...api,
+  })
 
-  return <BookContext.Provider value={state}>{props.children}</BookContext.Provider>
+  return (
+    <BookContext.Provider value={state}>{props.children}</BookContext.Provider>
+  )
 }
-export const BookContextProvider: FC = props => {
+export const BookContextProvider: FC = (props) => {
   return <_ {...props}>{props.children}</_>
 }

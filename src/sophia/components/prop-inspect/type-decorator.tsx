@@ -1,12 +1,19 @@
-import React, { FC, CSSProperties, useEffect, DOMAttributes, ReactNode, useRef } from 'react'
-import { DrawNativeTypeRow, TYPE_COLORS } from './native-type-factory'
-import { FLEX, StringTypeStyle } from '../../shared/styles'
-import { analyzeFuncParams } from '../../util/func-analysis'
-import { getExtraSVG } from '../../svgs/svgBadge'
-import { useObject } from '../../hooks/useObject'
-import { getEmptyArray } from '../../util/array-ex'
-import { KeyBoard } from '../../shared/keyboard'
-import { os } from '../../archive/objectStore'
+import React, {
+  FC,
+  CSSProperties,
+  useEffect,
+  DOMAttributes,
+  ReactNode,
+  useRef,
+} from 'react'
+import {DrawNativeTypeRow, TYPE_COLORS} from './native-type-factory'
+import {FLEX, StringTypeStyle} from '../../shared/styles'
+import {analyzeFuncParams} from '../../util/func-analysis'
+import {getExtraSVG} from '../../svgs/svgBadge'
+import {useObject} from '../../hooks/useObject'
+import {getEmptyArray} from '../../util/array-ex'
+import {KeyBoard} from '../../shared/keyboard'
+import {os} from '../../archive/objectStore'
 import nestedProperty from '../../util/nested-property'
 
 const KEY_STYLE: CSSProperties = {
@@ -15,30 +22,62 @@ const KEY_STYLE: CSSProperties = {
   position: 'relative',
   top: -5,
 }
-const DATA_TYPE_WRAPPER_STYLE: CSSProperties = { position: 'relative', top: 0, lineHeight: '20px' }
+const DATA_TYPE_WRAPPER_STYLE: CSSProperties = {
+  position: 'relative',
+  top: 0,
+  lineHeight: '20px',
+}
 
-export const ColorfulRows = (props: { objectKey: string; value: string; badgeWidth?: number }) => <RenderPropertyOfObjectOrArray objectKey={props.objectKey} value={props.value} objHierarchy={''} />
+export const ColorfulRows = (props: {
+  objectKey: string
+  value: string
+  badgeWidth?: number
+}) => (
+  <RenderPropertyOfObjectOrArray
+    objectKey={props.objectKey}
+    value={props.value}
+    objHierarchy={''}
+  />
+)
 
-export const CSpan: FC<{ color?: string; ml?: string | number; className?: string; style?: React.CSSProperties } & DOMAttributes<HTMLSpanElement>> = props => {
-  let { ml = 6 } = props
+export const CSpan: FC<
+  {
+    color?: string
+    ml?: string | number
+    className?: string
+    style?: React.CSSProperties
+  } & DOMAttributes<HTMLSpanElement>
+> = (props) => {
+  let {ml = 6} = props
 
   return (
-    <span {...props} style={{ marginLeft: ml, color: props.color, ...props.style }}>
+    <span
+      {...props}
+      style={{marginLeft: ml, color: props.color, ...props.style}}>
       {props.children}
     </span>
   )
 }
 
 /**This function will be rendered the each property of an object or an item of an Array */
-export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value: any; objHierarchy: string }): JSX.Element => {
+export const RenderPropertyOfObjectOrArray = (props: {
+  objectKey: string
+  value: any
+  objHierarchy: string
+}): JSX.Element => {
   let abyss = ',' + props.objectKey.toString() + props.objHierarchy.toString()
 
-  const typeDesc = new DrawNativeTypeRow(props.value, props.objectKey, abyss).getNativeTypeDescription()
+  const typeDesc = new DrawNativeTypeRow(
+    props.value,
+    props.objectKey,
+    abyss
+  ).getNativeTypeDescription()
 
   return (
-    <div style={{ marginTop: 10, ...FLEX }}>
+    <div style={{marginTop: 10, ...FLEX}}>
       <aside>
-        {typeDesc?.self.getDefualtTypeSVG()} <span style={KEY_STYLE}>{props.objectKey} :</span>
+        {typeDesc?.self.getDefualtTypeSVG()}{' '}
+        <span style={KEY_STYLE}>{props.objectKey} :</span>
       </aside>
       <article style={DATA_TYPE_WRAPPER_STYLE}>
         {typeDesc?.beforeNode} {typeDesc?.mainBody} {typeDesc?.afterNode}
@@ -46,9 +85,15 @@ export const RenderPropertyOfObjectOrArray = (props: { objectKey: string; value:
     </div>
   )
 }
-export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number }> = props => {
+export const RenderFuncInParameters: FC<{
+  value: Function
+  shouldExecute: number
+}> = (props) => {
   const funcArguments = analyzeFuncParams(props.value)
-  const { object, updateObject } = useObject({ isFirst: true, argument: getEmptyArray(funcArguments.length) })
+  const {object, updateObject} = useObject({
+    isFirst: true,
+    argument: getEmptyArray(funcArguments.length),
+  })
   useEffect(() => {
     if (object.isFirst) updateObject('isFirst', false)
     else Reflect.apply(props.value, undefined, object.argument)
@@ -57,12 +102,12 @@ export const RenderFuncInParameters: FC<{ value: Function; shouldExecute: number
     <div>
       {funcArguments.map((arg, i) => {
         return (
-          <div key={i} style={{ marginTop: 10 }}>
-            {getExtraSVG('wrench')({ width: 16 })} {arg} :{' '}
+          <div key={i} style={{marginTop: 10}}>
+            {getExtraSVG('wrench')({width: 16})} {arg} :{' '}
             <input
               value={object.argument[i]}
               type="text"
-              onChange={e => {
+              onChange={(e) => {
                 object.argument[i] = e.target.value
                 updateObject('argument', object.argument)
               }}
@@ -82,8 +127,12 @@ export const RenderEditableString: FC<{
   hierarchy: string
   nextHierarchy?: string | null
   fromType?: 'object' | 'array'
-}> = props => {
-  const { object, updateObject, recover } = useObject({ hovered: false, clicked: false, __sv__: props.value })
+}> = (props) => {
+  const {object, updateObject, recover} = useObject({
+    hovered: false,
+    clicked: false,
+    __sv__: props.value,
+  })
   const _input = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -91,7 +140,11 @@ export const RenderEditableString: FC<{
       _input.current?.focus()
     }
   }, [object.clicked])
-  function modifyText(e: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement, MouseEvent>) {
+  function modifyText(
+    e:
+      | React.FocusEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) {
     recover(['__sv__'])
     update()
   }
@@ -101,7 +154,6 @@ export const RenderEditableString: FC<{
       if (props.nextHierarchy !== null) {
         objPath += `.${props.nextHierarchy}`
       }
- 
     } else if (props.fromType === 'array') {
     } else {
     }
@@ -117,8 +169,9 @@ export const RenderEditableString: FC<{
           onMouseOver={() => updateObject('hovered', true)}
           onMouseOut={() => updateObject('hovered', false)}
           color={TYPE_COLORS.string}
-          style={object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal}
-        >
+          style={
+            object.hovered ? StringTypeStyle.hovered : StringTypeStyle.normal
+          }>
           {props.prefix}
           {object.__sv__ + ''}
           {props.affix}
@@ -130,8 +183,8 @@ export const RenderEditableString: FC<{
           ref={_input}
           value={object.__sv__}
           onBlur={modifyText}
-          onChange={e => updateObject('__sv__', e.target.value)}
-          onKeyDown={e => {
+          onChange={(e) => updateObject('__sv__', e.target.value)}
+          onKeyDown={(e) => {
             if (e.keyCode === KeyBoard.Enter) {
               recover(['__sv__'])
               update()

@@ -1,4 +1,4 @@
-import { isString, isNumber, isFunction, isObject, isArray } from 'util'
+import {isString, isNumber, isFunction, isObject, isArray} from 'util'
 import * as SVG from '.'
 export const path: string = '../assets/'
 export enum SVGType {
