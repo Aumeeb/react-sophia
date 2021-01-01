@@ -1,12 +1,12 @@
 {
   "name": "react-sophia",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "react state trace...",
   "main": "index.js",
   "types": "index.d.ts",
   "private": false,
   "scripts": {
-    "build":"tsc"
+    "build": "tsc"
   },
   "keywords": [
     "react",

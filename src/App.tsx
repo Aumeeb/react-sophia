@@ -1,7 +1,7 @@
 import React from 'react'
 import 'antd/dist/antd.css'
 
-import { Book2 } from './test/booklist2'
+import { Book2 } from './test/books.test'
 import { Sophia } from '../src/sophia'
 
 function App() {
